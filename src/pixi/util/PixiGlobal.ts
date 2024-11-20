@@ -1,6 +1,7 @@
 import { pixiEntry } from '../PixiEntry';
 import * as PIXI from 'pixi.js';
 import { goUtil } from './GOUtil';
+import { adapt } from './Adapt';
 
 /**
  * 使用默认导入导入 PIXI
@@ -19,6 +20,7 @@ class PixiGlobal {
     win.PIXI = PIXI;
 
     win.goUtil = goUtil;
+    win.adapt = adapt
   }
 
   private injectPixi() {
@@ -35,4 +37,5 @@ declare global {
   const pixiEntry: typeof import('../PixiEntry').pixiEntry;
   const PIXI: typeof import('pixi.js');
   const goUtil: typeof import('./GOUtil').goUtil;
+  const adapt: typeof import('./Adapt').adapt;
 }

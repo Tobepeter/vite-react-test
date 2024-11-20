@@ -2,6 +2,8 @@
 class Adapt {
 
   dpr = 1
+  currDpr = 1 // 按cmd + 加号放大
+
   width = 0
   height = 0
   cssWidth = 0
@@ -9,15 +11,19 @@ class Adapt {
 
   canvas: HTMLCanvasElement;
 
-  resizeTimer = -1
+  noThrottle = false;
   resizeThrottleTime = 100;
-  lastResizeTime = 0;
+
+  private resizeTimer = -1
+  private lastResizeTime = 0;
 
   cb?: () => void;
 
   init(canvas: HTMLCanvasElement, cb?: () => void) {
     this.canvas = canvas;
     this.cb = cb;
+
+    this.dpr = window.devicePixelRatio;
 
     window.addEventListener("resize", () => {
       this.throttleResize();
@@ -42,17 +48,20 @@ class Adapt {
   }
 
   throttleResize() {
+    if (this.noThrottle) {
+      this.onResize();
+      return;
+    }
+
+    if (this.resizeTimer > -1) return;
+
     const now = Date.now();
 
-    // 没有定时器，且上一次resize比较久远了，可以直接触发
-    if (this.resizeThrottleTime == -1) {
-      if (now - this.lastResizeTime > this.resizeThrottleTime) {
-        this.onResize();
-        this.lastResizeTime = now;
-        return;
-      }
-    } else {
-      this.stopThrottleResize();
+    // 没有定时器且上一次resize比较久远了，可以直接触发（加速第一次时间）
+    if (now - this.lastResizeTime > this.resizeThrottleTime) {
+      this.onResize();
+      this.lastResizeTime = now;
+      return;
     }
 
     this.resizeTimer = setTimeout(() => {
@@ -63,7 +72,8 @@ class Adapt {
   }
 
   onResize() {
-    this.dpr = window.devicePixelRatio;
+    this.currDpr = window.devicePixelRatio;
+
     const innerWidth = window.innerWidth || document.documentElement.clientWidth;
     const innerHeight = window.innerHeight || document.documentElement.clientHeight;
     this.width = innerWidth * this.dpr;

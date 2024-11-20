@@ -9,7 +9,13 @@ class PixiEntry {
   canvas: HTMLCanvasElement;
 
   stage: Container;
-  centerRoot: Container;
+
+  /**
+   * 根容器
+   * @desc 默认 stage 尺寸是参考css的，这里缩放一下
+   * @desc 同时默认居中，方便使用
+   */
+  root: Container;
 
   init() {
     if (this.isInited) return;
@@ -29,10 +35,13 @@ class PixiEntry {
 
     pixiGlobal.init();
 
-    this.centerRoot = goUtil.getCntr('centerRoot', this.stage)
+    this.root = goUtil.getCntr('centerRoot', this.stage);
+
     adapt.init(this.canvas, () => {
       this.onResize();
     });
+    this.root.scale.set(1 / adapt.dpr);
+
     this.runTest();
   }
 
@@ -41,13 +50,12 @@ class PixiEntry {
   }
 
   onResize() {
-    console.log('onResize: ', adapt.cssWidth, adapt.cssHeight);
+    // console.log('onResize: ', adapt.cssWidth, adapt.cssHeight);
 
-    // TODO: 适配方案是不是很明确
-    this.app.renderer.resize(adapt.cssWidth, adapt.cssHeight);
-
-    // this.centerRoot.position.set(adapt.width / 2, adapt.height / 2);
-    this.centerRoot.position.set(800, 50);
+    const width = adapt.cssWidth;
+    const height = adapt.cssHeight;
+    this.app.renderer.resize(width, height);
+    this.root.position.set(width / 2, height / 2);
   }
 }
 
