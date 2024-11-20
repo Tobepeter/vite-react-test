@@ -3,10 +3,16 @@ import ReactDOM from "react-dom";
 
 class GlobalUtil {
   init() {
-    this.initUnplugin();
+    this.injectUnplugin();
+    this.injectReact();
   }
 
-  private initUnplugin() {
+  private injectReact() {
+    win.React = React;
+    win.ReactDOM = ReactDOM;
+  }
+
+  private injectUnplugin() {
     window.win = window as any;
 
     // -- hooks

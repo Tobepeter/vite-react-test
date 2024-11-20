@@ -1,4 +1,5 @@
 import { GsapTest } from './gsap/GsapTest';
+import { PixiTest } from './pixi/PixiTest';
 import { SwiperTest } from './swiper/SwiperTest';
 import { debugUtil } from './utils/DebugUtil';
 import { globalUtil } from './utils/GlobalUtil';
@@ -9,7 +10,8 @@ debugUtil.init();
 function Test() {
   // return <div>Test</div>;
   // return <SwiperTest />;
-  return <GsapTest />;
+  // return <GsapTest />;
+  return <PixiTest />;
 }
 
 function App() {
