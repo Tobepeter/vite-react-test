@@ -5,6 +5,7 @@ import { SwiperTest } from './swiper/SwiperTest';
 import { debugUtil } from './utils/DebugUtil';
 import { globalUtil } from './utils/GlobalUtil';
 import { LevaTest } from './leva/LevaTest';
+import { TweakpaneTest } from './tweakpane/TweakPaneTest';
 
 globalUtil.init();
 debugUtil.init();
@@ -14,8 +15,9 @@ function Test() {
   // return <SwiperTest />;
   // return <GsapTest />;
   // return <PixiTest />;
-  return <DatGUITest />;
+  // return <DatGUITest />;
   // return <LevaTest />;
+  return <TweakpaneTest />;
 }
 
 function App() {
