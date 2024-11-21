@@ -4,6 +4,7 @@ import { DatGUITest } from './dat-gui/DatGUITest';
 import { SwiperTest } from './swiper/SwiperTest';
 import { debugUtil } from './utils/DebugUtil';
 import { globalUtil } from './utils/GlobalUtil';
+import { LevaTest } from './leva/LevaTest';
 
 globalUtil.init();
 debugUtil.init();
@@ -14,6 +15,7 @@ function Test() {
   // return <GsapTest />;
   // return <PixiTest />;
   return <DatGUITest />;
+  // return <LevaTest />;
 }
 
 function App() {

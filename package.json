@@ -12,6 +12,8 @@
   "dependencies": {
     "dat.gui": "^0.7.9",
     "gsap": "^3.12.5",
+    "leva": "^0.9.35",
+    "mockjs": "^1.1.0",
     "pixi.js": "^7.4.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -19,6 +21,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@types/dat.gui": "^0.7.13",
+    "@types/mockjs": "^1.0.10",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
