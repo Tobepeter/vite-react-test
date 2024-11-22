@@ -59,7 +59,6 @@ class TimeShaderTest {
  `;
 
   init() {
-    // const shader = new Shader(this.gl, vertex, fragment);
     const texture = debugTexture.getChessboardTexture();
     const sp = new Sprite();
     sp.texture = texture;
@@ -74,7 +73,7 @@ class TimeShaderTest {
 
     let progress = 0;
     pixiEntry.ticker.add(() => {
-      progress += 0.001;
+      progress += 0.003;
       if (progress > 1) {
         progress = 0;
       }

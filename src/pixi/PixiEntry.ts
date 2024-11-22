@@ -7,6 +7,7 @@ import { pixiTest } from './PixiTest';
 import { debugHelper } from './util/debug/DebugHelper';
 import { debugVisual } from './util/debug/DebugVisual';
 import { scriptLoader } from './util/ScriptLoader';
+import { debugUtil } from './util/debug/DebugUtil';
 
 class PixiEntry {
   isInited = false;
@@ -45,17 +46,21 @@ class PixiEntry {
     // NOTE: 这个其实是不需要的，但是如果不这么设置，每次hmr都会闪烁一下（默认body是白色的）
     document.body.style.backgroundColor = new Color(backgroundColor).toHex();
 
-    pixiGlobal.init();
+    this.root = new Container();
+    this.root.name = 'centerRoot';
+    this.stage.addChild(this.root);
 
-    this.root = goUtil.getCntr('centerRoot', this.stage);
-    this.ticker = this.app.ticker;
+    this.ticker = new Ticker();
+    this.ticker.autoStart = true;
+
+    pixiGlobal.init();
 
     adapt.init(this.canvas, () => {
       this.onResize();
     });
     this.root.scale.set(1 / adapt.dpr);
 
-    await scriptLoader.loadVConsoleInEditor();
+    await debugUtil.init();
 
     this.runTest();
   }
@@ -66,8 +71,10 @@ class PixiEntry {
 
   cleanRoot() {
     this.root.removeChildren();
-    this.ticker.destroy();
-    this.ticker = new Ticker();
+
+    // NOTE: 不能换引用，test 代码会应用旧的对象
+    //  目前内部api没有removeAll，只能手动清除
+    this.ticker['_head'].next = null;
   }
 
   destroy() {

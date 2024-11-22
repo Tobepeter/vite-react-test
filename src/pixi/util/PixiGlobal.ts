@@ -13,6 +13,7 @@ class PixiGlobal {
   init() {
     this.injectUnplugin();
     this.injectPixi();
+    this.injectBasic();
   }
 
   private injectUnplugin() {
@@ -20,7 +21,7 @@ class PixiGlobal {
     win.PIXI = PIXI;
 
     win.goUtil = goUtil;
-    win.adapt = adapt
+    win.adapt = adapt;
   }
 
   private injectPixi() {
@@ -28,6 +29,10 @@ class PixiGlobal {
     win.app = pixiEntry.app;
     win.canvas = pixiEntry.canvas;
     win.renderer = pixiEntry.app.renderer;
+  }
+
+  private injectBasic() {
+    win.ticker = pixiEntry.ticker;
   }
 }
 
