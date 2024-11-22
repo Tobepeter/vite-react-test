@@ -1,6 +1,9 @@
 import { DisplayObject } from 'pixi.js';
 
 class DebugHelper {
+  loadedScript: Record<string, { promise: Promise<void>; isDone: boolean }> =
+    {};
+
   /** 依次执行数组项目 */
   loopItem<T>(fn: (item: T) => any, arr: T[], delay = 1000) {
     let idx = 0;
@@ -82,11 +85,40 @@ class DebugHelper {
     const printObj = (obj: DisplayObject, curIndent: number) => {
       str += ' '.repeat(curIndent) + obj.name + '\n';
       obj.children.forEach((child) =>
-        printObj(child as DisplayObject, curIndent + indent)
+        printObj(child as DisplayObject, curIndent + indent),
       );
     };
     printObj(obj, 0);
     return str;
+  }
+
+  isScriptLoaded(url: string) {
+    const info = this.loadedScript[url];
+    if (info) {
+      return info.isDone;
+    }
+    return false;
+  }
+
+  loadScript(url: string) {
+    if (this.isScriptLoaded(url)) return;
+    const script = document.createElement('script');
+    script.src = url;
+    document.head.appendChild(script);
+    const info = { isDone: false, promise: null };
+    this.loadedScript[url] = info;
+
+    const promise = new Promise<void>((resolve) => {
+      script.onload = () => {
+        info.isDone = true;
+        resolve();
+      };
+      script.onerror = () => {
+        delete this.loadedScript[url];
+      };
+    });
+    info.promise = promise;
+    return promise;
   }
 }
 

@@ -2,6 +2,7 @@ import { Application, Container } from 'pixi.js';
 import { adapt } from './util/Adapt';
 import { pixiGlobal } from './util/PixiGlobal';
 import { rectTest } from './demo/RectTest';
+import { shaderTest } from './demo/ShaderTest';
 
 class PixiEntry {
   isInited = false;
@@ -46,7 +47,8 @@ class PixiEntry {
   }
 
   runTest() {
-    rectTest.init();
+    // rectTest.init();
+    shaderTest.init();
   }
 
   onResize() {

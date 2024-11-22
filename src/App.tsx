@@ -1,11 +1,9 @@
 import { GsapTest } from './gsap/GsapTest';
 import { PixiTest } from './pixi/PixiTest';
-import { DatGUITest } from './dat-gui/DatGUITest';
 import { SwiperTest } from './swiper/SwiperTest';
 import { debugUtil } from './utils/DebugUtil';
 import { globalUtil } from './utils/GlobalUtil';
-import { LevaTest } from './leva/LevaTest';
-import { TweakpaneTest } from './tweakpane/TweakPaneTest';
+import { ViteTest } from './vite-test/ViteTest';
 
 globalUtil.init();
 debugUtil.init();
@@ -17,7 +15,8 @@ function Test() {
   // return <PixiTest />;
   // return <DatGUITest />;
   // return <LevaTest />;
-  return <TweakpaneTest />;
+  // return <TweakpaneTest />;
+  return <ViteTest />;
 }
 
 function App() {

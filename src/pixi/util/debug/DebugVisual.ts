@@ -7,7 +7,8 @@ import {
   Sprite,
   Text,
 } from 'pixi.js';
-import { boundUtil } from './BoundUtil';
+import { boundUtil } from '../BoundUtil';
+import { debugHelper } from './DebugHelper';
 
 /**
  * 可视化的一些调试工具
@@ -16,6 +17,15 @@ class DebugVisual {
   domKey = 'debug-visual';
   dom: HTMLDivElement;
   rectName = 'debug-rect';
+  Tweakpane: any;
+  VConsole: any;
+  vConsoleIns: any;
+
+  async init() {
+    this.initDom();
+    await this.loadTweakpane();
+    await this.loadVConsole();
+  }
 
   initDom() {
     const dom = document.createElement('div');
@@ -25,6 +35,29 @@ class DebugVisual {
 
     dom.style.position = 'fixed';
     dom.style.pointerEvents = 'none';
+  }
+
+  async loadTweakpane() {
+    // NOTE: 只有v3才支持umd，v4强制模块化了
+    const urlv4 =
+      'https://cdn.jsdelivr.net/npm/tweakpane@4.0.5/dist/tweakpane.min.js';
+    const urlv3 =
+      'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.min.js';
+    const url = urlv3;
+
+    await debugHelper.loadScript(url);
+    this.Tweakpane = win.Tweakpane;
+  }
+
+  async loadVConsole() {
+    const url =
+      'https://cdn.jsdelivr.net/npm/vconsole@3.3.4/dist/vconsole.min.js';
+    await debugHelper.loadScript(url);
+    this.VConsole = win.VConsole;
+  }
+
+  openVConsole() {
+    this.vConsoleIns = new this.VConsole();
   }
 
   /**
