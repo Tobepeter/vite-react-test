@@ -1,9 +1,12 @@
-import { Application, Color, Container, utils } from 'pixi.js';
+import { Application, Color, Container, Ticker, utils } from 'pixi.js';
 import { adapt } from './util/Adapt';
 import { pixiGlobal } from './util/PixiGlobal';
 import { rectTest } from './demo/RectTest';
-import { shaderTest } from './demo/ShaderTest';
+import { shaderTest } from './demo/TimeShaderTest';
 import { pixiTest } from './PixiTest';
+import { debugHelper } from './util/debug/DebugHelper';
+import { debugVisual } from './util/debug/DebugVisual';
+import { scriptLoader } from './util/ScriptLoader';
 
 class PixiEntry {
   isInited = false;
@@ -12,6 +15,8 @@ class PixiEntry {
 
   stage: Container;
 
+  ticker: Ticker;
+
   /**
    * 根容器
    * @desc 默认 stage 尺寸是参考css的，这里缩放一下
@@ -19,7 +24,7 @@ class PixiEntry {
    */
   root: Container;
 
-  init() {
+  async init() {
     if (this.isInited) return;
     this.isInited = true;
 
@@ -43,11 +48,14 @@ class PixiEntry {
     pixiGlobal.init();
 
     this.root = goUtil.getCntr('centerRoot', this.stage);
+    this.ticker = this.app.ticker;
 
     adapt.init(this.canvas, () => {
       this.onResize();
     });
     this.root.scale.set(1 / adapt.dpr);
+
+    await scriptLoader.loadVConsoleInEditor();
 
     this.runTest();
   }
@@ -58,6 +66,8 @@ class PixiEntry {
 
   cleanRoot() {
     this.root.removeChildren();
+    this.ticker.destroy();
+    this.ticker = new Ticker();
   }
 
   destroy() {

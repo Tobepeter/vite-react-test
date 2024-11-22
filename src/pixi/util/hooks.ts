@@ -1,4 +1,5 @@
 import { debugVisual } from './debug/DebugVisual';
+import { scriptLoader } from './ScriptLoader';
 
 export const usePromise = <T>(promise: Promise<T>) => {
   const [data, setData] = useState<T | null>(null);
@@ -36,17 +37,4 @@ export const useLoadInfo = <T>(promise: Promise<T>): LoadInfo<T> => {
     );
 
   return info;
-};
-
-export const useLoadVConsole = (show = true) => {
-  const isLoad = useLoad(debugVisual.loadVConsole());
-  useEffect(() => {
-    if (isLoad) {
-      debugVisual.openVConsole();
-      if (show) {
-        debugVisual.vConsoleIns.show();
-      }
-    }
-  }, [isLoad]);
-  return isLoad;
 };

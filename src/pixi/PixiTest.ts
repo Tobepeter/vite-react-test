@@ -1,9 +1,10 @@
 import { rectTest } from './demo/RectTest';
+import { shaderTest } from './demo/TimeShaderTest';
 
 class PixiTest {
   init() {
-    rectTest.init();
-    // shaderTest.init();
+    // rectTest.init();
+    shaderTest.init();
   }
 
   clear() {

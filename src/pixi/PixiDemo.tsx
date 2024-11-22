@@ -13,8 +13,6 @@ export const PixiDemo = () => {
   return <div ref={rootRef} id="pixi-root"></div>;
 };
 
-console.log('PixiDemo: ', PixiDemo);
-
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     pixiEntry.destroy();
