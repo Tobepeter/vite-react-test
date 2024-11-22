@@ -1,20 +1,18 @@
-
 class Adapt {
+  dpr = 1;
+  currDpr = 1; // 按cmd + 加号放大
 
-  dpr = 1
-  currDpr = 1 // 按cmd + 加号放大
-
-  width = 0
-  height = 0
-  cssWidth = 0
-  cssHeight = 0
+  width = 0;
+  height = 0;
+  cssWidth = 0;
+  cssHeight = 0;
 
   canvas: HTMLCanvasElement;
 
   noThrottle = false;
   resizeThrottleTime = 100;
 
-  private resizeTimer = -1
+  private resizeTimer = -1;
   private lastResizeTime = 0;
 
   cb?: () => void;
@@ -25,12 +23,17 @@ class Adapt {
 
     this.dpr = window.devicePixelRatio;
 
-    window.addEventListener("resize", () => {
-      this.throttleResize();
-    });
+    window.addEventListener('resize', this.throttleResize);
     this.throttleResize();
 
     this.adjustCss();
+  }
+
+  destroy() {
+    window.removeEventListener('resize', this.throttleResize);
+    this.cb = null;
+    this.canvas = null;
+    this.stopThrottleResize();
   }
 
   /**
@@ -47,7 +50,7 @@ class Adapt {
     }
   }
 
-  throttleResize() {
+  throttleResize = () => {
     if (this.noThrottle) {
       this.onResize();
       return;
@@ -69,13 +72,15 @@ class Adapt {
       this.lastResizeTime = now;
       this.resizeTimer = -1;
     }, this.resizeThrottleTime);
-  }
+  };
 
   onResize() {
     this.currDpr = window.devicePixelRatio;
 
-    const innerWidth = window.innerWidth || document.documentElement.clientWidth;
-    const innerHeight = window.innerHeight || document.documentElement.clientHeight;
+    const innerWidth =
+      window.innerWidth || document.documentElement.clientWidth;
+    const innerHeight =
+      window.innerHeight || document.documentElement.clientHeight;
     this.width = innerWidth * this.dpr;
     this.height = innerHeight * this.dpr;
     this.cssWidth = innerWidth;
@@ -88,7 +93,6 @@ class Adapt {
 
     this.cb?.();
   }
-
 }
 
 export const adapt = new Adapt();

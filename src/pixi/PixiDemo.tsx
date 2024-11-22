@@ -1,6 +1,6 @@
 import { pixiEntry } from './PixiEntry';
 
-export const PixiTest = () => {
+export const PixiDemo = () => {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -12,3 +12,11 @@ export const PixiTest = () => {
 
   return <div ref={rootRef} id="pixi-root"></div>;
 };
+
+console.log('PixiDemo: ', PixiDemo);
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    pixiEntry.destroy();
+  });
+}

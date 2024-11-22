@@ -1,7 +1,10 @@
 class RectTest {
   init() {
     const rect = new PIXI.Graphics();
-    rect.beginFill(0xff0000);
+
+    const color = Math.random() * 0xffffff;
+    rect.beginFill(color);
+
     const size = 100;
     rect.drawRect(-size / 2, -size / 2, size, size);
     rect.endFill();

@@ -1,5 +1,5 @@
 import { GsapTest } from './gsap/GsapTest';
-import { PixiTest } from './pixi/PixiTest';
+import { PixiDemo } from './pixi/PixiDemo';
 import { SwiperTest } from './swiper/SwiperTest';
 import { debugUtil } from './utils/DebugUtil';
 import { globalUtil } from './utils/GlobalUtil';
@@ -12,11 +12,11 @@ function Test() {
   // return <div>Test</div>;
   // return <SwiperTest />;
   // return <GsapTest />;
-  // return <PixiTest />;
+  return <PixiDemo />;
   // return <DatGUITest />;
   // return <LevaTest />;
   // return <TweakpaneTest />;
-  return <ViteTest />;
+  // return <ViteTest />;
 }
 
 function App() {
