@@ -2,7 +2,7 @@ import { Application, Color, Container, Ticker, utils } from 'pixi.js';
 import { adapt } from './util/Adapt';
 import { pixiGlobal } from './util/PixiGlobal';
 import { rectTest } from './demo/RectTest';
-import { shaderTest } from './demo/TimeShaderTest';
+import { timeShaderTest } from './demo/TimeShaderTest';
 import { pixiTest } from './PixiTest';
 import { debugHelper } from './util/debug/DebugHelper';
 import { debugVisual } from './util/debug/DebugVisual';

@@ -1,10 +1,12 @@
+import { goHit } from './demo/GOHit';
 import { rectTest } from './demo/RectTest';
-import { shaderTest } from './demo/TimeShaderTest';
+import { timeShaderTest } from './demo/TimeShaderTest';
 
 class PixiTest {
   init() {
     // rectTest.init();
-    shaderTest.init();
+    timeShaderTest.init();
+    // goHit.init();
   }
 
   clear() {

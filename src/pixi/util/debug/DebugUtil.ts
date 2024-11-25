@@ -9,6 +9,8 @@ class DebugUtil {
     this.isInited = true;
 
     await scriptLoader.loadVConsoleInEditor();
+    await scriptLoader.loadTweakpane();
+
     debugInject.init();
   }
 }
