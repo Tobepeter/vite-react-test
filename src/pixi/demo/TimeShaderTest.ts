@@ -36,6 +36,7 @@ class TimeShaderTest implements ITest {
   `;
 
   fs = /** glsl */ `
+  precision mediump float;
   #define PI 3.1415926538
   varying vec2 vTextureCoord;
   varying vec2 vVertexPosition;
@@ -49,8 +50,8 @@ class TimeShaderTest implements ITest {
     if (rad < -PI / 2.0) {
       rad += PI * 2.0;
     }
-    float targetRad = -PI / 2.0 + progress * PI * 2.0;
 
+    float targetRad = -PI / 2.0 + progress * PI * 2.0;
     if (rad < targetRad) {
       discard;
     }
@@ -176,7 +177,11 @@ class TimeShaderTest implements ITest {
 
   setColorByProgress(t: number) {
     const len = this.colors.length;
-    const idx1 = Math.floor(t * len);
+    let idx1 = Math.floor(t * len);
+    // t取1.0时会越界
+    if (idx1 >= len) {
+      idx1 = len - 1;
+    }
     const idx2 = idx1 >= len - 1 ? idx1 : idx1 + 1;
     const t1 = idx1 / len;
     // 最后的比例需要设置到1.0，因为没有过渡了

@@ -11,8 +11,6 @@ class PixiTest {
     goHit,
   };
 
-  testStr = '111';
-
   init() {
     this.curTest = this.testMap.timeShaderTest;
     this.curTest.init();
