@@ -1,7 +1,8 @@
 import { Color, Filter, Sprite, Texture, utils } from 'pixi.js';
 import { debugTexture } from '../util/debug/DebugTexture';
+import { ITest } from '../util/ITest';
 
-class TimeShaderTest {
+class TimeShaderTest implements ITest {
   vs = /** glsl */ `
   attribute vec2 aVertexPosition;
   uniform mat3 projectionMatrix;
@@ -67,7 +68,9 @@ class TimeShaderTest {
   ];
   progress = 0;
   autoStart = false;
+
   private isStart = false;
+  private pane: any;
 
   init() {
     // const texture = debugTexture.getChessboardTexture();
@@ -150,6 +153,20 @@ class TimeShaderTest {
     buttonFolder.addButton({ title: '停止' }).on('click', () => {
       this.stopTick();
     });
+    this.pane = pane;
+  }
+
+  clear() {
+    console.log('clear');
+    this.stopTick();
+    this.filter.destroy();
+    this.filter = null;
+
+    this.sp.destroy();
+    this.sp = null;
+
+    this.pane.dispose();
+    this.pane = null;
   }
 
   setProgress(t: number) {
