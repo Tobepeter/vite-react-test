@@ -1,3 +1,4 @@
+import { AhooksDemo } from './ahooks/AhooksDemo';
 import { GsapTest } from './gsap/GsapTest';
 import { PixiDemo } from './pixi/PixiDemo';
 import { SwiperTest } from './swiper/SwiperTest';
@@ -18,7 +19,8 @@ function Test() {
   // return <LevaTest />;
   // return <TweakpaneTest />;
   // return <ViteTest />;
-  return <UseHotKeyDemo />;
+  // return <UseHotKeyDemo />;
+  return <AhooksDemo />;
 }
 
 function App() {
