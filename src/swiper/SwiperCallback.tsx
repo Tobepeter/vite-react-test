@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-export const SwiperTest = () => {
+export const SwiperCallback = () => {
   const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1'];
   const content = [];
 

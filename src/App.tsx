@@ -1,7 +1,7 @@
 import { AhooksDemo } from './ahooks/AhooksDemo';
 import { GsapTest } from './gsap/GsapTest';
 import { PixiDemo } from './pixi/PixiDemo';
-import { SwiperTest } from './swiper/SwiperTest';
+import { SwiperDemo } from './swiper/SwiperDemo';
 import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo';
 import { debugUtil } from './utils/DebugUtil';
 import { globalUtil } from './utils/GlobalUtil';
@@ -12,7 +12,7 @@ debugUtil.init();
 
 function Test() {
   // return <div>Test</div>;
-  // return <SwiperTest />;
+  return <SwiperDemo />;
   // return <GsapTest />;
   // return <PixiDemo />;
   // return <DatGUITest />;
@@ -20,7 +20,7 @@ function Test() {
   // return <TweakpaneTest />;
   // return <ViteTest />;
   // return <UseHotKeyDemo />;
-  return <AhooksDemo />;
+  // return <AhooksDemo />;
 }
 
 function App() {
