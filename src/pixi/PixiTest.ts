@@ -12,7 +12,7 @@ class PixiTest {
   };
 
   init() {
-    this.curTest = this.testMap.timeShaderTest;
+    this.curTest = this.testMap.rectTest;
     this.curTest.init();
   }
 

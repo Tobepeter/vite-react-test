@@ -39,6 +39,9 @@ class PixiEntry {
       autoDensity: true,
       resizeTo: window,
       backgroundColor,
+
+      // NOTE: 貌似不能跑起来canvas模式
+      // forceCanvas: true,
     });
     this.canvas = this.app.view as HTMLCanvasElement;
     this.stage = this.app.stage;
