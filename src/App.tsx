@@ -1,6 +1,7 @@
 import { AhooksDemo } from './ahooks/AhooksDemo';
 import { CanvasDemo } from './canvas/CanvasDemo';
 import { GsapTest } from './gsap/GsapTest';
+import { HtmlDemo } from './html/HtmlDemo';
 import { PixiDemo } from './pixi/PixiDemo';
 import { SwiperDemo } from './swiper/SwiperDemo';
 import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo';
@@ -15,7 +16,7 @@ function Test() {
   // return <div>Test</div>;
   // return <SwiperDemo />;
   // return <GsapTest />;
-  return <PixiDemo />;
+  // return <PixiDemo />;
   // return <DatGUITest />;
   // return <LevaTest />;
   // return <TweakpaneTest />;
@@ -23,6 +24,7 @@ function Test() {
   // return <UseHotKeyDemo />;
   // return <AhooksDemo />;
   // return <CanvasDemo />;
+  return <HtmlDemo />;
 }
 
 function App() {
