@@ -4,7 +4,7 @@ class DebugTexture {
   dummyImage = 'https://dummyimage.com/200x200/000/fff';
   dummyImage2 = 'https://dummyimage.com/400x400/fff/000';
 
-  colorMap: Record<string, number> = {
+  colorMap = {
     red: 0xff0000,
     green: 0x00ff00,
     blue: 0x0000ff,
@@ -14,9 +14,9 @@ class DebugTexture {
     white: 0xffffff,
     black: 0x000000,
     gray: 0x808080,
-  };
+  } satisfies Record<string, number>;
 
-  textureMap: Record<string, Texture> = {
+  textureMap = {
     chessboard: null,
 
     white: null,
@@ -28,7 +28,7 @@ class DebugTexture {
     cyan: null,
     black: null,
     gray: null,
-  };
+  } satisfies Record<string, Texture>;
 
   init() {
     this.initTextureMap();

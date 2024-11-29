@@ -1,4 +1,5 @@
 import { Graphics } from 'pixi.js';
+import { ITest } from '../util/ITest';
 
 /**
  * 显示对象点击测试
@@ -8,7 +9,7 @@ import { Graphics } from 'pixi.js';
  * 3. graphics设置宽高无效
  * 4. graphics设置fill可以监听，即使是alpha为0
  */
-class GOHit {
+class GOHit implements ITest {
   init() {
     // this.test_cntr();
     // this.test_sp();

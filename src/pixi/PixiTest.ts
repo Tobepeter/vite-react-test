@@ -1,7 +1,10 @@
 import { goHit } from './demo/GOHit';
+import { memTest } from './demo/MemTest';
 import { rectTest } from './demo/RectTest';
 import { timeShaderTest } from './demo/TimeShaderTest';
+import { debugQueryEntry } from './util/debug/DebugQueryEntry';
 import type { ITest } from './util/ITest';
+import qs from 'qs';
 
 class PixiTest {
   curTest: ITest = null;
@@ -9,11 +12,14 @@ class PixiTest {
     rectTest,
     timeShaderTest,
     goHit,
+    memTest,
   };
 
   init() {
-    this.curTest = this.testMap.rectTest;
-    this.curTest.init();
+    // this.curTest = this.testMap.memTest;
+    // this.curTest.init();
+
+    debugQueryEntry.run(this.testMap);
   }
 
   clear() {

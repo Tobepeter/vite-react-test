@@ -1,4 +1,6 @@
-class RectTest {
+import { ITest } from '../util/ITest';
+
+class RectTest implements ITest {
   init() {
     const rect = new PIXI.Graphics();
 
