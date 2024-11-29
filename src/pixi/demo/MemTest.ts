@@ -6,8 +6,8 @@ import { debugVisual } from '../util/debug/DebugVisual';
 
 class MemTest implements ITest {
   count = 100;
-  sizeArr = [20, 30] as const;
-  range = 1000;
+  readonly sizeArr = [20, 30] as const;
+  readonly range = 1000;
 
   init() {
     const Tweakpane = win.Tweakpane;
@@ -19,24 +19,29 @@ class MemTest implements ITest {
     const params = {
       count: this.count,
       create: () => {
-        this.createSprite(params.count);
+        this.createSprites();
       },
       remove: () => {
-        pixiEntry.root.removeChildren();
+        this.removeSprites();
       },
     };
 
-    pane.addInput(params, 'count', {
-      min: 10,
-      max: 1000,
-      step: 10,
-    });
+    pane
+      .addInput(params, 'count', {
+        min: 10,
+        max: 1000,
+        step: 10,
+      })
+      .on('change', (value: number) => {
+        this.count = value;
+      });
 
     pane.addButton({ title: '创建精灵' }).on('click', params.create);
     pane.addButton({ title: '移除所有' }).on('click', params.remove);
   }
 
-  createSprite(count: number) {
+  createSprites() {
+    const count = this.count;
     const textures = Object.values(debugTexture.colorTextureMap);
     const range = this.range;
     const rootChildCount = pixiEntry.root.children.length;
@@ -52,6 +57,11 @@ class MemTest implements ITest {
       sp.texture = Random.pick(textures);
       pixiEntry.root.addChild(sp);
     }
+  }
+
+  removeSprites() {
+    // NOTE: 经过测试，不需要destroy，内存会有回落
+    pixiEntry.root.removeChildren();
   }
 }
 
