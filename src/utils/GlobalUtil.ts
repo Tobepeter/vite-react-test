@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 class GlobalUtil {
   init() {
@@ -13,7 +13,8 @@ class GlobalUtil {
   }
 
   private injectUnplugin() {
-    window.win = window as any;
+    const win = window as any;
+    (window as any).win = win;
 
     // -- hooks
     win.useEffect = React.useEffect;
@@ -28,12 +29,11 @@ class GlobalUtil {
 export const globalUtil = new GlobalUtil();
 
 declare global {
-  var win: any;
-  var useEffect: typeof React.useEffect;
-  var useState: typeof React.useState;
-  var useRef: typeof React.useRef;
-  var useCallback: typeof React.useCallback;
-  var useMemo: typeof React.useMemo;
-  var useContext: typeof React.useContext;
+  const win: any;
+  const useEffect: typeof React.useEffect;
+  const useState: typeof React.useState;
+  const useRef: typeof React.useRef;
+  const useCallback: typeof React.useCallback;
+  const useMemo: typeof React.useMemo;
+  const useContext: typeof React.useContext;
 }
-

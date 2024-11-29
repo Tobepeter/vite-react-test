@@ -1,4 +1,5 @@
 import { AhooksDemo } from './ahooks/AhooksDemo';
+import { CanvasDemo } from './canvas/CanvasDemo';
 import { GsapTest } from './gsap/GsapTest';
 import { PixiDemo } from './pixi/PixiDemo';
 import { SwiperDemo } from './swiper/SwiperDemo';
@@ -21,6 +22,7 @@ function Test() {
   // return <ViteTest />;
   // return <UseHotKeyDemo />;
   // return <AhooksDemo />;
+  // return <CanvasDemo />;
 }
 
 function App() {

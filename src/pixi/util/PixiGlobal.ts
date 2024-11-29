@@ -16,6 +16,10 @@ class PixiGlobal {
     this.injectBasic();
   }
 
+  /**
+   * 注入一些高频使用对象
+   * @desc 注意这些对象不要在static的部分使用，只能在runtime使用
+   */
   private injectUnplugin() {
     win.pixiEntry = pixiEntry;
     win.PIXI = PIXI;

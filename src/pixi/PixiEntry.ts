@@ -32,6 +32,8 @@ class PixiEntry {
     // TODO: 内部是否支持自动适配？
 
     const backgroundColor = 0x000000;
+    // const backgroundColor = 0xffffff;
+
     this.app = new Application({
       width: 800,
       height: 600,

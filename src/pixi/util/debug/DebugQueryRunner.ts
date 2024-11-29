@@ -1,5 +1,6 @@
 import qs from 'qs';
 import { ITest } from '../ITest';
+import { hmr } from '../Hmr';
 
 /**
  * 根据query参数运行测试
@@ -7,13 +8,10 @@ import { ITest } from '../ITest';
 class DebugQueryRunner {
   printList = true;
 
+  @hmr.oneCall
   run(testMap: Record<string, ITest>) {
     const query = qs.parse(window.location.search, { ignoreQueryPrefix: true });
     let testName = query.testKey;
-
-    if (!testName || typeof testName !== 'string') {
-      return;
-    }
 
     const testNames = Object.keys(testMap);
 
@@ -25,8 +23,12 @@ class DebugQueryRunner {
       console.log('');
     }
 
+    if (!testName || typeof testName !== 'string') {
+      return;
+    }
+
     // 支持一下索引方式，字符串比较难记
-    let testIndex = Number(testName);
+    const testIndex = Number(testName);
     if (testIndex >= 0) {
       if (testIndex < testNames.length) {
         testName = testNames[testIndex];

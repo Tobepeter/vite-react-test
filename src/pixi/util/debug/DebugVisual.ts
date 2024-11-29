@@ -17,11 +17,8 @@ class DebugVisual {
   domKey = 'debug-visual';
   dom: HTMLDivElement;
   rectName = 'debug-rect';
-  Tweakpane: any;
-  VConsole: any;
-  vConsoleIns: any;
 
-  async init() {
+  init() {
     this.initDom();
   }
 
@@ -33,6 +30,8 @@ class DebugVisual {
 
     dom.style.position = 'fixed';
     dom.style.pointerEvents = 'none';
+    dom.style.top = '0';
+    dom.style.left = '0';
   }
 
   /**
@@ -229,6 +228,22 @@ class DebugVisual {
     div.id = 'debug_helper_div';
     (window as any).debug_helper_div = div;
     parent.appendChild(div);
+  }
+
+  forceShowCanvas(canvas: HTMLCanvasElement, setSizeStyle = true) {
+    canvas.style.position = 'absolute';
+    canvas.style.left = '0';
+    canvas.style.top = '0';
+    canvas.style.zIndex = '10000';
+    this.dom.appendChild(canvas);
+
+    if (setSizeStyle) {
+      const cssSize = 100;
+      if (setSizeStyle) {
+        canvas.style.width = `${cssSize}px`;
+        canvas.style.height = `${cssSize}px`;
+      }
+    }
   }
 }
 

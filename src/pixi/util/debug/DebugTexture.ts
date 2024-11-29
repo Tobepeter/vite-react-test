@@ -4,21 +4,25 @@ class DebugTexture {
   dummyImage = 'https://dummyimage.com/200x200/000/fff';
   dummyImage2 = 'https://dummyimage.com/400x400/fff/000';
 
+  /**
+   * 颜色配置
+   * @desc 使用string，不使用number是因为canvas 2d API只支持string
+   */
   colorMap = {
-    red: 0xff0000,
-    green: 0x00ff00,
-    blue: 0x0000ff,
-    yellow: 0xffff00,
-    purple: 0xff00ff,
-    cyan: 0x00ffff,
-    white: 0xffffff,
-    black: 0x000000,
-    gray: 0x808080,
-  } satisfies Record<string, number>;
+    red: '#ff0000',
+    green: '#00ff00',
+    blue: '#0000ff',
+    yellow: '#ffff00',
+    purple: '#ff00ff',
+    cyan: '#00ffff',
+    white: '#ffffff',
+    black: '#000000',
+    gray: '#808080',
+  } satisfies Record<string, string>;
 
-  textureMap = {
-    chessboard: null,
+  chessboard: Texture;
 
+  colorTextureMap = {
     white: null,
     red: null,
     green: null,
@@ -31,7 +35,7 @@ class DebugTexture {
   } satisfies Record<string, Texture>;
 
   init() {
-    this.initTextureMap();
+    this.initTextures();
   }
 
   getDummyImg(opt?: {
@@ -75,18 +79,15 @@ class DebugTexture {
     return Texture.from(canvas);
   }
 
-  private initTextureMap() {
-    const map = this.textureMap;
-    map.chessboard = this.getChessboardTexture();
-    map.white = this.getColorTexture('#ffffff');
-    map.red = this.getColorTexture('#ff0000');
-    map.green = this.getColorTexture('#00ff00');
-    map.blue = this.getColorTexture('#0000ff');
-    map.yellow = this.getColorTexture('#ffff00');
-    map.purple = this.getColorTexture('#ff00ff');
-    map.cyan = this.getColorTexture('#00ffff');
-    map.black = this.getColorTexture('#000000');
-    map.gray = this.getColorTexture('#808080');
+  private initTextures() {
+    this.chessboard = this.getChessboardTexture();
+
+    const { colorMap, colorTextureMap } = this;
+    const colors = Object.keys(colorMap);
+
+    for (const color of colors) {
+      colorTextureMap[color] = this.getColorTexture(colorMap[color]);
+    }
   }
 }
 
