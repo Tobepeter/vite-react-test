@@ -2,7 +2,7 @@ import { goHit } from './demo/GOHit';
 import { memTest } from './demo/MemTest';
 import { rectTest } from './demo/RectTest';
 import { timeShaderTest } from './demo/TimeShaderTest';
-import { debugQueryEntry } from './util/debug/DebugQueryEntry';
+import { debugQueryRunner } from './util/debug/DebugQueryRunner';
 import type { ITest } from './util/ITest';
 import qs from 'qs';
 
@@ -19,7 +19,7 @@ class PixiTest {
     // this.curTest = this.testMap.memTest;
     // this.curTest.init();
 
-    debugQueryEntry.run(this.testMap);
+    debugQueryRunner.run(this.testMap);
   }
 
   clear() {
