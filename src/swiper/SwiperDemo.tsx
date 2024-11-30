@@ -1,9 +1,13 @@
 import { SwiperCallback } from './SwiperCallback';
+import { SwiperCanvas } from './SwiperCanvas';
+import { SwiperHitThrough } from './SwiperHitThrough';
 import { SwiperHook } from './SwiperHook';
 import { SwiperSimple } from './SwiperSimple';
 
 export const SwiperDemo = () => {
-  return <SwiperSimple />;
+  // return <SwiperSimple />;
   // return <SwiperCallback />;
   // return <SwiperHook />;
+  return <SwiperHitThrough />;
+  // return <SwiperCanvas />;
 };

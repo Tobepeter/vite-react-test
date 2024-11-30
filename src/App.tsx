@@ -1,5 +1,6 @@
 import { AhooksDemo } from './ahooks/AhooksDemo';
 import { CanvasDemo } from './canvas/CanvasDemo';
+import { TailwindDemo } from './css/tailwind/TailwindDemo';
 import { GsapTest } from './gsap/GsapTest';
 import { HtmlDemo } from './html/HtmlDemo';
 import { PixiDemo } from './pixi/PixiDemo';
@@ -25,6 +26,7 @@ function Test() {
   // return <AhooksDemo />;
   // return <CanvasDemo />;
   // return <HtmlDemo />;
+  // return <TailwindDemo />;
 }
 
 function App() {

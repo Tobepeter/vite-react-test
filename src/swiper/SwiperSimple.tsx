@@ -5,7 +5,6 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { ComponentProps } from 'react';
 
 export const SwiperSimple = () => {
   const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1'];
