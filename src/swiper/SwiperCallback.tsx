@@ -5,6 +5,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { ComponentProps } from 'react';
 
 export const SwiperCallback = () => {
   const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1'];
@@ -71,6 +72,18 @@ export const SwiperCallback = () => {
     console.log('progress', e.progress);
   };
 
+  const transitionFn: ComponentProps<typeof Swiper> = {
+    onSlideNextTransitionStart: () =>
+      console.log('slide next transition start'),
+    onSlidePrevTransitionStart: () =>
+      console.log('slide prev transition start'),
+    onSlideNextTransitionEnd: () => console.log('slide next transition end'),
+    onSlidePrevTransitionEnd: () => console.log('slide prev transition end'),
+    // NOTE: 这是一个总的transition结束的回调
+    onSlideChangeTransitionEnd: () =>
+      console.log('slide change transition end'),
+  };
+
   return (
     <Swiper
       modules={[Navigation, Pagination]}
@@ -87,7 +100,8 @@ export const SwiperCallback = () => {
       loop={true}
       pagination={{ clickable: true }}
       // onSlideChange={onSlideChange}
-
+      // NOTE： next 和 prev 的transition callback
+      {...transitionFn}
       /**
        * 获取 Swiper 实例
        */

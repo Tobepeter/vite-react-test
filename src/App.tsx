@@ -14,7 +14,7 @@ debugUtil.init();
 
 function Test() {
   // return <div>Test</div>;
-  // return <SwiperDemo />;
+  return <SwiperDemo />;
   // return <GsapTest />;
   // return <PixiDemo />;
   // return <DatGUITest />;
@@ -24,7 +24,7 @@ function Test() {
   // return <UseHotKeyDemo />;
   // return <AhooksDemo />;
   // return <CanvasDemo />;
-  return <HtmlDemo />;
+  // return <HtmlDemo />;
 }
 
 function App() {
