@@ -65,23 +65,101 @@ export const SwiperCallback = () => {
   const onSwiper: React.ComponentProps<typeof Swiper>['onSwiper'] = (
     swiper
   ) => {
-    console.log('swiper', swiper);
+    // console.log('swiper', swiper);
+    win.swiper = swiper;
+
+    // TODO: 暂时不知道这个是做什么的
+    // swiper.params.cssMode = true;
   };
 
   const onProgress: React.ComponentProps<typeof Swiper>['onProgress'] = (e) => {
     console.log('progress', e.progress);
   };
 
+  /**
+   * 过渡
+   *
+   * 优先触发总的start，才会触发next或者pre的start
+   */
   const transitionFn: ComponentProps<typeof Swiper> = {
-    onSlideNextTransitionStart: () =>
-      console.log('slide next transition start'),
-    onSlidePrevTransitionStart: () =>
-      console.log('slide prev transition start'),
-    onSlideNextTransitionEnd: () => console.log('slide next transition end'),
-    onSlidePrevTransitionEnd: () => console.log('slide prev transition end'),
-    // NOTE: 这是一个总的transition结束的回调
-    onSlideChangeTransitionEnd: () =>
-      console.log('slide change transition end'),
+    // onSlideNextTransitionStart: () => {
+    //   console.log('slide next transition start');
+    // },
+    // onSlidePrevTransitionStart: () => {
+    //   console.log('slide prev transition start');
+    // },
+    // onSlideNextTransitionEnd: () => {
+    //   console.log('slide next transition end');
+    // },
+    // onSlidePrevTransitionEnd: () => {
+    //   console.log('slide prev transition end');
+    // },
+    // NOTE: 这是一个总的transition结束的回调，但是只有slideChange了才会触发
+    // onSlideChangeTransitionStart: () => {
+    //   console.log('slide change transition start');
+    // },
+    // onSlideChangeTransitionEnd: () => {
+    //   console.log('slide change transition end');
+    // },
+    // NOTE: onBeforeTransitionStart 和 onTransitionStart 源码上看其实差别不大，就是时机不同
+    // onBeforeTransitionStart: () => {
+    //   console.log('before transition start');
+    // },
+    // onTransitionStart: () => {
+    //   console.log('transition start');
+    // },
+    // onTransitionEnd: () => {
+    //   console.log('transition end');
+    // },
+  };
+
+  const onSliderMove: ComponentProps<typeof Swiper>['onSliderMove'] = (
+    swiper,
+    event
+  ) => {
+    console.log('slider move');
+  };
+
+  const onToEdge: ComponentProps<typeof Swiper>['onToEdge'] = (swiper) => {
+    console.log('to edge', swiper);
+  };
+
+  const onFromEdge: ComponentProps<typeof Swiper>['onFromEdge'] = (swiper) => {
+    console.log('from edge', swiper);
+  };
+
+  /**
+   * 设置translate
+   *
+   * 往左边拖动时候是负数
+   * 松手后直接就是目标值
+   *
+   * 注意loop模式会有点特别，是用附近的一个临时代替的
+   */
+  const onSetTranslate: ComponentProps<typeof Swiper>['onSetTranslate'] = (
+    swiper,
+    translate
+  ) => {
+    console.log('set translate', translate);
+  };
+
+  /**
+   * 设置过渡
+   *
+   * 经过测试，开始触摸点击时设置为0
+   * 松手设置为300（毫秒）
+   */
+  const onSetTransition: ComponentProps<typeof Swiper>['onSetTransition'] = (
+    swiper,
+    transition
+  ) => {
+    console.log('set transition', transition);
+  };
+
+  const onObserverUpdate: ComponentProps<typeof Swiper>['onObserverUpdate'] = (
+    swiper
+  ) => {
+    console.log('observer update');
   };
 
   return (
@@ -91,10 +169,12 @@ export const SwiperCallback = () => {
       spaceBetween={50}
       slidesPerView={1}
       // 速度，值越大越慢
-      // speed={1000}
+      speed={1000}
       /**
        * 导航
+       *
        * 展示左右导航按钮
+       * NOTE: 注意，由于css的特殊性，断点了是不会打断CSS动画的，特别是用导航就可以发现
        */
       navigation={true}
       loop={true}
@@ -105,12 +185,32 @@ export const SwiperCallback = () => {
       /**
        * 获取 Swiper 实例
        */
-      // onSwiper={onSwiper}
+      onSwiper={onSwiper}
+      /**
+       * 拖动中
+       */
+      onSliderMove={onSliderMove}
+
+      // onToEdge={onToEdge}
+      // onFromEdge={onFromEdge}
+      // onSetTranslate={onSetTranslate}
+      // onSetTransition={onSetTransition}
+
+      // onObserverUpdate={onObserverUpdate}
+      // onActiveIndexChange={() => {
+      //   console.log('active index change');
+      // }}
+      // onBeforeSlideChangeStart={() => {
+      //   console.log('before slide change start');
+      // }}
+      // onUpdate={() => {
+      //   console.log('update');
+      // }}
 
       /**
        * 进度
        */
-      onProgress={onProgress}
+      // onProgress={onProgress}
     >
       {content}
     </Swiper>

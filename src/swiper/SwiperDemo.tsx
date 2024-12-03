@@ -7,9 +7,9 @@ import { SwiperSimple } from './SwiperSimple';
 
 export const SwiperDemo = () => {
   // return <SwiperSimple />;
-  // return <SwiperCallback />;
+  return <SwiperCallback />;
   // return <SwiperHook />;
   // return <SwiperHitThrough />;
   // return <SwiperCanvas />;
-  return <SwiperInitialSlide />;
+  // return <SwiperInitialSlide />;
 };
