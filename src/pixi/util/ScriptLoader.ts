@@ -7,6 +7,8 @@ class ScriptLoader {
       'https://cdn.jsdelivr.net/npm/tweakpane@4.0.5/dist/tweakpane.min.js',
     tweakpaneV3:
       'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.min.js',
+    stats:
+      'https://cdn.jsdelivr.net/npm/stats-js@1.0.1/build/stats.min.js'
   };
 
   loadedScript: Record<string, { promise: Promise<void>; isDone: boolean }> =
@@ -90,6 +92,26 @@ class ScriptLoader {
 
   closeVConsole() {
     win.vConsole.hide();
+  }
+
+  async laodStats() {
+    const url = this.scriptMap.stats
+    await this.loadScript(url);
+  }
+
+  showStats() {
+    var stats = new win.Stats();
+    stats.showPanel(1); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild(stats.dom);
+
+    function animate() {
+      stats.begin();
+      // monitored code goes here
+      stats.end();
+
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
   }
 }
 

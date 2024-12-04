@@ -17,6 +17,7 @@ class DebugUtil {
 
     await scriptLoader.loadVConsoleInEditor();
     await scriptLoader.loadTweakpane();
+    await scriptLoader.laodStats();
 
     debugInject.init();
     debugTexture.init();

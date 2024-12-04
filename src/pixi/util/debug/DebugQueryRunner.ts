@@ -4,6 +4,8 @@ import { hmr } from '../Hmr';
 
 /**
  * 根据query参数运行测试
+ *
+ * TODO: 频繁使用query会导致浏览器的地址history很乱
  */
 class DebugQueryRunner {
   printList = true;

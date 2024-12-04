@@ -1,25 +1,27 @@
 import { goHit } from './demo/GOHit';
+import { maskTest } from './demo/MaskTest';
 import { memTest } from './demo/MemTest';
 import { rectTest } from './demo/RectTest';
 import { timeShaderTest } from './demo/TimeShaderTest';
 import { debugQueryRunner } from './util/debug/DebugQueryRunner';
 import type { ITest } from './util/ITest';
-import qs from 'qs';
 
 class PixiTest {
   curTest: ITest = null;
-  testMap: Record<string, ITest> = {
+  testMap = {
     rectTest,
     timeShaderTest,
     goHit,
     memTest,
-  };
+    maskTest,
+  } satisfies Record<string, ITest>;
 
   init() {
-    // this.curTest = this.testMap.memTest;
-    // this.curTest.init();
+    this.curTest = this.testMap.maskTest;
+    this.curTest.init();
 
-    debugQueryRunner.run(this.testMap);
+    // NOTE: 使用query来进行切换
+    // debugQueryRunner.run(this.testMap);
   }
 
   clear() {

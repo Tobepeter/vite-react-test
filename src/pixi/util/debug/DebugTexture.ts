@@ -66,6 +66,21 @@ class DebugTexture {
     return Texture.from(canvas);
   }
 
+  getCircleTexture(color: string = '#ffffff', size = 256) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d')!;
+
+    canvas.width = size;
+    canvas.height = size;
+
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    return Texture.from(canvas);
+  }
+
   getColorTexture(color: string, size: number = 256) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d')!;
