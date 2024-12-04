@@ -1,5 +1,5 @@
-import { Pane, TpChangeEvent } from 'tweakpane';
-import { Random } from 'mockjs';
+import { Pane, TpChangeEvent } from 'tweakpane'
+import { Random } from 'mockjs'
 
 export const TweakpaneSimple = () => {
   const [params, setParams] = useState({
@@ -19,45 +19,39 @@ export const TweakpaneSimple = () => {
       count: 0,
     },
     visible: true,
-  });
+  })
 
   useEffect(() => {
     setInterval(() => {
       setParams((prev) => ({
         ...prev,
         monitor: { name: Random.name(), count: prev.monitor.count + 1 },
-      }));
-    }, 200);
-  }, []);
+      }))
+    }, 200)
+  }, [])
 
   useEffect(() => {
-    const pane = new Pane();
+    const pane = new Pane()
 
-    type TpChangeValue = any;
-    type TpChangeTarget = any;
+    type TpChangeValue = any
+    type TpChangeTarget = any
     const onChange = (ev: TpChangeEvent<TpChangeValue, TpChangeTarget>) => {
-      setParams((prev) => ({ ...prev, [ev.target.key]: ev.value }));
-    };
+      setParams((prev) => ({ ...prev, [ev.target.key]: ev.value }))
+    }
 
     // 为每个参数添加 onChange 回调
-    pane
-      .addBinding(params, 'x', { min: -100, max: 100 })
-      .on('change', onChange);
+    pane.addBinding(params, 'x', { min: -100, max: 100 }).on('change', onChange)
 
-    pane
-      .addBinding(params, 'y', { min: -100, max: 100 })
-      .on('change', onChange);
+    pane.addBinding(params, 'y', { min: -100, max: 100 }).on('change', onChange)
 
-    pane
-      .addBinding(params, 'z', { min: -100, max: 100 })
-      .on('change', onChange);
+    pane.addBinding(params, 'z', { min: -100, max: 100 }).on('change', onChange)
 
     pane
       .addBinding(params, 'pos2D', {
         x: { min: -100, max: 100 },
         y: { min: -100, max: 100 },
       })
-      .on('change', onChange);
+      .on('change', onChange)
 
     pane
       .addBinding(params, 'pos3D', {
@@ -65,26 +59,24 @@ export const TweakpaneSimple = () => {
         y: { min: -100, max: 100 },
         z: { min: -100, max: 100 },
       })
-      .on('change', onChange);
+      .on('change', onChange)
 
-    pane.addBinding(params, 'color').on('change', onChange);
+    pane.addBinding(params, 'color').on('change', onChange)
 
-    pane.addBinding(params, 'colorRGB').on('change', onChange);
+    pane.addBinding(params, 'colorRGB').on('change', onChange)
 
-    pane.addBinding(params, 'colorRGBA').on('change', onChange);
+    pane.addBinding(params, 'colorRGBA').on('change', onChange)
 
-    pane.addBinding(params, 'text').on('change', onChange);
+    pane.addBinding(params, 'text').on('change', onChange)
 
-    pane
-      .addBinding(params, 'speed', { min: 0, max: 10 })
-      .on('change', onChange);
+    pane.addBinding(params, 'speed', { min: 0, max: 10 }).on('change', onChange)
 
     // button
     pane.addButton({ title: 'button' }).on('click', () => {
-      setParams((prev) => ({ ...prev, visible: !prev.visible }));
-    });
+      setParams((prev) => ({ ...prev, visible: !prev.visible }))
+    })
 
-    pane.addBinding(params, 'visible').on('change', onChange);
+    pane.addBinding(params, 'visible').on('change', onChange)
 
     // TODO: not work
     //  ref: https://tweakpane.github.io/docs/monitor-bindings/#multiline
@@ -94,13 +86,13 @@ export const TweakpaneSimple = () => {
     //   rows: 5,
     // });
 
-    return () => pane.dispose();
-  }, []);
+    return () => pane.dispose()
+  }, [])
 
   return (
     <div>
       <h2>Tweakpane Simple Demo</h2>
       <pre>{JSON.stringify(params, null, 2)}</pre>
     </div>
-  );
-};
+  )
+}

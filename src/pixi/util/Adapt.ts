@@ -1,98 +1,97 @@
 class Adapt {
-  dpr = 1;
-  currDpr = 1; // 按cmd + 加号放大
+  dpr = 1
+  currDpr = 1 // 按cmd + 加号放大
 
-  width = 0;
-  height = 0;
-  cssWidth = 0;
-  cssHeight = 0;
+  width = 0
+  height = 0
+  cssWidth = 0
+  cssHeight = 0
 
-  canvas: HTMLCanvasElement;
+  canvas: HTMLCanvasElement
 
-  noThrottle = false;
-  resizeThrottleTime = 100;
+  noThrottle = false
+  resizeThrottleTime = 100
 
-  private resizeTimer = -1;
-  private lastResizeTime = 0;
+  private resizeTimer = -1
+  private lastResizeTime = 0
 
-  cb?: () => void;
+  cb?: () => void
 
   init(canvas: HTMLCanvasElement, cb?: () => void) {
-    this.canvas = canvas;
-    this.cb = cb;
+    this.canvas = canvas
+    this.cb = cb
 
-    this.dpr = window.devicePixelRatio;
+    this.dpr = window.devicePixelRatio
 
-    window.addEventListener('resize', this.throttleResize);
-    this.throttleResize();
+    window.addEventListener('resize', this.throttleResize)
+    this.throttleResize()
 
-    this.adjustCss();
+    this.adjustCss()
   }
 
   destroy() {
-    window.removeEventListener('resize', this.throttleResize);
-    this.cb = null;
-    this.canvas = null;
-    this.stopThrottleResize();
+    window.removeEventListener('resize', this.throttleResize)
+    this.cb = null
+    this.canvas = null
+    this.stopThrottleResize()
   }
 
   /**
    * 移除默认浏览器的 margin 8px
    */
   adjustCss() {
-    document.body.style.margin = '0';
+    document.body.style.margin = '0'
   }
 
   stopThrottleResize() {
     if (this.resizeTimer > -1) {
-      clearTimeout(this.resizeTimer);
-      this.resizeTimer = -1;
+      clearTimeout(this.resizeTimer)
+      this.resizeTimer = -1
     }
   }
 
   throttleResize = () => {
     if (this.noThrottle) {
-      this.onResize();
-      return;
+      this.onResize()
+      return
     }
 
-    if (this.resizeTimer > -1) return;
+    if (this.resizeTimer > -1) return
 
-    const now = Date.now();
+    const now = Date.now()
 
     // 没有定时器且上一次resize比较久远了，可以直接触发（加速第一次时间）
     if (now - this.lastResizeTime > this.resizeThrottleTime) {
-      this.onResize();
-      this.lastResizeTime = now;
-      return;
+      this.onResize()
+      this.lastResizeTime = now
+      return
     }
 
     this.resizeTimer = setTimeout(() => {
-      this.onResize();
-      this.lastResizeTime = now;
-      this.resizeTimer = -1;
-    }, this.resizeThrottleTime);
-  };
+      this.onResize()
+      this.lastResizeTime = now
+      this.resizeTimer = -1
+    }, this.resizeThrottleTime)
+  }
 
   onResize() {
-    this.currDpr = window.devicePixelRatio;
+    this.currDpr = window.devicePixelRatio
 
-    const innerWidth =
-      window.innerWidth || document.documentElement.clientWidth;
+    const innerWidth = window.innerWidth || document.documentElement.clientWidth
     const innerHeight =
-      window.innerHeight || document.documentElement.clientHeight;
-    this.width = innerWidth * this.dpr;
-    this.height = innerHeight * this.dpr;
-    this.cssWidth = innerWidth;
-    this.cssHeight = innerHeight;
+      window.innerHeight || document.documentElement.clientHeight
+    this.width = innerWidth * this.dpr
+    this.height = innerHeight * this.dpr
+    this.cssWidth = innerWidth
+    this.cssHeight = innerHeight
 
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
-    this.canvas.style.width = `${this.cssWidth}px`;
-    this.canvas.style.height = `${this.cssHeight}px`;
+    this.canvas.width = this.width
+    this.canvas.height = this.height
+    this.canvas.style.width = `${this.cssWidth}px`
+    this.canvas.style.height = `${this.cssHeight}px`
 
-    this.cb?.();
+    this.cb?.()
   }
 }
 
-export const adapt = new Adapt();
+export const adapt = new Adapt()

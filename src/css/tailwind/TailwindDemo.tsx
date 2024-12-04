@@ -21,5 +21,5 @@ export const TailwindDemo = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

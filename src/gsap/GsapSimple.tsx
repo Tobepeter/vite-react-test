@@ -1,4 +1,4 @@
-import gsap from 'gsap';
+import gsap from 'gsap'
 
 export const GsapSimple = () => {
   useEffect(() => {
@@ -12,18 +12,18 @@ export const GsapSimple = () => {
         ease: 'power2.out',
         // NOET: onUpdate没有参数，只能通过实例，或者非剪头函数用 this 进行访问
         onUpdate: () => {
-          const progress = tween.progress();
-          console.log('progress', progress);
+          const progress = tween.progress()
+          console.log('progress', progress)
         },
-      });
-    };
-    test_simple();
-  }, []);
+      })
+    }
+    test_simple()
+  }, [])
 
   return (
     <div
       className="gsap-test"
       style={{ width: '100px', height: '100px', background: 'red' }}
     ></div>
-  );
-};
+  )
+}

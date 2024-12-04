@@ -1,5 +1,5 @@
 export const UseHotKeyEssential = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   /**
    * 检查元素是否可编辑
@@ -9,15 +9,15 @@ export const UseHotKeyEssential = () => {
   function isEditable(element: HTMLElement): boolean {
     // 检查是否是可编辑元素
     if (element.isContentEditable) {
-      return true;
+      return true
     }
 
     // 检查标签名和类型
-    const tagName = element.tagName.toLowerCase();
-    const inputType = (element as HTMLInputElement).type?.toLowerCase();
+    const tagName = element.tagName.toLowerCase()
+    const inputType = (element as HTMLInputElement).type?.toLowerCase()
 
     // 排除这些可编辑元素
-    const editableTags = ['input', 'textarea', 'select', 'option'];
+    const editableTags = ['input', 'textarea', 'select', 'option']
 
     // 排除特定类型的input
     const editableInputTypes = [
@@ -34,40 +34,40 @@ export const UseHotKeyEssential = () => {
       'time',
       'month',
       'week',
-    ];
+    ]
 
     return (
       editableTags.includes(tagName) &&
       (tagName !== 'input' || editableInputTypes.includes(inputType))
-    );
+    )
   }
 
   function handleKeyPress(event: KeyboardEvent) {
     // 检查事件目标
-    const target = event.target as HTMLElement;
+    const target = event.target as HTMLElement
 
     // 如果是可编辑元素，则不触发热键
     if (isEditable(target)) {
-      return;
+      return
     }
 
     // 继续处理热键...
-    console.log('handleKeyPress', event);
-    setCount((count) => count + 1);
+    console.log('handleKeyPress', event)
+    setCount((count) => count + 1)
   }
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('keydown', handleKeyPress)
 
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, []);
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [])
 
   return (
     <>
       <input type="text" />
       <span>Pressed 'a' key {count} times.</span>
     </>
-  );
-};
+  )
+}

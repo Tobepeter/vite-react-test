@@ -1,6 +1,6 @@
 export const HtmlOrientation = () => {
-  const testResize = false;
-  const testScreenOrientation = true;
+  const testResize = false
+  const testScreenOrientation = true
 
   /**
    * -- 测试结果 --
@@ -13,30 +13,30 @@ export const HtmlOrientation = () => {
    *
    */
   useEffect(() => {
-    if (!testResize) return;
+    if (!testResize) return
 
-    let resizeCb: () => void;
-    let orientationCb: () => void;
+    let resizeCb: () => void
+    let orientationCb: () => void
 
     window.addEventListener(
       'resize',
       (resizeCb = () => {
-        console.log('resize');
+        console.log('resize')
       })
-    );
+    )
 
     window.addEventListener(
       'orientationchange',
       (orientationCb = () => {
-        console.log('orientationchange');
+        console.log('orientationchange')
       })
-    );
+    )
 
     return () => {
-      window.removeEventListener('resize', resizeCb);
-      window.removeEventListener('orientationchange', orientationCb);
-    };
-  }, []);
+      window.removeEventListener('resize', resizeCb)
+      window.removeEventListener('orientationchange', orientationCb)
+    }
+  }, [])
 
   /**
    * 测试 ScreenOrientation
@@ -44,23 +44,23 @@ export const HtmlOrientation = () => {
    * screen.orientation 相比 orientationchange，从mobile转pc可以触发
    */
   useEffect(() => {
-    if (!testScreenOrientation) return;
+    if (!testScreenOrientation) return
 
-    let changeCb: () => void;
+    let changeCb: () => void
 
     /** @type {ScreenOrientation} */
-    const orientation = screen.orientation;
+    const orientation = screen.orientation
 
     orientation.addEventListener(
       'change',
       (changeCb = () => {
-        console.log('screenOrientation change');
+        console.log('screenOrientation change')
         // angle 貌似只有mobile才有有，比如 0 或者 90
-        console.log('screenOrientation angle', orientation.angle);
+        console.log('screenOrientation angle', orientation.angle)
         // 值为 landscape-primary 或者 portrait-primary
-        console.log('screenOrientation type', orientation.type);
+        console.log('screenOrientation type', orientation.type)
       })
-    );
+    )
 
     /**
      * 关于锁定
@@ -71,26 +71,26 @@ export const HtmlOrientation = () => {
      * HtmlOrientation.tsx:76 屏幕方向锁定失败: NotSupportedError: screen.orientation.lock() is not available on this device.
      *
      */
-    let isLocked = false;
+    let isLocked = false
     window.addEventListener('keypress', async (e) => {
       if (e.key == 't') {
         try {
           if (isLocked) {
-            orientation.unlock();
+            orientation.unlock()
           } else {
-            await (orientation as any).lock('landscape');
+            await (orientation as any).lock('landscape')
           }
-          isLocked = !isLocked;
+          isLocked = !isLocked
         } catch (error) {
-          console.error('屏幕方向锁定失败:', error);
+          console.error('屏幕方向锁定失败:', error)
         }
       }
-    });
+    })
 
     return () => {
-      orientation.removeEventListener('change', changeCb);
-    };
-  }, []);
+      orientation.removeEventListener('change', changeCb)
+    }
+  }, [])
 
-  return <div>HtmlOrientation</div>;
-};
+  return <div>HtmlOrientation</div>
+}

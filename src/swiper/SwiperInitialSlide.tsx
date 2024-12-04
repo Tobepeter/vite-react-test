@@ -1,35 +1,35 @@
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
 
 // 引入 Swiper 样式
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 export const SwiperInitialSlide = () => {
-  const swiperRef = useRef<SwiperClass>(null);
+  const swiperRef = useRef<SwiperClass>(null)
 
-  const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1'];
-  const content = [];
+  const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1']
+  const content = []
   for (let i = 0; i < 10; i++) {
-    const color = colors[i % colors.length];
+    const color = colors[i % colors.length]
     content.push(
       <SwiperSlide key={i}>
         <div style={{ height: '300px', background: color }}>Slide {i}</div>
       </SwiperSlide>
-    );
+    )
   }
 
   useEffect(() => {
     window.addEventListener('keydown', (e) => {
       if (e.key === 't') {
-        const swiper = swiperRef.current;
+        const swiper = swiperRef.current
         // NOTE: 可以指定速度，如果是0，可以瞬间切换
-        swiper.slideTo(swiper.activeIndex + 1, 0);
-        console.log('swiper length', swiper.slides.length);
+        swiper.slideTo(swiper.activeIndex + 1, 0)
+        console.log('swiper length', swiper.slides.length)
       }
-    });
-  }, []);
+    })
+  }, [])
 
   return (
     <Swiper
@@ -48,10 +48,10 @@ export const SwiperInitialSlide = () => {
       // NOTE: 这个测试好像和windows的自己的旋转无关
       // onOrientationchange={() => console.log('orientation change')}
       onSwiper={(swiper) => {
-        swiperRef.current = swiper;
+        swiperRef.current = swiper
       }}
     >
       {content}
     </Swiper>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import { TweakpaneCdnV3 } from './TweakPaneCdnV3';
-import { TweakpaneSimple } from './TweakPaneSimple';
+import { TweakpaneCdnV3 } from './TweakPaneCdnV3'
+import { TweakpaneSimple } from './TweakPaneSimple'
 
 /**
  * Tweakpane
@@ -7,5 +7,5 @@ import { TweakpaneSimple } from './TweakPaneSimple';
  */
 export const TweakpaneTest = () => {
   // return <TweakpaneCdnV3 />;
-  return <TweakpaneSimple />;
-};
+  return <TweakpaneSimple />
+}

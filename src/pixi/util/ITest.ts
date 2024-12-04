@@ -1,6 +1,6 @@
 interface ITest {
-  init(): void;
-  clear?(): void;
+  init(): void
+  clear?(): void
 }
 
-export type { ITest };
+export type { ITest }

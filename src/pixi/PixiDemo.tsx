@@ -1,20 +1,20 @@
-import { pixiEntry } from './PixiEntry';
+import { pixiEntry } from './PixiEntry'
 
 export const PixiDemo = () => {
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!pixiEntry.isInited) {
-      pixiEntry.init();
+      pixiEntry.init()
     }
-    rootRef.current!.appendChild(pixiEntry.canvas);
-  }, []);
+    rootRef.current!.appendChild(pixiEntry.canvas)
+  }, [])
 
-  return <div ref={rootRef} id="pixi-root"></div>;
-};
+  return <div ref={rootRef} id="pixi-root"></div>
+}
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
-    pixiEntry.destroy();
-  });
+    pixiEntry.destroy()
+  })
 }

@@ -1,10 +1,10 @@
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
 
 // 引入 Swiper 样式
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 /**
  * 点击穿透测试
@@ -15,18 +15,18 @@ import 'swiper/css/pagination';
  * 4. Swiper可以添加一些非SwiperSlide包裹的，如果浮在上面，会遮挡Swiper的点击交互
  */
 export const SwiperHitThrough = () => {
-  const showSwiper = true;
-  const [msg, setMsg] = useState('debug 信息');
-  const swiperRef = useRef<SwiperClass>(null);
+  const showSwiper = true
+  const [msg, setMsg] = useState('debug 信息')
+  const swiperRef = useRef<SwiperClass>(null)
 
   const onClickButton = () => {
-    setMsg('点击' + Date.now());
-  };
+    setMsg('点击' + Date.now())
+  }
 
-  const tailwindColors = ['bg-red-500', 'bg-green-500', 'bg-blue-500'];
-  const sliderContent = [];
+  const tailwindColors = ['bg-red-500', 'bg-green-500', 'bg-blue-500']
+  const sliderContent = []
   for (let i = 0; i < 3; i++) {
-    const color = tailwindColors[i % tailwindColors.length];
+    const color = tailwindColors[i % tailwindColors.length]
     sliderContent.push(
       <SwiperSlide key={i}>
         <div
@@ -43,62 +43,62 @@ export const SwiperHitThrough = () => {
                * 点击阻止滑动设计
                * 貌似 Swiper 没有做类似设计，chrome是有的，点击时候preventDefault会阻止浏览器滚动
                */
-              e.stopPropagation();
-              e.preventDefault();
-              onClickButton();
+              e.stopPropagation()
+              e.preventDefault()
+              onClickButton()
             }}
             onClickCapture={(e) => {
-              e.stopPropagation();
-              onClickButton();
+              e.stopPropagation()
+              onClickButton()
             }}
           >
             点击
           </button>
         </div>
       </SwiperSlide>
-    );
+    )
   }
 
-  const test_body_click = true;
+  const test_body_click = true
   useEffect(() => {
-    if (!test_body_click) return;
+    if (!test_body_click) return
     document.body.addEventListener('touchstart', () => {
-      console.log('body touch start');
-    });
+      console.log('body touch start')
+    })
     document.body.addEventListener('pointerdown', () => {
-      console.log('body pointer down');
-    });
+      console.log('body pointer down')
+    })
     return () => {
-      document.body.removeEventListener('touchstart', () => {});
-      document.body.removeEventListener('pointerdown', () => {});
-    };
-  }, []);
+      document.body.removeEventListener('touchstart', () => {})
+      document.body.removeEventListener('pointerdown', () => {})
+    }
+  }, [])
 
   const getSliderWrapBtn = () => {
     return (
       <div
         className="absolute top-0 left-0 w-full h-full z-10"
         onPointerDown={(e) => {
-          console.log('swiper inner btn wrapper pointer down');
+          console.log('swiper inner btn wrapper pointer down')
         }}
         onTouchStart={(e) => {
-          console.log('swiper inner btn wrapper touch start');
+          console.log('swiper inner btn wrapper touch start')
         }}
       >
         <button
           className="mt-[150px] ml-[10px]"
           onPointerDown={(e) => {
-            console.log('swiper inner btn pointer down');
+            console.log('swiper inner btn pointer down')
           }}
           onTouchStart={(e) => {
-            console.log('swiper inner btn touch start');
+            console.log('swiper inner btn touch start')
           }}
         >
           Swiper内浮层点击
         </button>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div>
@@ -118,13 +118,13 @@ export const SwiperHitThrough = () => {
         <div className="absolute top-0 left-0 w-full h-full">
           <Swiper
             onSwiper={(swiper) => {
-              swiperRef.current = swiper;
+              swiperRef.current = swiper
 
               // NOTE: 找了好久终于找到，可以点击浮层同时slide的代码了 T T
-              swiper.params.touchEventsTarget = 'container';
+              swiper.params.touchEventsTarget = 'container'
 
-              win.swiper = swiper;
-              win.swiperRef = swiperRef;
+              win.swiper = swiper
+              win.swiperRef = swiperRef
             }}
             className="h-full w-full"
             modules={[Navigation, Pagination]}
@@ -139,7 +139,7 @@ export const SwiperHitThrough = () => {
              * 貌似内部没有适配，不会派发，毕竟不是原生事件
              */
             onPointerDown={(e) => {
-              console.log('swiper pointer down');
+              console.log('swiper pointer down')
             }}
             /**
              * 关于 onTouchStart
@@ -148,7 +148,7 @@ export const SwiperHitThrough = () => {
              * 但是很奇怪， 如果点击上层的浮层，是不可以触发的
              */
             onTouchStart={(e) => {
-              console.log('swiper touch start');
+              console.log('swiper touch start')
             }}
             // speed={3000}
             // pagination={{ clickable: true }}
@@ -171,5 +171,5 @@ export const SwiperHitThrough = () => {
         </label>
       </div>
     </div>
-  );
-};
+  )
+}

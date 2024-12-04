@@ -1,5 +1,5 @@
-import { ViteImportGlob } from './ViteImportGlob';
+import { ViteImportGlob } from './ViteImportGlob'
 
 export const ViteTest = () => {
-  return <ViteImportGlob />;
-};
+  return <ViteImportGlob />
+}

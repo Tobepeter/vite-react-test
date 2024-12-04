@@ -1,7 +1,7 @@
-import { useControls, button } from 'leva';
+import { useControls, button } from 'leva'
 
 export const LevaSimple = () => {
-  const [clickCount, setClickCount] = useState(0);
+  const [clickCount, setClickCount] = useState(0)
 
   const { text, count, size, color, isEnabled, position, select, image } =
     useControls(
@@ -18,9 +18,9 @@ export const LevaSimple = () => {
         },
         image: { image: undefined },
         ClickMe: button(() => {
-          console.log('按钮被点击了！');
+          console.log('按钮被点击了！')
           // NOTE: 这个函数是固定引用的，需要callback方式来进行更新
-          setClickCount((prev) => prev + 1);
+          setClickCount((prev) => prev + 1)
         }),
         ResetAll: button(() => {
           // 使用 set 函数重置所有控件到初始值
@@ -34,7 +34,7 @@ export const LevaSimple = () => {
         label: 'Leva Simple',
         titleBar: true,
       }
-    );
+    )
 
   return (
     <div>
@@ -50,5 +50,5 @@ export const LevaSimple = () => {
       <img src={image} alt="image" />
       <div>Click Count: {clickCount}</div>
     </div>
-  );
-};
+  )
+}

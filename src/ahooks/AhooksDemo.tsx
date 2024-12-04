@@ -1,5 +1,5 @@
-import { AhooksUseClickAway } from './AhooksUseClickAway';
+import { AhooksUseClickAway } from './AhooksUseClickAway'
 
 export const AhooksDemo = () => {
-  return <AhooksUseClickAway />;
-};
+  return <AhooksUseClickAway />
+}

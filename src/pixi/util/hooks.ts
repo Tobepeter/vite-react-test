@@ -1,27 +1,27 @@
-import { debugVisual } from './debug/DebugVisual';
-import { scriptLoader } from './ScriptLoader';
+import { debugVisual } from './debug/DebugVisual'
+import { scriptLoader } from './ScriptLoader'
 
 export const usePromise = <T>(promise: Promise<T>) => {
-  const [data, setData] = useState<T | null>(null);
+  const [data, setData] = useState<T | null>(null)
   useEffect(() => {
-    promise.then(setData);
-  }, [promise]);
+    promise.then(setData)
+  }, [promise])
 
-  return data;
-};
+  return data
+}
 
 export const useLoad = (promise: Promise<any>) => {
-  const [isLoad, setIsLoad] = useState(false);
-  promise.then(() => setIsLoad(true));
-  return isLoad;
-};
+  const [isLoad, setIsLoad] = useState(false)
+  promise.then(() => setIsLoad(true))
+  return isLoad
+}
 
 type LoadInfo<T> = {
-  data: T;
-  isLoad: boolean;
-  error: Error;
-  errorMsg: string;
-};
+  data: T
+  isLoad: boolean
+  error: Error
+  errorMsg: string
+}
 
 export const useLoadInfo = <T>(promise: Promise<T>): LoadInfo<T> => {
   const [info, setInfo] = useState<LoadInfo<T>>({
@@ -29,12 +29,12 @@ export const useLoadInfo = <T>(promise: Promise<T>): LoadInfo<T> => {
     isLoad: false,
     error: null,
     errorMsg: '',
-  });
+  })
   promise
     .then((data) => setInfo({ data, isLoad: true, error: null, errorMsg: '' }))
     .catch((error) =>
-      setInfo({ data: null, isLoad: true, error, errorMsg: error.message }),
-    );
+      setInfo({ data: null, isLoad: true, error, errorMsg: error.message })
+    )
 
-  return info;
-};
+  return info
+}

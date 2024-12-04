@@ -1,5 +1,5 @@
 export const PerformanceSimple = () => {
-  const [autoRun, setAutoRun] = useState(true);
+  const [autoRun, setAutoRun] = useState(true)
 
   /**
    * 密集数学运算
@@ -7,39 +7,39 @@ export const PerformanceSimple = () => {
    * @desc count 最好不要超过 1e5
    */
   const matchCalc = (count: number) => {
-    let result = 0;
+    let result = 0
     for (let i = 0; i < count; i++) {
-      result += Math.sqrt(i) * Math.sin(i) * Math.cos(i);
+      result += Math.sqrt(i) * Math.sin(i) * Math.cos(i)
     }
-    return result;
-  };
+    return result
+  }
 
   const bigArrayOperate = (count: number) => {
-    const arr = new Array(count).fill(0);
+    const arr = new Array(count).fill(0)
     for (let i = 0; i < count; i++) {
-      arr[i] = Math.random();
+      arr[i] = Math.random()
     }
-  };
+  }
 
   const doHeavyWork = () => {
-    const count = 1e8;
-    matchCalc(count);
+    const count = 1e8
+    matchCalc(count)
     // bigArrayOperate(count);
-  };
+  }
 
   useEffect(() => {
-    if (!autoRun) return;
-    let timer = -1;
-    console.log('开始执行复杂代码');
+    if (!autoRun) return
+    let timer = -1
+    console.log('开始执行复杂代码')
     const loop = () => {
-      doHeavyWork();
-      timer = requestAnimationFrame(loop);
-    };
-    timer = requestAnimationFrame(loop);
+      doHeavyWork()
+      timer = requestAnimationFrame(loop)
+    }
+    timer = requestAnimationFrame(loop)
     return () => {
-      cancelAnimationFrame(timer);
-    };
-  }, [autoRun]);
+      cancelAnimationFrame(timer)
+    }
+  }, [autoRun])
 
   return (
     <div>
@@ -70,5 +70,5 @@ export const PerformanceSimple = () => {
         }
       `}</style>
     </div>
-  );
-};
+  )
+}

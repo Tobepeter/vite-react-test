@@ -1,37 +1,37 @@
-import { Application, Color, Container, Ticker, utils } from 'pixi.js';
-import { adapt } from './util/Adapt';
-import { pixiGlobal } from './util/PixiGlobal';
-import { rectTest } from './demo/RectTest';
-import { timeShaderTest } from './demo/TimeShaderTest';
-import { pixiTest } from './PixiTest';
-import { debugHelper } from './util/debug/DebugHelper';
-import { debugVisual } from './util/debug/DebugVisual';
-import { scriptLoader } from './util/ScriptLoader';
-import { debugUtil } from './util/debug/DebugUtil';
+import { Application, Color, Container, Ticker, utils } from 'pixi.js'
+import { adapt } from './util/Adapt'
+import { pixiGlobal } from './util/PixiGlobal'
+import { rectTest } from './demo/RectTest'
+import { timeShaderTest } from './demo/TimeShaderTest'
+import { pixiTest } from './PixiTest'
+import { debugHelper } from './util/debug/DebugHelper'
+import { debugVisual } from './util/debug/DebugVisual'
+import { scriptLoader } from './util/ScriptLoader'
+import { debugUtil } from './util/debug/DebugUtil'
 
 class PixiEntry {
-  isInited = false;
-  app: Application;
-  canvas: HTMLCanvasElement;
+  isInited = false
+  app: Application
+  canvas: HTMLCanvasElement
 
-  stage: Container;
+  stage: Container
 
-  ticker: Ticker;
+  ticker: Ticker
 
   /**
    * 根容器
    * @desc 默认 stage 尺寸是参考css的，这里缩放一下
    * @desc 同时默认居中，方便使用
    */
-  root: Container;
+  root: Container
 
   async init() {
-    if (this.isInited) return;
-    this.isInited = true;
+    if (this.isInited) return
+    this.isInited = true
 
     // TODO: 内部是否支持自动适配？
 
-    const backgroundColor = 0x000000;
+    const backgroundColor = 0x000000
     // const backgroundColor = 0xffffff;
 
     this.app = new Application({
@@ -44,67 +44,67 @@ class PixiEntry {
 
       // NOTE: 貌似不能跑起来canvas模式
       // forceCanvas: true,
-    });
-    this.canvas = this.app.view as HTMLCanvasElement;
-    this.stage = this.app.stage;
+    })
+    this.canvas = this.app.view as HTMLCanvasElement
+    this.stage = this.app.stage
 
     // NOTE: 这个其实是不需要的，但是如果不这么设置，每次hmr都会闪烁一下（默认body是白色的）
-    document.body.style.backgroundColor = new Color(backgroundColor).toHex();
+    document.body.style.backgroundColor = new Color(backgroundColor).toHex()
 
-    this.root = new Container();
-    this.root.name = 'centerRoot';
-    this.stage.addChild(this.root);
+    this.root = new Container()
+    this.root.name = 'centerRoot'
+    this.stage.addChild(this.root)
 
-    this.ticker = new Ticker();
-    this.ticker.autoStart = true;
+    this.ticker = new Ticker()
+    this.ticker.autoStart = true
 
-    pixiGlobal.init();
+    pixiGlobal.init()
 
     adapt.init(this.canvas, () => {
-      this.onResize();
-    });
-    this.root.scale.set(1 / adapt.dpr);
+      this.onResize()
+    })
+    this.root.scale.set(1 / adapt.dpr)
 
-    await debugUtil.init();
+    await debugUtil.init()
 
-    this.runTest();
+    this.runTest()
   }
 
   runTest() {
-    pixiTest.init();
+    pixiTest.init()
   }
 
   cleanRoot() {
-    this.root.removeChildren();
+    this.root.removeChildren()
 
     // NOTE: 不能换引用，test 代码会应用旧的对象
     //  目前内部api没有removeAll，只能手动清除
-    this.ticker['_head'].next = null;
+    this.ticker['_head'].next = null
   }
 
   destroy() {
-    this.isInited = false;
-    adapt.destroy();
-    this.cleanRoot();
+    this.isInited = false
+    adapt.destroy()
+    this.cleanRoot()
 
-    this.app.destroy(true, true);
-    this.app = null;
-    this.canvas = null;
-    this.stage = null;
-    this.root = null;
+    this.app.destroy(true, true)
+    this.app = null
+    this.canvas = null
+    this.stage = null
+    this.root = null
   }
 
   onResize() {
     // console.log('onResize: ', adapt.cssWidth, adapt.cssHeight);
 
-    const width = adapt.cssWidth;
-    const height = adapt.cssHeight;
-    this.app.renderer.resize(width, height);
-    this.root.position.set(width / 2, height / 2);
+    const width = adapt.cssWidth
+    const height = adapt.cssHeight
+    this.app.renderer.resize(width, height)
+    this.root.position.set(width / 2, height / 2)
   }
 }
 
-export const pixiEntry = new PixiEntry();
+export const pixiEntry = new PixiEntry()
 
 /**
  * 热更新

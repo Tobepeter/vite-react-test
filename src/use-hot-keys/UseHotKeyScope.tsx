@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
-import { useHotkeys, HotkeysProvider } from 'react-hotkeys-hook';
+import { useCallback, useState } from 'react'
+import { useHotkeys, HotkeysProvider } from 'react-hotkeys-hook'
 
 // TODO: 有bug，暂时没精力去仔细研究了
 export const UseHotKeyScope = () => {
-  const [text, setText] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState('')
+  const [isEditing, setIsEditing] = useState(false)
 
   const ScopeEditor = () => {
     // 在编辑模式下使用热键
@@ -13,22 +13,22 @@ export const UseHotKeyScope = () => {
       (e) => {
         // e.preventDefault();
         if (isEditing) {
-          setIsEditing(false);
-          console.log('保存内容:', text);
+          setIsEditing(false)
+          console.log('保存内容:', text)
         }
       },
       {
         enabled: isEditing, // 只在编辑模式下启用
         scopes: ['editor'],
       }
-    );
+    )
 
     // 在非编辑模式下使用热键
     useHotkeys(
       'e',
       () => {
         if (!isEditing) {
-          setIsEditing(true);
+          setIsEditing(true)
         }
       },
       {
@@ -36,7 +36,7 @@ export const UseHotKeyScope = () => {
         enabled: !isEditing,
         scopes: ['viewer'],
       }
-    );
+    )
 
     return (
       <div>
@@ -52,12 +52,12 @@ export const UseHotKeyScope = () => {
           </div>
         )}
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <HotkeysProvider initiallyActiveScopes={['viewer']}>
       <ScopeEditor />
     </HotkeysProvider>
-  );
-};
+  )
+}

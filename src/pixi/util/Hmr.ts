@@ -1,5 +1,5 @@
 class Hmr {
-  oneCallMap: Record<string, boolean> = {};
+  oneCallMap: Record<string, boolean> = {}
 
   /**
    * hmr下只执行一次的代码
@@ -9,35 +9,35 @@ class Hmr {
   oneCall: MethodDecorator = (target, propertyKey, descriptor) => {
     // not support symbol
     if (typeof propertyKey === 'symbol') {
-      console.error('not support symbol');
-      return descriptor;
+      console.error('not support symbol')
+      return descriptor
     }
 
-    const oldMethod = descriptor.value;
+    const oldMethod = descriptor.value
     if (typeof oldMethod !== 'function') {
-      console.error('not function');
-      return descriptor;
+      console.error('not function')
+      return descriptor
     }
 
-    const oneCallMap = this.oneCallMap;
+    const oneCallMap = this.oneCallMap
 
     descriptor.value = function (this: any, ...args: any[]) {
-      const key = `${target.constructor.name}.${propertyKey}`;
+      const key = `${target.constructor.name}.${propertyKey}`
       if (oneCallMap[key]) {
-        return;
+        return
       }
-      oneCallMap[key] = true;
-      return oldMethod.apply(this, args);
-    } as any;
+      oneCallMap[key] = true
+      return oldMethod.apply(this, args)
+    } as any
 
-    return descriptor;
-  };
+    return descriptor
+  }
 }
 
-export const hmr = new Hmr();
+export const hmr = new Hmr()
 
 if (import.meta.hot) {
   import.meta.hot.accept(() => {
-    window.location.reload();
-  });
+    window.location.reload()
+  })
 }

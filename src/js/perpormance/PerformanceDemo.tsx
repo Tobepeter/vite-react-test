@@ -1,5 +1,5 @@
-import { PerformanceSimple } from './PerformanceSimple';
+import { PerformanceSimple } from './PerformanceSimple'
 
 export const PerformanceDemo = () => {
-  return <PerformanceSimple />;
-};
+  return <PerformanceSimple />
+}

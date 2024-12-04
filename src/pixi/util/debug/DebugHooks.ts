@@ -2,4 +2,4 @@ class DebugHooks {
   useLoadVConsole() {}
 }
 
-export const debugHooks = new DebugHooks();
+export const debugHooks = new DebugHooks()

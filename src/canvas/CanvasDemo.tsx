@@ -1,12 +1,12 @@
 export const CanvasDemo = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    const canvas = canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = 'red';
-    ctx.fillRect(0, 0, 100, 100);
-  }, []);
+    const canvas = canvasRef.current!
+    const ctx = canvas.getContext('2d')!
+    ctx.fillStyle = 'red'
+    ctx.fillRect(0, 0, 100, 100)
+  }, [])
 
-  return <canvas ref={canvasRef} />;
-};
+  return <canvas ref={canvasRef} />
+}

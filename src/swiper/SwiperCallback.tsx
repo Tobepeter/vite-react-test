@@ -1,23 +1,23 @@
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
 
 // 引入 Swiper 样式
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { ComponentProps } from 'react';
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import { ComponentProps } from 'react'
 
 export const SwiperCallback = () => {
-  const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1'];
-  const content = [];
+  const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1']
+  const content = []
 
   for (let i = 0; i < 4; i++) {
-    const color = colors[i % colors.length];
+    const color = colors[i % colors.length]
     content.push(
       <SwiperSlide key={i}>
         <div style={{ height: '300px', background: color }}>Slide {i}</div>
       </SwiperSlide>
-    );
+    )
   }
 
   // [回弹] 即使是没有实际拉过去，回弹也会触发
@@ -58,23 +58,23 @@ export const SwiperCallback = () => {
      */
     // console.log('isBeginning', e.isBeginning);
     // console.log('isEnd', e.isEnd);
-    console.log('isLocked', e.isLocked);
+    console.log('isLocked', e.isLocked)
     // console.log('');
-  };
+  }
 
   const onSwiper: React.ComponentProps<typeof Swiper>['onSwiper'] = (
     swiper
   ) => {
     // console.log('swiper', swiper);
-    win.swiper = swiper;
+    win.swiper = swiper
 
     // TODO: 暂时不知道这个是做什么的
     // swiper.params.cssMode = true;
-  };
+  }
 
   const onProgress: React.ComponentProps<typeof Swiper>['onProgress'] = (e) => {
-    console.log('progress', e.progress);
-  };
+    console.log('progress', e.progress)
+  }
 
   /**
    * 过渡
@@ -111,22 +111,22 @@ export const SwiperCallback = () => {
     // onTransitionEnd: () => {
     //   console.log('transition end');
     // },
-  };
+  }
 
   const onSliderMove: ComponentProps<typeof Swiper>['onSliderMove'] = (
     swiper,
     event
   ) => {
-    console.log('slider move');
-  };
+    console.log('slider move')
+  }
 
   const onToEdge: ComponentProps<typeof Swiper>['onToEdge'] = (swiper) => {
-    console.log('to edge', swiper);
-  };
+    console.log('to edge', swiper)
+  }
 
   const onFromEdge: ComponentProps<typeof Swiper>['onFromEdge'] = (swiper) => {
-    console.log('from edge', swiper);
-  };
+    console.log('from edge', swiper)
+  }
 
   /**
    * 设置translate
@@ -140,8 +140,8 @@ export const SwiperCallback = () => {
     swiper,
     translate
   ) => {
-    console.log('set translate', translate);
-  };
+    console.log('set translate', translate)
+  }
 
   /**
    * 设置过渡
@@ -153,14 +153,14 @@ export const SwiperCallback = () => {
     swiper,
     transition
   ) => {
-    console.log('set transition', transition);
-  };
+    console.log('set transition', transition)
+  }
 
   const onObserverUpdate: ComponentProps<typeof Swiper>['onObserverUpdate'] = (
     swiper
   ) => {
-    console.log('observer update');
-  };
+    console.log('observer update')
+  }
 
   return (
     <Swiper
@@ -214,5 +214,5 @@ export const SwiperCallback = () => {
     >
       {content}
     </Swiper>
-  );
-};
+  )
+}

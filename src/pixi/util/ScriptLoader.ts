@@ -7,114 +7,112 @@ class ScriptLoader {
       'https://cdn.jsdelivr.net/npm/tweakpane@4.0.5/dist/tweakpane.min.js',
     tweakpaneV3:
       'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.min.js',
-    stats:
-      'https://cdn.jsdelivr.net/npm/stats-js@1.0.1/build/stats.min.js'
-  };
+    stats: 'https://cdn.jsdelivr.net/npm/stats-js@1.0.1/build/stats.min.js',
+  }
 
-  loadedScript: Record<string, { promise: Promise<void>; isDone: boolean }> =
-    {};
+  loadedScript: Record<string, { promise: Promise<void>; isDone: boolean }> = {}
 
   isScriptLoaded(url: string) {
-    const info = this.loadedScript[url];
+    const info = this.loadedScript[url]
     if (info) {
-      return info.isDone;
+      return info.isDone
     }
-    return false;
+    return false
   }
 
   loadScript(url: string) {
-    if (this.isScriptLoaded(url)) return;
+    if (this.isScriptLoaded(url)) return
 
-    const script = document.createElement('script');
-    script.src = url;
-    document.head.appendChild(script);
-    const info = { isDone: false, promise: null };
-    this.loadedScript[url] = info;
+    const script = document.createElement('script')
+    script.src = url
+    document.head.appendChild(script)
+    const info = { isDone: false, promise: null }
+    this.loadedScript[url] = info
 
     const promise = new Promise<void>((resolve) => {
       script.onload = () => {
-        info.isDone = true;
-        resolve();
-      };
+        info.isDone = true
+        resolve()
+      }
       script.onerror = () => {
-        delete this.loadedScript[url];
-      };
-    });
-    info.promise = promise;
-    return promise;
+        delete this.loadedScript[url]
+      }
+    })
+    info.promise = promise
+    return promise
   }
 
   async loadTweakpane() {
-    const url = this.scriptMap.tweakpaneV3;
-    await this.loadScript(url);
-    return win.Tweakpane;
+    const url = this.scriptMap.tweakpaneV3
+    await this.loadScript(url)
+    return win.Tweakpane
   }
 
   isInEditor() {
-    const ua = navigator.userAgent;
-    const cursorReg = /like Gecko\) Cursor\//;
-    const codeReg = /like Gecko\) Code\//;
-    return cursorReg.test(ua) || codeReg.test(ua);
+    const ua = navigator.userAgent
+    const cursorReg = /like Gecko\) Cursor\//
+    const codeReg = /like Gecko\) Code\//
+    return cursorReg.test(ua) || codeReg.test(ua)
   }
 
   async loadVConsoleInEditor(action: VConsoleAction = 'create') {
-    if (!this.isInEditor()) return;
-    await this.loadVConsole(action);
+    if (!this.isInEditor()) return
+    await this.loadVConsole(action)
   }
 
   async loadVConsole(action: VConsoleAction = 'create') {
-    if (win.VConsole) return;
-    const url = this.scriptMap.vConsole;
-    await this.loadScript(url);
+    if (win.VConsole) return
+    const url = this.scriptMap.vConsole
+    await this.loadScript(url)
 
     if (action !== 'loadOnly') {
-      this.createVConsole();
+      this.createVConsole()
 
       if (action === 'open') {
-        this.openVConsole();
+        this.openVConsole()
       }
     }
   }
 
   createVConsole() {
-    if (win.vConsole) return;
+    if (win.vConsole) return
 
     // TODO: not work
     // const vConsole = new win.VConsole({ theme: 'dark' });
-    const vConsole = new win.VConsole();
-    win.vConsole = vConsole;
-    return vConsole;
+    const vConsole = new win.VConsole()
+    win.vConsole = vConsole
+    return vConsole
   }
 
   openVConsole() {
-    win.vConsole.show();
+    win.vConsole.show()
   }
 
   closeVConsole() {
-    win.vConsole.hide();
+    win.vConsole.hide()
   }
 
   async laodStats() {
     const url = this.scriptMap.stats
-    await this.loadScript(url);
+    await this.loadScript(url)
   }
 
   showStats() {
-    var stats = new win.Stats();
-    stats.showPanel(1); // 0: fps, 1: ms, 2: mb, 3+: custom
-    document.body.appendChild(stats.dom);
+    var stats = new win.Stats()
+    stats.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild(stats.dom)
 
     function animate() {
-      stats.begin();
+      stats.begin()
       // monitored code goes here
-      stats.end();
+      stats.end()
 
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animate)
     }
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animate)
   }
 }
 
-export const scriptLoader = new ScriptLoader();
+export const scriptLoader = new ScriptLoader()
 
-type VConsoleAction = 'loadOnly' | 'create' | 'open';
+type VConsoleAction = 'loadOnly' | 'create' | 'open'
