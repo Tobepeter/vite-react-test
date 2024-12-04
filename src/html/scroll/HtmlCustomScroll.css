@@ -1,0 +1,16 @@
+/** chrome/safari */
+.no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/** firefox */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/** IE/Edge */
+.no-scrollbar {
+  -ms-overflow-style: none;
+}

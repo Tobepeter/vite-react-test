@@ -16,20 +16,20 @@ globalUtil.init()
 debugUtil.init()
 
 function Test() {
-  // return <div>Test</div>;
-  // return <SwiperDemo />;
-  // return <GsapTest />;
-  return <PixiDemo />
-  // return <DatGUITest />;
-  // return <LevaTest />;
-  // return <TweakpaneTest />;
-  // return <ViteTest />;
-  // return <UseHotKeyDemo />;
-  // return <AhooksDemo />;
-  // return <CanvasDemo />;
-  // return <HtmlDemo />;
-  // return <TailwindDemo />;
-  // return <PerformanceDemo />;
+  // return <div>Test</div>
+  // return <SwiperDemo />
+  // return <GsapTest />
+  // return <PixiDemo />
+  // return <DatGUITest />
+  // return <LevaTest />
+  // return <TweakpaneTest />
+  // return <ViteTest />
+  // return <UseHotKeyDemo />
+  // return <AhooksDemo />
+  // return <CanvasDemo />
+  return <HtmlDemo />
+  // return <TailwindDemo />
+  // return <PerformanceDemo />
 }
 
 function App() {
