@@ -3,6 +3,8 @@ import { CanvasDemo } from './canvas/CanvasDemo';
 import { TailwindDemo } from './css/tailwind/TailwindDemo';
 import { GsapTest } from './gsap/GsapTest';
 import { HtmlDemo } from './html/HtmlDemo';
+import { PerformanceDemo } from './js/perpormance/PerformanceDemo';
+import { PerformanceSimple } from './js/perpormance/PerformanceSimple';
 import { PixiDemo } from './pixi/PixiDemo';
 import { SwiperDemo } from './swiper/SwiperDemo';
 import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo';
@@ -15,7 +17,7 @@ debugUtil.init();
 
 function Test() {
   // return <div>Test</div>;
-  return <SwiperDemo />;
+  // return <SwiperDemo />;
   // return <GsapTest />;
   // return <PixiDemo />;
   // return <DatGUITest />;
@@ -27,6 +29,7 @@ function Test() {
   // return <CanvasDemo />;
   // return <HtmlDemo />;
   // return <TailwindDemo />;
+  return <PerformanceDemo />;
 }
 
 function App() {
