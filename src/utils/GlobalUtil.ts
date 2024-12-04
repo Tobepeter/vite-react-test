@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { nextFrame, sleep } from './common'
 
 class GlobalUtil {
   init() {
@@ -16,13 +17,17 @@ class GlobalUtil {
     const win = window as any
     ;(window as any).win = win
 
-    // -- hooks
+    // -- hooks --
     win.useEffect = React.useEffect
     win.useState = React.useState
     win.useRef = React.useRef
     win.useCallback = React.useCallback
     win.useMemo = React.useMemo
     win.useContext = React.useContext
+
+    // -- utils --
+    win.sleep = sleep
+    win.nextFrame = nextFrame
   }
 }
 
@@ -36,4 +41,7 @@ declare global {
   const useCallback: typeof React.useCallback
   const useMemo: typeof React.useMemo
   const useContext: typeof React.useContext
+
+  const sleep: typeof import('./common').sleep
+  const nextFrame: typeof import('./common').nextFrame
 }

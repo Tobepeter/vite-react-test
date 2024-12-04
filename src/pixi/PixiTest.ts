@@ -1,3 +1,4 @@
+import { cacheTest } from './demo/CacheTest'
 import { goHit } from './demo/GOHit'
 import { maskTest } from './demo/MaskTest'
 import { memTest } from './demo/MemTest'
@@ -14,6 +15,7 @@ class PixiTest {
     goHit,
     memTest,
     maskTest,
+    cacheTest,
   } satisfies Record<string, ITest>
 
   init() {

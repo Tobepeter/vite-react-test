@@ -78,10 +78,14 @@ class ScriptLoader {
     if (win.vConsole) return
 
     // TODO: not work
-    // const vConsole = new win.VConsole({ theme: 'dark' });
+    // const vConsole = new win.VConsole({ theme: 'dark' })
     const vConsole = new win.VConsole()
     win.vConsole = vConsole
     return vConsole
+  }
+
+  isVConsoleReady() {
+    return !!win.vConsole
   }
 
   openVConsole() {
@@ -95,11 +99,16 @@ class ScriptLoader {
   async laodStats() {
     const url = this.scriptMap.stats
     await this.loadScript(url)
+    this.showStats()
   }
 
   showStats() {
-    var stats = new win.Stats()
-    stats.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom
+    if (win.stats) return
+
+    const stats = new win.Stats()
+    win.stats = stats
+
+    stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
     document.body.appendChild(stats.dom)
 
     function animate() {
