@@ -39,25 +39,14 @@ export const LockScroll = () => {
     <>
       <div
         style={{
-          position: 'fixed',
-          top: 20,
-          right: 20,
-          background: 'rgba(0,0,0,0.7)',
-          color: 'white',
-          padding: '8px 12px',
-          borderRadius: '4px',
-          zIndex: 1000,
-        }}
-      >
-        ScrollY: {Math.round(displayScrollY)}
-      </div>
-      <div
-        style={{
           height,
           width,
           position: 'relative',
           overflow: 'scroll',
           // scrollBehavior: 'smooth',
+
+          // NOTE: 这个属性可以解决
+          overscrollBehavior: 'none',
         }}
         ref={viewportRef}
       >
@@ -67,6 +56,20 @@ export const LockScroll = () => {
           <div style={{ height: itemHeight, backgroundColor: 'yellow' }} />
           <div style={{ height: itemHeight, backgroundColor: 'red' }} />
         </div>
+      </div>
+
+      <div
+        style={{
+          position: 'fixed',
+          top: 20,
+          right: 20,
+          background: 'rgba(0,0,0,0.7)',
+          color: 'white',
+          padding: '8px 12px',
+          borderRadius: '4px',
+        }}
+      >
+        ScrollY: {Math.round(displayScrollY)}
       </div>
     </>
   )

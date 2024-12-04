@@ -7,7 +7,7 @@ import { HtmlTransform } from './transform/HtmlTransform'
 export const HtmlDemo = () => {
   // return <HtmlOrientation />
   // return <HtmlTransform />
-  return <HtmlCustomScroll />
+  // return <HtmlCustomScroll />
   // return <HtmlCustomScrollNoTailwind />
-  // return <LockScroll />
+  return <LockScroll />
 }
