@@ -19,7 +19,7 @@ class PixiTest {
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.maskTest
+    this.curTest = this.testMap.cacheTest
     this.curTest.init()
 
     // NOTE: 使用query来进行切换

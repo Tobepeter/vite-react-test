@@ -99,7 +99,6 @@ class ScriptLoader {
   async laodStats() {
     const url = this.scriptMap.stats
     await this.loadScript(url)
-    this.showStats()
   }
 
   showStats() {

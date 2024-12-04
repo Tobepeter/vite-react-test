@@ -23,6 +23,8 @@ class MaskTest implements ITest {
     const pane = new win.Tweakpane.Pane()
     this.pane = pane
 
+    scriptLoader.showStats()
+
     // 数量
     const countList = [200, 300, 500]
     const countLabel = 'count'
