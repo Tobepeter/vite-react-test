@@ -1,6 +1,7 @@
 import { animationSpriteDemo } from './demo/AnimationSpriteDemo'
 import { cacheTest } from './demo/CacheTest'
 import { goHit } from './demo/GOHit'
+import { pixiLottie } from './demo/lottie/PixiLottie'
 import { maskTest } from './demo/MaskTest'
 import { memTest } from './demo/MemTest'
 import { rectTest } from './demo/RectTest'
@@ -20,10 +21,11 @@ class PixiTest {
     cacheTest,
     animationSpriteDemo,
     textureTest,
+    pixiLottie,
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.textureTest
+    this.curTest = this.testMap.pixiLottie
     this.curTest.init()
 
     // NOTE: 使用query来进行切换

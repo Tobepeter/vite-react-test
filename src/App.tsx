@@ -19,7 +19,7 @@ function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
   // return <GsapTest />
-  // return <PixiDemo />
+  return <PixiDemo />
   // return <DatGUITest />
   // return <LevaTest />
   // return <TweakpaneTest />
@@ -27,7 +27,7 @@ function Test() {
   // return <UseHotKeyDemo />
   // return <AhooksDemo />
   // return <CanvasDemo />
-  return <HtmlDemo />
+  // return <HtmlDemo />
   // return <TailwindDemo />
   // return <PerformanceDemo />
 }
