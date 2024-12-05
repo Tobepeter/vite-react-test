@@ -1,8 +1,10 @@
+import { Random } from 'mockjs'
 import { Texture } from 'pixi.js'
 
 class DebugTexture {
   dummyImage = 'https://dummyimage.com/200x200/000/fff'
   dummyImage2 = 'https://dummyimage.com/400x400/fff/000'
+  bunnyUrl = 'https://www.pixijs.com/assets/bunny.png'
 
   /**
    * 颜色配置
@@ -46,6 +48,31 @@ class DebugTexture {
   }) {
     const { w = 200, h = 200, bgColor = 'fff', textColor = '000' } = opt || {}
     return `https://dummyimage.com/${w}x${h}/${bgColor}/${textColor}`
+  }
+
+  getRandomDummyImg(
+    sizeList?: number[],
+    bgColorList?: string[],
+    textColorList?: string[]
+  ) {
+    if (!sizeList) {
+      sizeList = [200, 300, 400]
+    }
+
+    if (!bgColorList) {
+      bgColorList = Object.values(this.colorMap)
+    }
+
+    if (!textColorList) {
+      textColorList = Object.values(this.colorMap)
+    }
+
+    const size = Random.pick(sizeList)
+    // URL不支持#，要去掉
+    const bgColor = Random.pick(bgColorList).slice(1)
+    const textColor = Random.pick(textColorList).slice(1)
+
+    return this.getDummyImg({ w: size, h: size, bgColor, textColor })
   }
 
   getChessboardTexture(gridSize: number = 16, size: number = 256) {

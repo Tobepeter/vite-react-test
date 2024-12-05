@@ -1,13 +1,18 @@
-import { IPoint, Point, Sprite } from 'pixi.js'
+import { Container, IPoint, Point, Sprite } from 'pixi.js'
 import { ITest } from '../util/ITest'
 import { debugTexture } from '../util/debug/DebugTexture'
 
 class CacheTest implements ITest {
   init() {
     // this.testWorldPos()
-    this.testCacheChange()
+    // this.testCacheChange()
+    this.testFarPosRender()
+    // this.testHideRender()
   }
 
+  /**
+   * 测试缓存后世界坐标的bug
+   */
   async testWorldPos() {
     const size = 256
 
@@ -61,13 +66,14 @@ class CacheTest implements ITest {
     this.printWorldPos(spImg)
   }
 
+  /**
+   * 测试刷新缓存变化
+   */
   async testCacheChange() {
     const sp = new Sprite()
     sp.texture = debugTexture.colorTextureMap.red
     pixiEntry.root.addChild(sp)
     sp.anchor.set(0.5)
-    sp.width = 256
-    sp.height = 256
 
     const mask = new Sprite()
     mask.texture = debugTexture.getCircleTexture()
@@ -82,6 +88,90 @@ class CacheTest implements ITest {
     sp.cacheAsBitmap = false
     sp.texture = debugTexture.colorTextureMap.green
     sp.cacheAsBitmap = true
+  }
+
+  /**
+   * 测试隐藏位置渲染回来
+   * @desc 经过测试，在隐藏的位置还是可以渲染的
+   */
+  async testFarPosRender() {
+    const UseWrapper = true
+
+    const wrapper = new Container()
+    pixiEntry.root.addChild(wrapper)
+
+    const sp = new Sprite()
+    sp.texture = debugTexture.colorTextureMap.red
+    sp.anchor.set(0.5)
+    wrapper.addChild(sp)
+
+    if (UseWrapper) {
+      wrapper.position.x = 999999
+    } else {
+      sp.position.x = 999999
+    }
+
+    const mask = new Sprite()
+    mask.texture = debugTexture.getCircleTexture()
+    sp.mask = mask
+    mask.anchor.set(0.5)
+
+    if (UseWrapper) {
+      wrapper.addChild(mask)
+      wrapper.cacheAsBitmap = true
+    } else {
+      sp.addChild(mask)
+      sp.cacheAsBitmap = true
+    }
+
+    await sleep(1000)
+    if (UseWrapper) {
+      wrapper.position.x = 0
+    } else {
+      sp.position.x = 0
+    }
+  }
+
+  /**
+   * 测试隐藏后渲染
+   * @desc 经过测试，在隐藏后，渲染还是会生效的
+   */
+  async testHideRender() {
+    const UseWrapper = true
+
+    const wrapper = new Container()
+    pixiEntry.root.addChild(wrapper)
+
+    const sp = new Sprite()
+    sp.texture = debugTexture.colorTextureMap.red
+    if (UseWrapper) {
+      wrapper.addChild(sp)
+    } else {
+      pixiEntry.root.addChild(sp)
+    }
+    sp.anchor.set(0.5)
+
+    const mask = new Sprite()
+    mask.texture = debugTexture.getCircleTexture()
+    sp.mask = mask
+    mask.anchor.set(0.5)
+    if (UseWrapper) {
+      wrapper.addChild(mask)
+      wrapper.cacheAsBitmap = true
+    } else {
+      sp.addChild(mask)
+      sp.visible = false
+      sp.cacheAsBitmap = true
+    }
+
+    await sleep(100)
+
+    sp.cacheAsBitmap = false
+    sp.texture = debugTexture.colorTextureMap.green
+    sp.cacheAsBitmap = true
+
+    await sleep(200)
+    sp.visible = true
   }
 
   printWorldPos(sp: Sprite) {

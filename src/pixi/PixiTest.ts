@@ -4,6 +4,7 @@ import { goHit } from './demo/GOHit'
 import { maskTest } from './demo/MaskTest'
 import { memTest } from './demo/MemTest'
 import { rectTest } from './demo/RectTest'
+import { textureTest } from './demo/TextureTest'
 import { timeShaderTest } from './demo/TimeShaderTest'
 import { debugQueryRunner } from './util/debug/DebugQueryRunner'
 import type { ITest } from './util/ITest'
@@ -18,10 +19,11 @@ class PixiTest {
     maskTest,
     cacheTest,
     animationSpriteDemo,
+    textureTest,
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.animationSpriteDemo
+    this.curTest = this.testMap.textureTest
     this.curTest.init()
 
     // NOTE: 使用query来进行切换

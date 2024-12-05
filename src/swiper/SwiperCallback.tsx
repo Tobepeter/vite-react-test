@@ -10,6 +10,7 @@ import { ComponentProps } from 'react'
 export const SwiperCallback = () => {
   const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1']
   const content = []
+  const swiperRef = useRef<SwiperClass>(null)
 
   for (let i = 0; i < 4; i++) {
     const color = colors[i % colors.length]
@@ -65,6 +66,8 @@ export const SwiperCallback = () => {
   const onSwiper: React.ComponentProps<typeof Swiper>['onSwiper'] = (
     swiper
   ) => {
+    swiperRef.current = swiper
+
     // console.log('swiper', swiper);
     win.swiper = swiper
 
@@ -162,6 +165,29 @@ export const SwiperCallback = () => {
     console.log('observer update')
   }
 
+  const navigateFn: ComponentProps<typeof Swiper> = {
+    onNavigationNext: () => {
+      console.log('navigation next')
+    },
+    onNavigationPrev: () => {
+      console.log('navigation prev')
+    },
+    onNavigationShow: () => {
+      console.log('navigation show')
+    },
+    onNavigationHide: () => {
+      console.log('navigation hide')
+    },
+  }
+
+  // 测试导航
+  useEffect(() => {
+    setTimeout(() => {
+      // swiperRef.current?.navigation.nextEl.click()
+      // swiperRef.current?.navigation.prevEl.click()
+    }, 1000)
+  }, [])
+
   return (
     <Swiper
       modules={[Navigation, Pagination]}
@@ -177,6 +203,7 @@ export const SwiperCallback = () => {
        * NOTE: 注意，由于css的特殊性，断点了是不会打断CSS动画的，特别是用导航就可以发现
        */
       navigation={true}
+      {...navigateFn}
       loop={true}
       pagination={{ clickable: true }}
       // onSlideChange={onSlideChange}
@@ -190,7 +217,6 @@ export const SwiperCallback = () => {
        * 拖动中
        */
       onSliderMove={onSliderMove}
-
       // onToEdge={onToEdge}
       // onFromEdge={onFromEdge}
       // onSetTranslate={onSetTranslate}
@@ -205,6 +231,11 @@ export const SwiperCallback = () => {
       // }}
       // onUpdate={() => {
       //   console.log('update');
+      // }}
+
+      // TODO: 不会触发
+      // onAnimationEnd={() => {
+      //   console.log('animation end')
       // }}
 
       /**
