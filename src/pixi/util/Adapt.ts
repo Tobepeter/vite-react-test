@@ -1,6 +1,6 @@
 class Adapt {
-  dpr = 1
-  currDpr = 1 // 按cmd + 加号放大
+  dpr = 1 // 只会赋值第一次
+  currDpr = 1 // 会变的，比如按cmd + 加号放大
 
   width = 0
   height = 0

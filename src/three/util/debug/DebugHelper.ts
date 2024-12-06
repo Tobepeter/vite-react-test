@@ -1,4 +1,5 @@
 import { DisplayObject } from 'pixi.js'
+import { Object3D } from 'three'
 
 class DebugHelper {
   /** 依次执行数组项目 */
@@ -76,13 +77,13 @@ class DebugHelper {
     return Object.keys(enumObj).find((key) => enumObj[key] === value) || ''
   }
 
-  getTreeStr(obj: DisplayObject) {
+  getTreeStr(obj: Object3D) {
     const indent = 2
     let str = ''
-    const processObj = (obj: DisplayObject, curIndent: number) => {
+    const processObj = (obj: Object3D, curIndent: number) => {
       str += ' '.repeat(curIndent) + obj.name + '\n'
       obj.children.forEach((child) =>
-        processObj(child as DisplayObject, curIndent + indent)
+        processObj(child as Object3D, curIndent + indent)
       )
     }
     processObj(obj, 0)

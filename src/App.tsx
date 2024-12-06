@@ -7,6 +7,7 @@ import { PerformanceDemo } from './js/perpormance/PerformanceDemo'
 import { PerformanceSimple } from './js/perpormance/PerformanceSimple'
 import { PixiDemo } from './pixi/PixiDemo'
 import { SwiperDemo } from './swiper/SwiperDemo'
+import { ThreeDemo } from './three/ThreeDemo'
 import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo'
 import { debugUtil } from './utils/DebugUtil'
 import { globalUtil } from './utils/GlobalUtil'
@@ -19,7 +20,8 @@ function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
   // return <GsapTest />
-  return <PixiDemo />
+  // return <PixiDemo />
+  return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />
   // return <TweakpaneTest />
