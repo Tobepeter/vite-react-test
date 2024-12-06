@@ -14,6 +14,8 @@ class ThreeEntry {
 
   isInited = false
 
+  renderCb: Array<() => void> = []
+
   private renderLoopId = -1
 
   init() {
@@ -54,7 +56,9 @@ class ThreeEntry {
   }
 
   renderLoop = () => {
-    threeTest.update()
+    for (const cb of this.renderCb) {
+      cb()
+    }
 
     this.renderer.render(this.scene, this.camera)
     this.renderLoopId = requestAnimationFrame(this.renderLoop)

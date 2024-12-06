@@ -15,11 +15,15 @@ class ThreeTest {
 
     this.curTest = this.testMap.cubeTest
     this.curTest.init()
+
+    threeEntry.renderCb.push(this.update)
   }
 
-  update() {
+  update = () => {
     const delta = this.clock.getDelta()
-    this.curTest.update?.(delta)
+    if (this.curTest) {
+      this.curTest.update?.(delta)
+    }
   }
 
   clear() {
@@ -29,6 +33,14 @@ class ThreeTest {
       threeEntry.cleanTestRoot()
     }
     this.curTest = null
+
+    for (let i = threeEntry.renderCb.length - 1; i >= 0; i--) {
+      const cb = threeEntry.renderCb[i]
+      if (cb === this.update) {
+        threeEntry.renderCb.splice(i, 1)
+        break
+      }
+    }
   }
 }
 
