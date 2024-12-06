@@ -1,8 +1,10 @@
 import { threeEntry } from '../../ThreeEntry'
+import { hmr } from '../Hmr'
 import { scriptLoader } from '../ScriptLoader'
 import { debugInject } from './DebugInject'
 
 class DebugUtil {
+  @hmr.oneCall
   async init() {
     await scriptLoader.loadVConsoleInEditor()
     await scriptLoader.loadTweakpane()

@@ -2,6 +2,7 @@ import { Scene, WebGLRenderer, PerspectiveCamera, Object3D } from 'three'
 import { threeAdapt } from './util/ThreeAdapt'
 import { threeGlobal } from './util/ThreeGlobal'
 import { threeTest } from './ThreeTest'
+import { debugUtil } from './util/debug/DebugUtil'
 
 class ThreeEntry {
   scene: Scene
@@ -18,7 +19,7 @@ class ThreeEntry {
 
   private renderLoopId = -1
 
-  init() {
+  async init() {
     if (this.isInited) return
     this.isInited = true
 
@@ -37,6 +38,9 @@ class ThreeEntry {
     })
 
     threeGlobal.init()
+
+    await debugUtil.init()
+
     threeTest.init()
     this.startRender()
   }
