@@ -11,6 +11,11 @@ export const SwiperCallback = () => {
   const colors = ['#f1f1f1', '#e1e1e1', '#d1d1d1', '#c1c1c1']
   const content = []
   const swiperRef = useRef<SwiperClass>(null)
+  const startTime = useRef(Date.now())
+
+  const getCurrTime = () => {
+    return ((Date.now() - startTime.current) / 1000).toFixed(2) + 's'
+  }
 
   for (let i = 0; i < 4; i++) {
     const color = colors[i % colors.length]
@@ -120,8 +125,20 @@ export const SwiperCallback = () => {
     swiper,
     event
   ) => {
-    console.log('slider move')
+    // console.log('slider move')
+    console.log('slider move', getCurrTime())
   }
+  useEffect(() => {
+    // 测试，sliderMove的延迟
+
+    document.documentElement.style.height = '100%'
+    document.body.style.height = '100%'
+    document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+
+    document.body.addEventListener('touchmove', (e) => {
+      console.log('body touchmove', getCurrTime())
+    })
+  }, [])
 
   const onToEdge: ComponentProps<typeof Swiper>['onToEdge'] = (swiper) => {
     console.log('to edge', swiper)

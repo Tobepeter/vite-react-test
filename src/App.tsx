@@ -18,10 +18,10 @@ debugUtil.init()
 
 function Test() {
   // return <div>Test</div>
-  // return <SwiperDemo />
+  return <SwiperDemo />
   // return <GsapTest />
   // return <PixiDemo />
-  return <ThreeDemo />
+  // return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />
   // return <TweakpaneTest />
