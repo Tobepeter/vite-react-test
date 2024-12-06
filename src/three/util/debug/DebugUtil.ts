@@ -2,6 +2,7 @@ import { threeEntry } from '../../ThreeEntry'
 import { hmr } from '../Hmr'
 import { scriptLoader } from '../ScriptLoader'
 import { debugInject } from './DebugInject'
+import { debugTexture } from './DebugTexture'
 
 class DebugUtil {
   @hmr.oneCall
@@ -11,6 +12,7 @@ class DebugUtil {
     await scriptLoader.laodStats()
 
     debugInject.init()
+    debugTexture.init()
   }
 }
 
