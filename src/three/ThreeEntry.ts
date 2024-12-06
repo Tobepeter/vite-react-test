@@ -46,6 +46,9 @@ class ThreeEntry {
     this.camera.name = 'camera'
     this.scene.add(this.camera)
 
+    // 方便一开始看向原点
+    this.camera.position.set(0, 0, 5)
+
     this.testRoot = new Object3D()
     this.testRoot.name = 'testRoot'
     this.scene.add(this.testRoot)

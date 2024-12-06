@@ -90,7 +90,9 @@ class DebugTexture {
       }
     }
 
-    return new Texture(canvas)
+    const texture = new Texture(canvas)
+    texture.needsUpdate = true
+    return texture
   }
 
   getCircleTexture(color: string = '#ffffff', size = 256) {
@@ -105,7 +107,9 @@ class DebugTexture {
     ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2)
     ctx.fill()
 
-    return new Texture(canvas)
+    const texture = new Texture(canvas)
+    texture.needsUpdate = true
+    return texture
   }
 
   getColorTexture(color: string, size: number = 256) {
