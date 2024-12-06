@@ -59,6 +59,7 @@ class ThreeEntry {
   }
 
   startRender() {
+    // TODO: 有一个 renderer.setAnimationLoop 可以直接使用
     this.renderLoopId = requestAnimationFrame(this.renderLoop)
   }
 
@@ -80,6 +81,9 @@ class ThreeEntry {
     for (const child of children) {
       this.testRoot.remove(child)
     }
+
+    // TODO: 应该有不少webgl资源是需要释放的，比如 geometry, material, texture, renderTarget
+    //  需要调用一个基于事件监听的 dispose 方法
   }
 
   destroy() {
