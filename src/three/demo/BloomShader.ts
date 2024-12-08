@@ -10,6 +10,12 @@ import { Random } from 'mockjs'
 import { OrbitControls } from 'three/examples/jsm/Addons.js'
 import { debugTexture } from '../util/debug/DebugTexture'
 
+/**
+ * 泛光
+ *
+ * shadertoy参考
+ * https://www.shadertoy.com/view/lsBfRc
+ */
 class BloomShader implements IThreeTest {
   envCubes: Mesh[] = []
   controls: OrbitControls
