@@ -12,6 +12,8 @@ class DebugUtil {
     if (this.activeChromeDevtools) {
       // 设置 chrome devtools 扩展对象
       // DOC: https://pixijs.io/devtools/docs/guide/installation/
+
+      // TODO: 不知道为什么，有时候hmr会导致disconnect
       win.__PIXI_APP__ = pixiEntry.app
     }
 

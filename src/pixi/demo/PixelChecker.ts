@@ -20,7 +20,13 @@ class PixelChecker implements ITest {
   pixelsCntr: Container
   url: string
 
-  gridSize = 20
+  gridSize = 10
+
+  /**
+   * 分区渲染
+   * NOTE：不太好支持特别大的canvas，会渲染失败
+   */
+  chunkSize = 1024
 
   useStorage = true
   readonly storageKey = 'pixel-checker:url'
@@ -82,7 +88,8 @@ class PixelChecker implements ITest {
 
   async renderImageData() {
     // await this.renderImageDataBySprite()
-    await this.renderImageDataByCanvas()
+    // await this.renderImageDataByCanvas()
+    await this.renderImageDataByCanvasByChunk()
   }
 
   /**
@@ -163,12 +170,85 @@ class PixelChecker implements ITest {
         ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize)
       }
     }
+  }
+  /**
+   * 使用canvas来渲染
+   *
+   * NOTE：测试起来感觉比多个Sprite好多了，依然是用Canvas，只是格子放大了
+   */
+  async renderImageDataByCanvasByChunk() {
+    if (!this.url) return
 
-    // 创建纹理并显示
-    const texture = Texture.from(canvas)
-    const sprite = new Sprite(texture)
-    sprite.anchor.set(0.5)
-    this.pixelsCntr.addChild(sprite)
+    const imageData = await imageUtil.url2ImageData(this.url)
+    if (!imageData) return
+
+    const width = imageData.width
+    const height = imageData.height
+    const gridSize = this.gridSize
+
+    const targetWidth = width * gridSize
+    const targetHeight = height * gridSize
+
+    const chunkSize = this.chunkSize
+    const chunkW = Math.ceil(targetWidth / chunkSize)
+    const chunkH = Math.ceil(targetHeight / chunkSize)
+
+    const canvasList: HTMLCanvasElement[] = []
+    const ctxList: CanvasRenderingContext2D[] = []
+
+    const chunkCount = chunkW * chunkH
+
+    // 初始化分区
+    for (let i = 0; i < chunkCount; i++) {
+      const canvas = document.createElement('canvas')
+      canvas.width = chunkSize
+      canvas.height = chunkSize
+      const ctx = canvas.getContext('2d')!
+      canvasList.push(canvas)
+      ctxList.push(ctx)
+    }
+
+    for (let i = 0; i < chunkCount; i++) {
+      // 分区坐标
+      const chunkX = i % chunkW
+      const chunkY = Math.floor(i / chunkW)
+      const ctx = ctxList[i]
+
+      const startX = Math.floor((chunkX * chunkSize) / gridSize)
+      const startY = Math.floor((chunkY * chunkSize) / gridSize)
+      let endX = Math.floor(((chunkX + 1) * chunkSize) / gridSize)
+      let endY = Math.floor(((chunkY + 1) * chunkSize) / gridSize)
+      if (endX > width) endX = width
+      if (endY > height) endY = height
+
+      // 绘制这个范围内的像素
+      for (let y = startY; y < endY; y++) {
+        for (let x = startX; x < endX; x++) {
+          const i = (y * width + x) * 4
+          const r = imageData.data[i]
+          const g = imageData.data[i + 1]
+          const b = imageData.data[i + 2]
+          const a = imageData.data[i + 3]
+          const aFixed = (a / 255).toFixed(2)
+          ctx.fillStyle = `rgba(${r},${g},${b},${aFixed})`
+
+          const drawX = (x - startX) * gridSize
+          const drawY = (y - startY) * gridSize
+          let fillW = gridSize
+          if (drawX + gridSize > chunkSize) fillW = chunkSize - drawX
+          let fillH = gridSize
+          if (drawY + gridSize > chunkSize) fillH = chunkSize - drawY
+          ctx.fillRect(drawX, drawY, fillW, fillH)
+        }
+      }
+
+      // 创建纹理并显示
+      const texture = Texture.from(canvasList[i])
+      const sprite = new Sprite(texture)
+      sprite.x = -targetWidth / 2 + chunkX * this.chunkSize - chunkSize / 2
+      sprite.y = -targetHeight / 2 + chunkY * this.chunkSize - chunkSize / 2
+      this.pixelsCntr.addChild(sprite)
+    }
   }
 
   reset() {

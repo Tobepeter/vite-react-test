@@ -50,7 +50,7 @@ class PixiInput {
     const localY = (mouseY - pixiEntry.interactRoot.y) / this.scale
 
     // 默认向上是负数，但是习惯向上是放大
-    const deltaScale = -delta * this.config.scaleSpeed * 0.1
+    const deltaScale = -delta * this.config.scaleSpeed * 0.05
     let newScale = this.scale + deltaScale
     newScale = Math.max(this.config.minScale, newScale)
     newScale = Math.min(this.config.maxScale, newScale)
