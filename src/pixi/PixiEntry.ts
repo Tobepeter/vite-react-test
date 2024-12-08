@@ -8,6 +8,8 @@ import { debugHelper } from './util/debug/DebugHelper'
 import { debugVisual } from './util/debug/DebugVisual'
 import { scriptLoader } from './util/ScriptLoader'
 import { debugUtil } from './util/debug/DebugUtil'
+import { PixiDomHandle } from './util/dom/PixiDomUtil'
+import { pixiInput } from './util/PixiInput'
 
 class PixiEntry {
   isInited = false
@@ -18,12 +20,16 @@ class PixiEntry {
 
   ticker: Ticker
 
+  interactRoot: Container
+
   /**
    * 根容器
    * @desc 默认 stage 尺寸是参考css的，这里缩放一下
    * @desc 同时默认居中，方便使用
    */
   root: Container
+
+  domHandle?: PixiDomHandle
 
   async init() {
     if (this.isInited) return
@@ -51,14 +57,21 @@ class PixiEntry {
     // NOTE: 这个其实是不需要的，但是如果不这么设置，每次hmr都会闪烁一下（默认body是白色的）
     document.body.style.backgroundColor = new Color(backgroundColor).toHex()
 
+    // NOTE: root位置不会变，但是交互支持拖拽缩放之类的
+    this.interactRoot = new Container()
+    this.interactRoot.name = 'interactRoot'
+    this.stage.addChild(this.interactRoot)
+
     this.root = new Container()
     this.root.name = 'centerRoot'
-    this.stage.addChild(this.root)
+    this.interactRoot.addChild(this.root)
+
+    pixiGlobal.init()
+    pixiInput.init()
 
     this.ticker = new Ticker()
     this.ticker.autoStart = true
-
-    pixiGlobal.init()
+    this.ticker.add(this.update)
 
     adapt.init(this.canvas, () => {
       this.onResize()
@@ -94,13 +107,19 @@ class PixiEntry {
     this.root = null
   }
 
-  onResize() {
-    // console.log('onResize: ', adapt.cssWidth, adapt.cssHeight);
+  update(delta: number) {
+    pixiInput.update(delta)
+    pixiTest.update(delta)
+  }
 
+  onResize() {
+    // TODO: 一开始不应该调用一次 onResize 的
     const width = adapt.cssWidth
     const height = adapt.cssHeight
     this.app.renderer.resize(width, height)
     this.root.position.set(width / 2, height / 2)
+
+    pixiInput.onResize()
   }
 }
 

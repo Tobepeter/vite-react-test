@@ -1,3 +1,7 @@
+import { ReactClosureBug } from './ReactClosureBug'
+import { ReactMountedOrder } from './ReactMountedOrder'
+
 export const ReactDemo = () => {
-  return <div>ReactDemo</div>
+  // return <ReactClosureBug />
+  return <ReactMountedOrder />
 }

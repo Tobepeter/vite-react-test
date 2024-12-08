@@ -15,7 +15,7 @@ class ThreeEntry {
 
   isInited = false
 
-  renderCb: Array<() => void> = []
+  updateCbList: Array<() => void> = []
 
   private renderLoopId = -1
 
@@ -64,7 +64,7 @@ class ThreeEntry {
   }
 
   renderLoop = () => {
-    for (const cb of this.renderCb) {
+    for (const cb of this.updateCbList) {
       cb()
     }
 
@@ -74,6 +74,17 @@ class ThreeEntry {
 
   stopRender() {
     cancelAnimationFrame(this.renderLoopId)
+  }
+
+  addUpdateCb(cb: () => void) {
+    this.updateCbList.push(cb)
+  }
+
+  removeUpdateCb(cb: () => void) {
+    const index = this.updateCbList.indexOf(cb)
+    if (index !== -1) {
+      this.updateCbList.splice(index, 1)
+    }
   }
 
   cleanTestRoot() {

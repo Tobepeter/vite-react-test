@@ -2,6 +2,8 @@ import { pixiEntry } from '../PixiEntry'
 import * as PIXI from 'pixi.js'
 import { goUtil } from './GOUtil'
 import { adapt } from './Adapt'
+import { pixiTest } from '../PixiTest'
+import { pixiInput } from './PixiInput'
 
 /**
  * 使用默认导入导入 PIXI
@@ -37,6 +39,8 @@ class PixiGlobal {
 
   private injectBasic() {
     win.ticker = pixiEntry.ticker
+    win.pixiTest = pixiTest
+    win.pixiInput = pixiInput
   }
 }
 

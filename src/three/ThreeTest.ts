@@ -19,7 +19,7 @@ class ThreeTest {
     this.curTest = this.testMap.bloomShader
     this.curTest.init()
 
-    threeEntry.renderCb.push(this.update)
+    threeEntry.addUpdateCb(this.update)
   }
 
   update = () => {
@@ -37,20 +37,14 @@ class ThreeTest {
     }
     this.curTest = null
 
-    for (let i = threeEntry.renderCb.length - 1; i >= 0; i--) {
-      const cb = threeEntry.renderCb[i]
-      if (cb === this.update) {
-        threeEntry.renderCb.splice(i, 1)
-        break
-      }
-    }
+    threeEntry.removeUpdateCb(this.update)
   }
 }
 
 export const threeTest = new ThreeTest()
 
 if (import.meta.hot) {
-  import.meta.hot.accept((mod) => {
+  import.meta.hot.accept(mod => {
     threeTest.clear()
     mod.threeTest.init()
   })

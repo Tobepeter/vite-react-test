@@ -6,6 +6,7 @@ import { HtmlDemo } from './html/HtmlDemo'
 import { PerformanceDemo } from './js/perpormance/PerformanceDemo'
 import { PerformanceSimple } from './js/perpormance/PerformanceSimple'
 import { PixiDemo } from './pixi/PixiDemo'
+import { ReactDemo } from './react/ReactDemo'
 import { SwiperDemo } from './swiper/SwiperDemo'
 import { ThreeDemo } from './three/ThreeDemo'
 import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo'
@@ -20,7 +21,7 @@ function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
   // return <GsapTest />
-  // return <PixiDemo />
+  return <PixiDemo />
   // return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />
@@ -29,9 +30,10 @@ function Test() {
   // return <UseHotKeyDemo />
   // return <AhooksDemo />
   // return <CanvasDemo />
-  return <HtmlDemo />
+  // return <HtmlDemo />
   // return <TailwindDemo />
   // return <PerformanceDemo />
+  // return <ReactDemo />
 }
 
 function App() {
