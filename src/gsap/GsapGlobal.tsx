@@ -1,10 +1,11 @@
-import { Button, Space } from 'antd'
+import { Button, Col, Row, Slider, Space } from 'antd'
 import gsap from 'gsap'
 import { useEffect } from 'react'
 import { gain } from 'three/webgpu'
 
-export const GsapKill = () => {
+export const GsapGlobal = () => {
   const tweenRef = useRef<gsap.core.Tween>(null)
+  const [globalSpeed, setGlobalSpeed] = useState(1)
 
   useEffect(() => {
     const tween = gsap.to('#circle', {
@@ -27,17 +28,17 @@ export const GsapKill = () => {
   }, [])
 
   const actions = {
-    kill: () => tweenRef.current?.kill(),
-    resume: () => tweenRef.current?.resume(),
-    pause: () => tweenRef.current?.pause(),
-    reverse: () => tweenRef.current?.reverse(),
-    restart: () => tweenRef.current?.restart(),
+    kill: () => gsap.globalTimeline.kill(),
+    resume: () => gsap.globalTimeline.resume(),
+    pause: () => gsap.globalTimeline.pause(),
+    reverse: () => gsap.globalTimeline.reverse(),
+    restart: () => gsap.globalTimeline.restart(),
   }
 
   return (
     <div>
       <div id="circle" className="w-[50px] h-[50px] rounded-full bg-red-500 absolute left-0 top-[300px]" />
-      <Space>
+      <Space className="mt-4">
         <Button id="kill-btn" onClick={actions.kill}>
           终止
         </Button>
@@ -46,6 +47,23 @@ export const GsapKill = () => {
         <Button onClick={actions.reverse}>反向</Button>
         <Button onClick={actions.restart}>重启</Button>
       </Space>
+      <Row className="mt-4">
+        <Col span={2}>
+          <div className="mb-2">速度</div>
+        </Col>
+        <Col span={20}>
+          <Slider
+            value={globalSpeed}
+            min={0.1}
+            max={2}
+            step={0.0001}
+            onChange={value => {
+              gsap.globalTimeline.timeScale(value)
+              setGlobalSpeed(value)
+            }}
+          />
+        </Col>
+      </Row>
     </div>
   )
 }
