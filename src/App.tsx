@@ -24,13 +24,13 @@ function Test() {
   // return <SwiperDemo />
   // return <GsapDemo />
   // return <PixiDemo />
-  // return <ThreeDemo />
+  return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />
   // return <TweakpaneTest />
   // return <ViteTest />
   // return <UseHotKeyDemo />
-  return <AhooksDemo />
+  // return <AhooksDemo />
   // return <CanvasDemo />
   // return <HtmlDemo />
   // return <TailwindDemo />
