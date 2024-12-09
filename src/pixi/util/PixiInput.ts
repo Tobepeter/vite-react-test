@@ -8,6 +8,8 @@ class PixiInput {
     dragSpeed: 1,
     canKeyResetDrag: false,
     keyResetDrag: 'Space',
+    // TODO: 待实现
+    useStorage: false,
   }
 
   scale = 1
@@ -162,6 +164,7 @@ export type PixiInputConfig = {
   dragSpeed?: number
   canKeyResetDrag?: boolean
   keyResetDrag?: string
+  useStorage?: boolean
 }
 
 export const pixiInput = new PixiInput()

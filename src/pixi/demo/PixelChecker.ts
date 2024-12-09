@@ -4,6 +4,7 @@ import { ITest } from '../util/ITest'
 import { Pane, InputBindingApi } from 'tweakpane'
 import { imageUtil } from '../util/ImageUtil'
 import { debugTexture } from '../util/debug/DebugTexture'
+import dogPng from './assets/dog.png'
 
 class PixelChecker implements ITest {
   config = {
@@ -39,6 +40,10 @@ class PixelChecker implements ITest {
     pixiEntry.root.addChild(this.pixelsCntr)
 
     this.reloadUrl()
+    if (!this.url) {
+      this.url = dogPng
+    }
+    this.refresh()
   }
 
   onFileUpload = async (file: File) => {
@@ -53,14 +58,12 @@ class PixelChecker implements ITest {
     }
   }
 
-  async reloadUrl() {
+  reloadUrl() {
     if (!this.useStorage) {
       localStorage.removeItem(this.storageKey)
       return
     }
-
     this.url = localStorage.getItem(this.storageKey)
-    this.refresh()
   }
 
   async refresh() {
@@ -209,7 +212,6 @@ class PixelChecker implements ITest {
     }
 
     // 遍历原始像素，如果当前像素被chunk打断，同时用下一个chunk渲染
-    // 遍历原始像素
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const i = (y * width + x) * 4
@@ -222,12 +224,10 @@ class PixelChecker implements ITest {
         const targetX = x * gridSize
         const targetY = y * gridSize
 
-        // 计算当前像素属于哪个chunk
+        // 计算当前chunk
         const chunkX = Math.floor(targetX / chunkSize)
         const chunkY = Math.floor(targetY / chunkSize)
         const chunkIndex = chunkY * chunkW + chunkX
-
-        // 获取对应的ctx
         const ctx = ctxList[chunkIndex]
 
         // 在chunk内的相对坐标
@@ -236,68 +236,56 @@ class PixelChecker implements ITest {
 
         // 绘制像素
         ctx.fillStyle = `rgba(${r},${g},${b},${a / 255})`
+
+        // TODO: 这个会渲染超出chunk的像素，待优化
         ctx.fillRect(relativeX, relativeY, gridSize, gridSize)
 
-        // 如果当前像素跨越了chunk边界，需要在相邻的chunk中也绘制
+        // TODO: 有条件可以支持repeat模式，有时候可能会连续超出很多个chunk
+
+        // 右侧超出部分
         if (relativeX + gridSize > chunkSize) {
           // 需要在右侧chunk中绘制
           const rightChunkIndex = chunkIndex + 1
           if (rightChunkIndex < chunkCount) {
             const rightCtx = ctxList[rightChunkIndex]
             rightCtx.fillStyle = `rgba(${r},${g},${b},${a / 255})`
-            rightCtx.fillRect(
-              0,
-              relativeY,
-              (relativeX + gridSize) % chunkSize,
-              gridSize
-            )
+            rightCtx.fillRect(0, relativeY, (relativeX + gridSize) % chunkSize, gridSize)
           }
         }
 
+        // 下方超出部分
         if (relativeY + gridSize > chunkSize) {
-          // 需要在下方chunk中绘制
           const bottomChunkIndex = chunkIndex + chunkW
           if (bottomChunkIndex < chunkCount) {
             const bottomCtx = ctxList[bottomChunkIndex]
             bottomCtx.fillStyle = `rgba(${r},${g},${b},${a / 255})`
-            bottomCtx.fillRect(
-              relativeX,
-              0,
-              gridSize,
-              (relativeY + gridSize) % chunkSize
-            )
+            bottomCtx.fillRect(relativeX, 0, gridSize, (relativeY + gridSize) % chunkSize)
           }
         }
 
-        if (
-          relativeX + gridSize > chunkSize &&
-          relativeY + gridSize > chunkSize
-        ) {
-          // 需要在右下方chunk中绘制
+        // 右下超出部分
+        if (relativeX + gridSize > chunkSize && relativeY + gridSize > chunkSize) {
           const bottomRightChunkIndex = chunkIndex + chunkW + 1
           if (bottomRightChunkIndex < chunkCount) {
             const bottomRightCtx = ctxList[bottomRightChunkIndex]
             bottomRightCtx.fillStyle = `rgba(${r},${g},${b},${a / 255})`
-            bottomRightCtx.fillRect(
-              0,
-              0,
-              (relativeX + gridSize) % chunkSize,
-              (relativeY + gridSize) % chunkSize
-            )
+            bottomRightCtx.fillRect(0, 0, (relativeX + gridSize) % chunkSize, (relativeY + gridSize) % chunkSize)
           }
         }
       }
     }
 
-    // 将所有canvas添加到容器中
+    // 创建对应的sprite
+    const chunkStartX = -targetWidth / 2
+    const chunkStartY = -targetHeight / 2
     for (let y = 0; y < chunkH; y++) {
       for (let x = 0; x < chunkW; x++) {
         const chunkIndex = y * chunkW + x
         const canvas = canvasList[chunkIndex]
-        const texture = PIXI.Texture.from(canvas)
-        const sprite = new PIXI.Sprite(texture)
-        sprite.x = x * chunkSize
-        sprite.y = y * chunkSize
+        const texture = Texture.from(canvas)
+        const sprite = new Sprite(texture)
+        sprite.x = chunkStartX + x * chunkSize
+        sprite.y = chunkStartY + y * chunkSize
         this.pixelsCntr.addChild(sprite)
       }
     }
@@ -320,7 +308,7 @@ class PixelChecker implements ITest {
 export const pixelChecker = new PixelChecker()
 
 if (import.meta.hot) {
-  import.meta.hot.accept((mod) => {
+  import.meta.hot.accept(mod => {
     // 复用一些hmr的状态
     pixelChecker.url = mod.url
   })
