@@ -9,6 +9,7 @@ import { PixiDemo } from './pixi/PixiDemo'
 import { ReactDemo } from './react/ReactDemo'
 import { SwiperDemo } from './swiper/SwiperDemo'
 import { ThreeDemo } from './three/ThreeDemo'
+import { ShadcnDemo } from './ui/shadcn/ShadcnDemo'
 import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo'
 import { debugUtil } from './utils/DebugUtil'
 import { globalUtil } from './utils/GlobalUtil'
@@ -20,7 +21,7 @@ debugUtil.init()
 function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
-  return <GsapDemo />
+  // return <GsapDemo />
   // return <PixiDemo />
   // return <ThreeDemo />
   // return <DatGUITest />
@@ -34,6 +35,7 @@ function Test() {
   // return <TailwindDemo />
   // return <PerformanceDemo />
   // return <ReactDemo />
+  return <ShadcnDemo />
 }
 
 function App() {
