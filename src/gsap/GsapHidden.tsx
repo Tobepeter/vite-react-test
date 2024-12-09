@@ -60,8 +60,7 @@ export const GsapHidden = () => {
           }
         }
         const progress = gsapTween.progress()
-        document.getElementById('test-gsap')!.style.left =
-          `${progress * distanceX}px`
+        document.getElementById('test-gsap')!.style.left = `${progress * distanceX}px`
       },
     })
 
@@ -79,8 +78,7 @@ export const GsapHidden = () => {
         }
       }
       const progress = (Date.now() - rafStartTime) / (duration * 1000)
-      document.getElementById('test-raf')!.style.left =
-        `${progress * distanceX}px`
+      document.getElementById('test-raf')!.style.left = `${progress * distanceX}px`
       requestAnimationFrame(rafFunc)
     }
     rafFunc()
@@ -94,22 +92,20 @@ export const GsapHidden = () => {
     tweenJSLoop()
 
     const tweenObj = { x: 0 }
-    const tween = new Tween(tweenObj, tweenGroup)
-      .to({ x: 600 }, duration * 1000)
-      .onUpdate(({ x }) => {
-        if (tweenJSRecordTime > 0) {
-          if (Date.now() - tweenJSRecordTime < recordDur) {
-            const deltaSec = (Date.now() - tweenJSRecordTime) / 1000
-            tweenJSHistory.push(deltaSec)
-          } else {
-            tweenJSRecordTime = -2
-            recordFinishCount++
-            checkRecordFinish()
-          }
+    const tween = new Tween(tweenObj, tweenGroup).to({ x: 600 }, duration * 1000).onUpdate(({ x }) => {
+      if (tweenJSRecordTime > 0) {
+        if (Date.now() - tweenJSRecordTime < recordDur) {
+          const deltaSec = (Date.now() - tweenJSRecordTime) / 1000
+          tweenJSHistory.push(deltaSec)
+        } else {
+          tweenJSRecordTime = -2
+          recordFinishCount++
+          checkRecordFinish()
         }
+      }
 
-        document.getElementById('test-tweenjs')!.style.left = `${x}px`
-      })
+      document.getElementById('test-tweenjs')!.style.left = `${x}px`
+    })
     win.tweenObj = tweenObj
     tween.start()
   }, [])
@@ -120,7 +116,7 @@ export const GsapHidden = () => {
     return idArr.map((id, idx) => {
       const el = document.getElementById(id)
       return (
-        <div>
+        <div key={id}>
           <div
             id={id}
             style={{

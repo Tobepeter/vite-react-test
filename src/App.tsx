@@ -1,7 +1,7 @@
 import { AhooksDemo } from './ahooks/AhooksDemo'
 import { CanvasDemo } from './canvas/CanvasDemo'
 import { TailwindDemo } from './css/tailwind/TailwindDemo'
-import { GsapTest } from './gsap/GsapTest'
+import { GsapDemo } from './gsap/GsapDemo'
 import { HtmlDemo } from './html/HtmlDemo'
 import { PerformanceDemo } from './js/perpormance/PerformanceDemo'
 import { PerformanceSimple } from './js/perpormance/PerformanceSimple'
@@ -20,8 +20,8 @@ debugUtil.init()
 function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
-  // return <GsapTest />
-  return <PixiDemo />
+  return <GsapDemo />
+  // return <PixiDemo />
   // return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />
