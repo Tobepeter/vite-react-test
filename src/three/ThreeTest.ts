@@ -3,12 +3,15 @@ import { cubeTest } from './demo/CubeTest'
 import { IThreeTest } from './util/IThreeTest'
 import { brightnessShader } from './demo/BrightnessShader'
 import { bloomShader } from './demo/BloomShader'
+import { normalFadeShader } from './demo/NormalFadeShader'
+
 class ThreeTest {
   curTest: IThreeTest = null
   testMap = {
     cubeTest,
     brightnessShader,
     bloomShader,
+    normalFadeShader,
   } satisfies Record<string, IThreeTest>
 
   clock = new Clock()
@@ -16,7 +19,7 @@ class ThreeTest {
   init() {
     this.clock.start()
 
-    this.curTest = this.testMap.bloomShader
+    this.curTest = this.testMap.normalFadeShader
     this.curTest.init()
 
     threeEntry.addUpdateCb(this.update)

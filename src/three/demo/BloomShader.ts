@@ -1,10 +1,4 @@
-import {
-  BoxGeometry,
-  Color,
-  Mesh,
-  MeshBasicMaterial,
-  ShaderMaterial,
-} from 'three'
+import { BoxGeometry, Color, Mesh, MeshBasicMaterial, ShaderMaterial } from 'three'
 import { IThreeTest } from '../util/IThreeTest'
 import { Random } from 'mockjs'
 import { OrbitControls } from 'three/examples/jsm/Addons.js'
