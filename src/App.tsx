@@ -9,6 +9,7 @@ import { PixiDemo } from './pixi/PixiDemo'
 import { ReactDemo } from './react/ReactDemo'
 import { SwiperDemo } from './swiper/SwiperDemo'
 import { ThreeDemo } from './three/ThreeDemo'
+import { AntdDemo } from './ui/antd/AntdDemo'
 import { ShadcnDemo } from './ui/shadcn/ShadcnDemo'
 import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo'
 import { debugUtil } from './utils/DebugUtil'
@@ -35,7 +36,8 @@ function Test() {
   // return <TailwindDemo />
   // return <PerformanceDemo />
   // return <ReactDemo />
-  return <ShadcnDemo />
+  // return <ShadcnDemo />
+  return <AntdDemo />
 }
 
 function App() {
