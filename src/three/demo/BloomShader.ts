@@ -1,8 +1,9 @@
-import { BoxGeometry, Color, Mesh, MeshBasicMaterial, ShaderMaterial } from 'three'
+import { BoxGeometry, Color, Layers, Mesh, MeshBasicMaterial, PerspectiveCamera, RawShaderMaterial, ShaderMaterial, UniformsUtils } from 'three'
 import { IThreeTest } from '../util/IThreeTest'
 import { Random } from 'mockjs'
-import { OrbitControls } from 'three/examples/jsm/Addons.js'
+import { EffectComposer, FullScreenQuad, OrbitControls, OutputShader, RenderPass, UnrealBloomPass } from 'three/examples/jsm/Addons.js'
 import { debugTexture } from '../util/debug/DebugTexture'
+import { Pane } from 'tweakpane'
 
 /**
  * 泛光
@@ -15,6 +16,12 @@ class BloomShader implements IThreeTest {
   controls: OrbitControls
 
   cube: Mesh
+  offScreenLayerIndex = 2
+  offScreenCamera: PerspectiveCamera
+  composer: EffectComposer
+  renderScenePass: RenderPass
+  bloomPass: UnrealBloomPass
+  pane: Pane
 
   vertexShader = /** glsl */ `
     varying vec2 vUv;
@@ -40,6 +47,9 @@ class BloomShader implements IThreeTest {
     this.createEnvCubes()
     this.addControls()
     this.initCube()
+    this.initOffScreenCamera()
+    this.initEffectComposer()
+    this.addPane()
   }
 
   private addControls() {
@@ -94,10 +104,107 @@ class BloomShader implements IThreeTest {
 
     const texture = debugTexture.chessboard
     mtl.uniforms.tDiffuse.value = texture
+
+    this.cube.layers.set(this.offScreenLayerIndex)
+  }
+
+  private initOffScreenCamera() {
+    const cam = new PerspectiveCamera()
+    cam.copy(threeEntry.camera)
+    cam.updateProjectionMatrix()
+    cam.layers.set(this.offScreenLayerIndex)
+    threeEntry.testRoot.add(cam)
+    this.offScreenCamera = cam
+  }
+
+  private initEffectComposer() {
+    const composer = new EffectComposer(threeEntry.renderer)
+    this.composer = composer
+    composer.renderToScreen = false
+
+    this.renderScenePass = new RenderPass(threeEntry.scene, this.offScreenCamera)
+    this.renderScenePass.clearAlpha = 0
+    composer.addPass(this.renderScenePass)
+
+    this.bloomPass = new UnrealBloomPass(undefined, 1, 0, 0)
+    composer.addPass(this.bloomPass)
+
+    threeEntry.postRenderList.push(this.render)
+  }
+
+  private addPane() {
+    const pane = new Pane()
+    this.pane = pane
+    const params = {
+      threshold: 0.1,
+      strength: 0.1,
+      radius: 0.1,
+    }
+    pane
+      .addBinding(params, 'threshold', {
+        min: 0,
+        max: 1,
+        step: 0.01,
+      })
+      .on('change', () => {
+        this.bloomPass.threshold = params.threshold
+      })
+    pane
+      .addBinding(params, 'strength', {
+        min: 0,
+        max: 3,
+        step: 0.01,
+      })
+      .on('change', () => {
+        this.bloomPass.strength = params.strength
+      })
+    pane
+      .addBinding(params, 'radius', {
+        min: 0,
+        max: 1,
+        step: 0.01,
+      })
+      .on('change', () => {
+        this.bloomPass.radius = params.radius
+      })
+  }
+
+  update() {
+    const cam = this.offScreenCamera
+    // NOTE: copy 会复制layer
+    cam.copy(threeEntry.camera)
+    cam.layers.set(this.offScreenLayerIndex)
+    cam.updateMatrixWorld()
+  }
+
+  render = () => {
+    this.composer.render()
+
+    // TODO: 这里的renderbuffer默认没有clear，感觉可能需要手动清空为alpha0
+    const renderer = threeEntry.renderer
+
+    const outputMaterial = new RawShaderMaterial({
+      vertexShader: OutputShader.vertexShader,
+      fragmentShader: OutputShader.fragmentShader,
+      uniforms: UniformsUtils.clone(OutputShader.uniforms),
+    })
+    const fsQuad = new FullScreenQuad(outputMaterial)
+    outputMaterial.uniforms.tDiffuse.value = this.composer.readBuffer.texture
+    outputMaterial.uniforms.toneMappingExposure.value = renderer.toneMappingExposure
+
+    // TODO: 是否有需要销毁的逻辑？
+
+    const preAutoClear = renderer.autoClear
+    renderer.autoClear = false
+    fsQuad.render(renderer)
+    renderer.autoClear = preAutoClear
   }
 
   clear() {
     this.controls.dispose()
+    this.composer.dispose()
+    this.bloomPass.dispose()
+    this.pane.dispose()
   }
 }
 

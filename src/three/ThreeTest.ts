@@ -4,6 +4,7 @@ import { IThreeTest } from './util/IThreeTest'
 import { brightnessShader } from './demo/BrightnessShader'
 import { bloomShader } from './demo/BloomShader'
 import { normalFadeShader } from './demo/NormalFadeShader'
+import { tonemapShader } from './demo/TonemapShader'
 
 class ThreeTest {
   curTest: IThreeTest = null
@@ -12,6 +13,7 @@ class ThreeTest {
     brightnessShader,
     bloomShader,
     normalFadeShader,
+    tonemapShader,
   } satisfies Record<string, IThreeTest>
 
   clock = new Clock()
@@ -19,10 +21,8 @@ class ThreeTest {
   init() {
     this.clock.start()
 
-    this.curTest = this.testMap.normalFadeShader
+    this.curTest = this.testMap.bloomShader
     this.curTest.init()
-
-    threeEntry.addUpdateCb(this.update)
   }
 
   update = () => {
@@ -35,12 +35,9 @@ class ThreeTest {
   clear() {
     if (this.curTest && this.curTest.clear) {
       this.curTest.clear()
-    } else {
-      threeEntry.cleanTestRoot()
     }
+    threeEntry.cleanTest()
     this.curTest = null
-
-    threeEntry.removeUpdateCb(this.update)
   }
 }
 
@@ -50,5 +47,8 @@ if (import.meta.hot) {
   import.meta.hot.accept(mod => {
     threeTest.clear()
     mod.threeTest.init()
+
+    // 替换callback引用
+    threeTest.update = mod.upda
   })
 }

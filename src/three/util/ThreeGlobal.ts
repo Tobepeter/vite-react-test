@@ -5,6 +5,7 @@ class ThreeGlobal {
   init() {
     this.injectUnplugin()
     this.injectThree()
+    this.injectGlobal()
   }
 
   private injectUnplugin() {
@@ -13,6 +14,12 @@ class ThreeGlobal {
 
   private injectThree() {
     win.THREE = THREE
+  }
+
+  private injectGlobal() {
+    win.renderer = threeEntry.renderer
+    win.scene = threeEntry.scene
+    win.camera = threeEntry.camera
   }
 }
 

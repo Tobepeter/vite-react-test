@@ -15,7 +15,8 @@ class ThreeEntry {
 
   isInited = false
 
-  updateCbList: Array<() => void> = []
+  preRenderList: Array<() => void> = []
+  postRenderList: Array<() => void> = []
 
   private renderLoopId = -1
 
@@ -64,11 +65,10 @@ class ThreeEntry {
   }
 
   renderLoop = () => {
-    for (const cb of this.updateCbList) {
-      cb()
-    }
-
+    this.preRenderList.forEach(cb => cb())
+    threeTest.update()
     this.renderer.render(this.scene, this.camera)
+    this.postRenderList.forEach(cb => cb())
     this.renderLoopId = requestAnimationFrame(this.renderLoop)
   }
 
@@ -76,22 +76,14 @@ class ThreeEntry {
     cancelAnimationFrame(this.renderLoopId)
   }
 
-  addUpdateCb(cb: () => void) {
-    this.updateCbList.push(cb)
-  }
-
-  removeUpdateCb(cb: () => void) {
-    const index = this.updateCbList.indexOf(cb)
-    if (index !== -1) {
-      this.updateCbList.splice(index, 1)
-    }
-  }
-
-  cleanTestRoot() {
+  cleanTest() {
     const children = this.testRoot.children
     for (const child of children) {
       this.testRoot.remove(child)
     }
+
+    this.preRenderList = []
+    this.postRenderList = []
 
     // TODO: 应该有不少webgl资源是需要释放的，比如 geometry, material, texture, renderTarget
     //  需要调用一个基于事件监听的 dispose 方法
@@ -102,7 +94,7 @@ class ThreeEntry {
     threeAdapt.destroy()
 
     this.stopRender()
-    this.cleanTestRoot()
+    this.cleanTest()
     // TODO: 暂时没想到还有什么需要销毁的?
     this.renderer.dispose()
   }
