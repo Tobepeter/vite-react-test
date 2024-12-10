@@ -54,6 +54,7 @@ class MaskTest implements ITest {
     mask.texture = debugTexture.getCircleTexture()
     sp.mask = mask
     mask.anchor.set(0.5)
+    // NOTE: 实际上还是挺常见的，比如头像修改了非原始宽高会导致缩放，而mask需要是原始宽高
     cntr.addChild(mask)
 
     const pane = new Pane()
