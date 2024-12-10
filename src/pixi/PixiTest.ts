@@ -1,6 +1,7 @@
 import { animationSpriteDemo } from './demo/AnimationSpriteDemo'
 import { cacheTest } from './demo/CacheTest'
 import { goHit } from './demo/GOHit'
+import { graphicsCacheTest } from './demo/GraphicsCacheTest'
 import { pixiLottie } from './demo/lottie/PixiLottie'
 import { maskPerfTest } from './demo/MaskPerfTest'
 import { maskTest } from './demo/MaskTest'
@@ -27,6 +28,7 @@ class PixiTest {
     textureTest,
     pixiLottie,
     pixelChecker,
+    graphicsCacheTest,
   } satisfies Record<string, ITest>
 
   init() {
