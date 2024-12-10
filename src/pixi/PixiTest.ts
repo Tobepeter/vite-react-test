@@ -2,6 +2,7 @@ import { animationSpriteDemo } from './demo/AnimationSpriteDemo'
 import { cacheTest } from './demo/CacheTest'
 import { goHit } from './demo/GOHit'
 import { pixiLottie } from './demo/lottie/PixiLottie'
+import { maskPerfTest } from './demo/MaskPerfTest'
 import { maskTest } from './demo/MaskTest'
 import { memTest } from './demo/MemTest'
 import { pixelChecker } from './demo/PixelChecker'
@@ -19,6 +20,7 @@ class PixiTest {
     timeShaderTest,
     goHit,
     memTest,
+    maskPerfTest,
     maskTest,
     cacheTest,
     animationSpriteDemo,
@@ -28,7 +30,7 @@ class PixiTest {
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.pixelChecker
+    this.curTest = this.testMap.maskTest
 
     if (this.curTest.config) {
       const { dom, input } = this.curTest.config
@@ -49,13 +51,11 @@ class PixiTest {
   }
 
   clear() {
-    // NOTE: 如果指定了clear方法，让测试类自己清理
     if (this.curTest && this.curTest.clear) {
       this.curTest.clear()
-    } else {
-      pixiEntry.cleanRoot()
     }
     this.curTest = null
+    pixiEntry.cleanRoot()
   }
 }
 

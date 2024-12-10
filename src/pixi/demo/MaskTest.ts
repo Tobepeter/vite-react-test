@@ -1,109 +1,81 @@
-import { Sprite } from 'pixi.js'
+import { Container, Sprite } from 'pixi.js'
 import { ITest } from '../util/ITest'
 import { debugTexture } from '../util/debug/DebugTexture'
-import { scriptLoader } from '../util/ScriptLoader'
-import { Random } from 'mockjs'
+import { Pane } from 'tweakpane'
 
 /**
- * Mask性能测试
+ * 遮罩测试
  *
- * 测试版本 v7
- * 经过测试，使用mask性能非常差
+ * [定位]     遮罩要注意anchor，因为anchor会影响到子节点的定位
+ * [显示]     如果一个节点作为mask使用，那么mask无论如何都是不可见的，哪怕是主体visible为false
+ * [mask渲染] mask是否visible不会影响到正常的遮罩效果
+ * [层级]     层级似乎并不重要
  */
 class MaskTest implements ITest {
-  size = 50
-  useMask = true
-  count = 300
-  range = 800
-  cacheAsBitmap = true
-  spList: Sprite[] = []
-  pane: any
+  pane: Pane
 
   init() {
-    const pane = new win.Tweakpane.Pane()
-    this.pane = pane
-
-    scriptLoader.showStats()
-
-    // 数量
-    const countList = [200, 300, 500]
-    const countLabel = 'count'
-    for (let i = 0; i < countList.length; i++) {
-      const count = countList[i]
-      pane.addButton({ title: `${count}个` }).on('click', () => {
-        this.count = count
-        this.createSprites()
-      })
-    }
-
-    // 缓存位图
-    pane
-      .addInput({ cacheAsBitmap: this.cacheAsBitmap }, 'cacheAsBitmap', {
-        label: '缓存为位图',
-      })
-      .on('change', (ev) => {
-        this.cacheAsBitmap = ev.value
-        this.updateCacheAsBitmap()
-      })
-
-    this.createSprites()
+    // this.maskAsChild()
+    this.maskAsSibling()
   }
 
-  createSprites() {
-    this.clearSpList()
-
-    const { count, range } = this
-
-    for (let i = 0; i < count; i++) {
-      const sp = this.createSp()
-      sp.x = Random.float(-range, range)
-      sp.y = Random.float(-range, range)
-      this.spList.push(sp)
-    }
-  }
-
-  updateCacheAsBitmap() {
-    this.spList.forEach((sp) => {
-      sp.cacheAsBitmap = this.cacheAsBitmap
-    })
-  }
-
-  createSp() {
-    // scriptLoader.showStats()
-
+  maskAsChild() {
     const sp = new Sprite()
-    sp.texture = debugTexture.getChessboardTexture(50, 256)
+    sp.texture = debugTexture.getChessboardTexture()
     pixiEntry.root.addChild(sp)
     sp.anchor.set(0.5)
-    sp.width = this.size
-    sp.height = this.size
 
-    if (this.useMask) {
-      const mask = new Sprite()
-      mask.texture = debugTexture.getCircleTexture()
-      sp.mask = mask
-      mask.anchor.set(0.5)
-      sp.addChild(mask)
-    }
+    const mask = new Sprite()
+    mask.texture = debugTexture.getCircleTexture()
+    mask.anchor.set(0.5)
+    sp.mask = mask
+    sp.addChild(mask)
 
-    sp.cacheAsBitmap = this.cacheAsBitmap
-
-    return sp
+    const pane = new Pane()
+    pane.addButton({ title: 'toggle mask' }).on('click', () => {
+      sp.mask = sp.mask ? null : mask
+    })
+    pane.addButton({ title: 'toggle mask visible' }).on('click', () => {
+      mask.visible = !mask.visible
+    })
+    this.pane = pane
   }
 
-  clearSpList() {
-    this.spList.forEach((sp) => {
-      sp.destroy()
+  maskAsSibling() {
+    const cntr = new Container()
+    pixiEntry.root.addChild(cntr)
+
+    const sp = new Sprite()
+    sp.texture = debugTexture.getChessboardTexture()
+    sp.anchor.set(0.5)
+    cntr.addChild(sp)
+
+    const mask = new Sprite()
+    mask.texture = debugTexture.getCircleTexture()
+    sp.mask = mask
+    mask.anchor.set(0.5)
+    cntr.addChild(mask)
+
+    const pane = new Pane()
+    pane.addButton({ title: 'toggle mask' }).on('click', () => {
+      sp.mask = sp.mask ? null : mask
     })
-    this.spList = []
+    pane.addButton({ title: 'toggle mask visible' }).on('click', () => {
+      mask.visible = !mask.visible
+    })
+    pane.addButton({ title: 'toggle sp visible' }).on('click', () => {
+      sp.visible = !sp.visible
+    })
+    pane.addButton({ title: 'toggle offset' }).on('click', () => {
+      mask.position.x = mask.position.x === 0 ? 100 : 0
+    })
+    this.pane = pane
   }
 
   clear() {
-    this.clearSpList()
-    this.spList = []
-
-    this.pane.dispose()
-    this.pane = null
+    if (this.pane) {
+      this.pane.dispose()
+    }
   }
 }
 
