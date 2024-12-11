@@ -15,6 +15,7 @@ import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo'
 import { debugUtil } from './utils/DebugUtil'
 import { globalUtil } from './utils/GlobalUtil'
 import { ViteTest } from './vite-test/ViteTest'
+import { WebGLDemo } from './webgl/WebGLDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -23,8 +24,9 @@ function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
   // return <GsapDemo />
-  return <PixiDemo />
+  // return <PixiDemo />
   // return <ThreeDemo />
+  return <WebGLDemo />
   // return <DatGUITest />
   // return <LevaTest />
   // return <TweakpaneTest />

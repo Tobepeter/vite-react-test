@@ -21,7 +21,7 @@ class ThreeTest {
   init() {
     this.clock.start()
 
-    this.curTest = this.testMap.bloomShader
+    this.curTest = this.testMap.tonemapShader
     this.curTest.init()
   }
 
