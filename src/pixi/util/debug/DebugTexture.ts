@@ -40,21 +40,12 @@ class DebugTexture {
     this.initTextures()
   }
 
-  getDummyImg(opt?: {
-    w?: number
-    h?: number
-    bgColor?: string
-    textColor?: string
-  }) {
+  getDummyImg(opt?: { w?: number; h?: number; bgColor?: string; textColor?: string }) {
     const { w = 200, h = 200, bgColor = 'fff', textColor = '000' } = opt || {}
     return `https://dummyimage.com/${w}x${h}/${bgColor}/${textColor}`
   }
 
-  getRandomDummyImg(
-    sizeList?: number[],
-    bgColorList?: string[],
-    textColorList?: string[]
-  ) {
+  getRandomDummyImg(sizeList?: number[], bgColorList?: string[], textColorList?: string[]) {
     if (!sizeList) {
       sizeList = [200, 300, 400]
     }
@@ -106,6 +97,11 @@ class DebugTexture {
     ctx.fill()
 
     return Texture.from(canvas)
+  }
+
+  getRandomColor() {
+    const color = Random.pick(Object.keys(this.colorMap))
+    return this.colorMap[color]
   }
 
   getColorTexture(color: string, size: number = 256) {

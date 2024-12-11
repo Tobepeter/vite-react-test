@@ -10,6 +10,7 @@ import { scriptLoader } from './util/ScriptLoader'
 import { debugUtil } from './util/debug/DebugUtil'
 import { PixiDomHandle } from './util/dom/PixiDomUtil'
 import { pixiInput } from './util/PixiInput'
+import { Group } from '@tweenjs/tween.js'
 
 class PixiEntry {
   isInited = false
@@ -19,7 +20,13 @@ class PixiEntry {
   stage: Container
 
   ticker: Ticker
+  tween: Group
+  stats: Stats
 
+  /**
+   * 交互容器
+   * @desc 因为默认对象是添加到root上的，所以容器包裹root
+   */
   interactRoot: Container
 
   /**
@@ -73,6 +80,8 @@ class PixiEntry {
     this.ticker.autoStart = true
     this.ticker.add(this.update)
 
+    this.tween = new Group()
+
     adapt.init(this.canvas, () => {
       this.onResize()
     })
@@ -107,8 +116,9 @@ class PixiEntry {
     this.root = null
   }
 
-  update(delta: number) {
+  update = (delta: number) => {
     pixiInput.update(delta)
+    this.tween.update()
     pixiTest.update(delta)
   }
 

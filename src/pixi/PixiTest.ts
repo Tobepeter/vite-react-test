@@ -2,6 +2,7 @@ import { animationSpriteDemo } from './demo/AnimationSpriteDemo'
 import { cacheTest } from './demo/CacheTest'
 import { goHit } from './demo/GOHit'
 import { graphicsCacheTest } from './demo/GraphicsCacheTest'
+import { hiddenRender } from './demo/HiddenRender'
 import { pixiLottie } from './demo/lottie/PixiLottie'
 import { maskPerfTest } from './demo/MaskPerfTest'
 import { maskTest } from './demo/MaskTest'
@@ -29,10 +30,11 @@ class PixiTest {
     pixiLottie,
     pixelChecker,
     graphicsCacheTest,
+    hiddenRender,
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.maskTest
+    this.curTest = this.testMap.hiddenRender
 
     if (this.curTest.config) {
       const { dom, input } = this.curTest.config
