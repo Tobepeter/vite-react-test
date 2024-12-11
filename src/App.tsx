@@ -25,8 +25,8 @@ function Test() {
   // return <SwiperDemo />
   // return <GsapDemo />
   // return <PixiDemo />
-  // return <ThreeDemo />
-  return <WebGLDemo />
+  return <ThreeDemo />
+  // return <WebGLDemo />
   // return <DatGUITest />
   // return <LevaTest />
   // return <TweakpaneTest />

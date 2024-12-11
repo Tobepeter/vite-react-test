@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Layers, Mesh, MeshBasicMaterial, PerspectiveCamera, RawShaderMaterial, ShaderMaterial, UniformsUtils } from 'three'
+import { BoxGeometry, Color, Layers, Mesh, MeshBasicMaterial, NoBlending, NormalBlending, PerspectiveCamera, RawShaderMaterial, Renderer, ShaderMaterial, UniformsUtils } from 'three'
 import { IThreeTest } from '../util/IThreeTest'
 import { Random } from 'mockjs'
 import { EffectComposer, FullScreenQuad, OrbitControls, OutputShader, RenderPass, UnrealBloomPass } from 'three/examples/jsm/Addons.js'
@@ -23,6 +23,8 @@ class BloomShader implements IThreeTest {
   bloomPass: UnrealBloomPass
   pane: Pane
 
+  enableBlend = true
+
   vertexShader = /** glsl */ `
     varying vec2 vUv;
     void main() {
@@ -44,6 +46,21 @@ class BloomShader implements IThreeTest {
   `
 
   init() {
+    // 修改body背景颜色，方便观察
+    const modifyBodyBgColor = true
+    if (modifyBodyBgColor) {
+      document.body.style.backgroundColor = 'rgba(0, 200, 200, 1)'
+    }
+
+    const verbose = true
+    if (verbose) {
+      const renderer = threeEntry.renderer
+      const gl = renderer.getContext()
+      console.log('gl.getParameter(gl.ALPHA_BITS)', gl.getParameter(gl.ALPHA_BITS))
+      console.log('gl.isEnabled(gl.BLEND)', gl.isEnabled(gl.BLEND))
+      console.log('gl.getParameter(gl.COLOR_CLEAR_VALUE)', Array.from(gl.getParameter(gl.COLOR_CLEAR_VALUE)))
+    }
+
     this.createEnvCubes()
     this.addControls()
     this.initCube()
@@ -120,14 +137,33 @@ class BloomShader implements IThreeTest {
   private initEffectComposer() {
     const composer = new EffectComposer(threeEntry.renderer)
     this.composer = composer
+
+    // 不这么设置，bloomPass开始会清除颜色直接上屏
     composer.renderToScreen = false
 
     this.renderScenePass = new RenderPass(threeEntry.scene, this.offScreenCamera)
     this.renderScenePass.clearAlpha = 0
     composer.addPass(this.renderScenePass)
+    const renderPassRender = this.renderScenePass.render
+    const enableBlend = this.enableBlend
+    this.renderScenePass.render = function () {
+      // 渲染了不透明材质又会篡改回去
+      renderPassRender.apply(this, arguments as any)
+      if (enableBlend) {
+        threeEntry.renderer.state.setBlending(NormalBlending)
+      }
+      debugger
+    }
 
     this.bloomPass = new UnrealBloomPass(undefined, 1, 0, 0)
     composer.addPass(this.bloomPass)
+
+    // 设置透明，否则会清除颜色
+    this.bloomPass.materialHighPassFilter.transparent = true
+    this.bloomPass.separableBlurMaterials.forEach(mtl => {
+      mtl.transparent = true
+    })
+    this.bloomPass.compositeMaterial.transparent = true
 
     threeEntry.postRenderList.push(this.render)
   }
@@ -171,13 +207,45 @@ class BloomShader implements IThreeTest {
 
   update() {
     const cam = this.offScreenCamera
-    // NOTE: copy 会复制layer
+    // NOTE: copy 会复制layer，需要手动还原回去
     cam.copy(threeEntry.camera)
     cam.layers.set(this.offScreenLayerIndex)
     cam.updateMatrixWorld()
   }
 
   render = () => {
+    // TEST
+    if (!win.gl) {
+      win.gl = threeEntry.renderer.getContext()
+      const clear = win.gl.clear
+      win.gl.clear = function () {
+        // debugger
+        clear.apply(this, arguments)
+      }
+
+      // monitor enableBlend
+      const enable = win.gl.enable
+      win.gl.enable = function () {
+        if (arguments[0] === win.gl.BLEND) {
+          // debugger
+        }
+        enable.apply(this, arguments)
+      }
+
+      const disable = win.gl.disable
+      win.gl.disable = function () {
+        if (arguments[0] === win.gl.BLEND) {
+          debugger
+        }
+        disable.apply(this, arguments)
+      }
+    }
+
+    const enableBlend = true
+    if (enableBlend) {
+      threeEntry.renderer.state.setBlending(NormalBlending)
+    }
+
     this.composer.render()
 
     // TODO: 这里的renderbuffer默认没有clear，感觉可能需要手动清空为alpha0
@@ -187,6 +255,7 @@ class BloomShader implements IThreeTest {
       vertexShader: OutputShader.vertexShader,
       fragmentShader: OutputShader.fragmentShader,
       uniforms: UniformsUtils.clone(OutputShader.uniforms),
+      transparent: true,
     })
     const fsQuad = new FullScreenQuad(outputMaterial)
     outputMaterial.uniforms.tDiffuse.value = this.composer.readBuffer.texture
@@ -198,6 +267,11 @@ class BloomShader implements IThreeTest {
     renderer.autoClear = false
     fsQuad.render(renderer)
     renderer.autoClear = preAutoClear
+
+    if (enableBlend) {
+      threeEntry.renderer.state.setBlending(NoBlending)
+    }
+    debugger
   }
 
   clear() {
