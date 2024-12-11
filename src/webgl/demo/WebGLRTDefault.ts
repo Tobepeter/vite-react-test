@@ -9,13 +9,17 @@ import { IWebGLTest } from '../utils/IWebGLTest'
  * 1. 想要RT透明，要开启blend
  * 2. 如果不开启blend，RT如果不clear，rt默认其实是透明的，但是会顶掉绘制canvas的颜色，导致看到body
  * 3. 只有开启了blend，才能保留背景色
+ * 4. 如果不开启canvas透明，并且关闭了blend，rt的alpha通道不重要，canvas背景直接采纳rt的颜色
+ *    如果开启blend，走正常blend的逻辑
  */
 class WebGLRTDefault implements IWebGLTest {
-  canClearRT = false
+  enableCtxAlpha = true
+  canClearRT = true
   enableBlend = false
   clearMainColor = [1.0, 0.0, 0.0, 1.0] as const
   clearColorRT = [0.0, 0.0, 1.0, 0.0] as const
   rtSize = [512, 512] as const
+  verbose = true
 
   vs = /* glsl */ `
     attribute vec4 a_position;
@@ -59,7 +63,16 @@ class WebGLRTDefault implements IWebGLTest {
   texture: WebGLTexture
 
   init() {
+    webGLEntry.config.contextParams.alpha = this.enableCtxAlpha
+
     this.gl = webGLEntry.getGL()
+
+    if (this.verbose) {
+      // 如果不开启，alphaBits是0，开启后得到的是8
+      console.log('alpha', this.gl.getParameter(this.gl.ALPHA_BITS))
+      // 如果不开启，blend是false，开启后得到的是true
+      console.log('gl.enable', this.gl.isEnabled(this.gl.BLEND))
+    }
 
     if (this.enableBlend) {
       this.gl.enable(this.gl.BLEND)

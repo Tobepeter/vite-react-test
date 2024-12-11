@@ -11,6 +11,7 @@ class WebGLEntry {
       depth: true,
       stencil: true,
       antialias: true,
+      alpha: true,
     } as WebGLContextAttributes,
   }
 
