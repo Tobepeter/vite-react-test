@@ -1,4 +1,5 @@
 import { animationSpriteDemo } from './demo/AnimationSpriteDemo'
+import { batchTest } from './demo/BatchTest'
 import { cacheTest } from './demo/CacheTest'
 import { goHit } from './demo/GOHit'
 import { graphicsCacheTest } from './demo/GraphicsCacheTest'
@@ -31,10 +32,11 @@ class PixiTest {
     pixelChecker,
     graphicsCacheTest,
     hiddenRender,
+    batchTest,
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.hiddenRender
+    this.curTest = this.testMap.batchTest
 
     if (this.curTest.config) {
       const { dom, input } = this.curTest.config
