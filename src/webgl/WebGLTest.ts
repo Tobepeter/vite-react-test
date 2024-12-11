@@ -1,11 +1,17 @@
+import { webGLRTDefault } from './demo/WebGLRTDefault'
 import { webGLTriangle } from './demo/WebGLTriangle'
 import { IWebGLTest } from './utils/IWebGLTest'
 
 class WebGLTest {
   currTest: IWebGLTest
 
+  testMap = {
+    webGLTriangle,
+    webGLRTDefault,
+  } satisfies Record<string, IWebGLTest>
+
   init() {
-    this.currTest = webGLTriangle
+    this.currTest = this.testMap.webGLRTDefault
     this.currTest.init()
   }
 
