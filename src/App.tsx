@@ -9,11 +9,15 @@ import { PixiDemo } from './pixi/PixiDemo'
 import { ReactDemo } from './react/ReactDemo'
 import { SwiperDemo } from './swiper/SwiperDemo'
 import { ThreeDemo } from './three/ThreeDemo'
+import { TSDemo } from './typescript/TSDemo'
 import { AntdDemo } from './ui/antd/AntdDemo'
 import { ShadcnDemo } from './ui/shadcn/ShadcnDemo'
 import { UseHotKeyDemo } from './use-hot-keys/UseHotKeyDemo'
 import { debugUtil } from './utils/DebugUtil'
+import { decorate, inject, monitorLog } from './utils/deco/Decorate'
 import { globalUtil } from './utils/GlobalUtil'
+import { storage } from './utils/Storage'
+import { UtilTest } from './utils/test/UtilTest'
 import { ViteTest } from './vite-test/ViteTest'
 import { WebGLDemo } from './webgl/WebGLDemo'
 
@@ -25,8 +29,7 @@ function Test() {
   // return <SwiperDemo />
   // return <GsapDemo />
   // return <PixiDemo />
-  return <ThreeDemo />
-  // return <WebGLDemo />
+  // return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />
   // return <TweakpaneTest />
@@ -40,6 +43,8 @@ function Test() {
   // return <ReactDemo />
   // return <ShadcnDemo />
   // return <AntdDemo />
+  // return <TSDemo />
+  return <UtilTest />
 }
 
 function App() {

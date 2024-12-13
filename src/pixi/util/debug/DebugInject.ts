@@ -1,4 +1,4 @@
-import { DisplayObject, Ticker } from 'pixi.js'
+import { DisplayObject, Matrix, Ticker } from 'pixi.js'
 
 import { debugHelper } from './DebugHelper'
 import { debugVisual } from './DebugVisual'
@@ -44,6 +44,51 @@ class DebugInject {
         },
       })
     }
+
+    const getMatrixStr = (m: Matrix) => {
+      const f2 = (v: number) => v.toFixed(2)
+      return `[${f2(m.a)}, ${f2(m.b)}, ${f2(m.c)}, ${f2(m.d)}, ${f2(m.tx)}, ${f2(m.ty)}]`
+    }
+
+    Object.defineProperty(DisplayObject.prototype, 'matStr', {
+      get: function () {
+        return getMatrixStr(this.transform.localTransform)
+      },
+    })
+
+    Object.defineProperty(DisplayObject.prototype, 'worldMatStr', {
+      get: function () {
+        return getMatrixStr(this.transform.worldTransform)
+      },
+    })
+
+    Object.defineProperty(DisplayObject.prototype, 'printMatStrChain', {
+      get: function () {
+        let str = this.matStr
+        let parent = this.parent
+        while (parent) {
+          // += \n
+          str += '\n' + parent.matStr
+          parent = parent.parent
+        }
+        console.log(str)
+      },
+    })
+
+    Object.defineProperty(DisplayObject.prototype, 'printWorldMatStrChain', {
+      get: function () {
+        let name: string
+        name = this.name || this.constructor.name.toLowerCase()
+        let str = `${name}: ${this.worldMatStr}`
+        let parent = this.parent
+        while (parent) {
+          name = parent.name || parent.constructor.name.toLowerCase()
+          str += '\n' + `${name}: ${parent.worldMatStr}`
+          parent = parent.parent
+        }
+        console.log(str)
+      },
+    })
   }
 
   injectVisualRect() {
@@ -109,7 +154,7 @@ class DebugInject {
 
     Object.defineProperty(Ticker.prototype, 'allFn', {
       get: function () {
-        return this.all.map((item) => item.fn)
+        return this.all.map(item => item.fn)
       },
     })
 

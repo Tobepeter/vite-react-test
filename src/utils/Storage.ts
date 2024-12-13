@@ -1,8 +1,10 @@
+import { decorate, inject } from './deco/Decorate'
+
 /**
  * 数据存储
  *
  * features
- * - 支持scope范围读取
+ * - 支持scope范围读取(有默认scope)
  * - 支持throttle保存
  * - 自动删除陈旧的数据
  */
@@ -16,13 +18,15 @@ export class Storage<T extends object = any> {
     saveThrottle: 1000,
     maxSaveTime: 1 * 3600 * 1000, // 1 hour
     scope: Storage.defaultScope,
+    // verbose: false,
+    verbose: true,
   }
 
   scope: string
   isThrottle: boolean
   saveThrottle: number
   maxSaveTime: number
-
+  verbose: boolean
   data: T | null = null
 
   private lastSaveTime = 0
@@ -41,7 +45,7 @@ export class Storage<T extends object = any> {
     this.isThrottle = config.canThrottle
     this.saveThrottle = config.saveThrottle
     this.maxSaveTime = config.maxSaveTime
-
+    this.verbose = config.verbose
     this.restoreData()
   }
 
@@ -54,6 +58,15 @@ export class Storage<T extends object = any> {
       this.restoreData()
     }
     return this.data ? this.data[key] : null
+  }
+
+  setByKey<K extends keyof T>(key: K, value: T[K]) {
+    if (!this.data) {
+      this.restoreData()
+    }
+    this.data[key] = value
+    // TODO: 可以延迟队列消费
+    this.saveData()
   }
 
   restoreData() {
@@ -101,7 +114,11 @@ export class Storage<T extends object = any> {
         lastSaveTime: Date.now(),
       },
     }
-    localStorage.setItem(key, JSON.stringify(saveData))
+    const saveDataStr = JSON.stringify(saveData)
+    localStorage.setItem(key, saveDataStr)
+    if (this.verbose) {
+      console.log(`[storage] saveData key: ${key}, data: ${saveDataStr}`)
+    }
   }
 
   save() {
@@ -130,7 +147,53 @@ export class Storage<T extends object = any> {
       this.saveDataTimer = null
     }, this.saveThrottle) as unknown as number
   }
+
+  getPersistKey(cls: any, prop: string | symbol) {
+    // TODO: 很多类似的代码，有空兼容symbol
+    if (typeof prop === 'symbol') {
+      console.warn('prop not support symbol')
+      return 'symbol'
+    }
+    const persistKey = `${cls.name}-${prop}`
+    return persistKey
+  }
+
+  getPersistValue(cls: any, prop: string | symbol) {
+    const persistKey = this.getPersistKey(cls, prop) as keyof T
+    // TODO: 每次用 getByKey，那么data的意义是什么？
+    const data = this.getByKey(persistKey)
+    return data
+  }
+
+  /**
+   * 持久化属性
+   *
+   * NOTE：注意，不考虑不同实例不同值，一般面向单例，如果能支持后面可以看看
+   */
+  persist: PropertyDecorator = (proto, prop: string | symbol) => {
+    const cls = proto.constructor
+    const persistKey = this.getPersistKey(cls, prop) as keyof T
+
+    decorate.registerInit(cls, info => {
+      const data = this.getByKey(persistKey)
+
+      // NOTE: 其实不太可能为null，因为json不支持序列化null
+      if (typeof data !== 'undefined') {
+        info.ins[prop] = data
+      }
+    })
+
+    const onSet = (val: any) => {
+      this.setByKey(persistKey, val)
+    }
+
+    decorate.monitor(onSet)(proto, prop)
+  }
 }
+
+export const storage = new Storage()
+
+export const persist: typeof storage.persist = storage.persist
 
 export interface StorageData<T> {
   data: T
@@ -144,5 +207,5 @@ export interface StorageConfig {
   saveThrottle?: number
   maxSaveTime?: number
   scope?: string
-  key?: string
+  verbose?: boolean
 }

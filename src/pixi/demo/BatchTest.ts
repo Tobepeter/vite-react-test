@@ -2,7 +2,6 @@ import { Graphics, Renderer, Sprite } from 'pixi.js'
 import { ITest } from '../util/ITest'
 import { debugTexture } from '../util/debug/DebugTexture'
 import { Pane } from 'tweakpane'
-import { inject } from '@/utils/Decorate'
 
 /**
  * 渲染合批测试
@@ -14,7 +13,6 @@ import { inject } from '@/utils/Decorate'
  * [矢量精灵] 矢量和精灵是可以混搭的，都可以合批
  *
  */
-@inject
 class BatchTest implements ITest {
   pane: Pane
   paneParam = {
