@@ -5,6 +5,10 @@ import { brightnessShader } from './demo/BrightnessShader'
 import { bloomShader } from './demo/BloomShader'
 import { normalFadeShader } from './demo/NormalFadeShader'
 import { tonemapShader } from './demo/TonemapShader'
+import { hslTest } from './demo/HSLTest'
+import { hsl2rgb } from './demo/HSL2RGB'
+import { hsl2rgbSingleParam } from './demo/HSL2RGBSingleParam'
+import { lightBulb } from './demo/LightBulb'
 
 class ThreeTest {
   curTest: IThreeTest = null
@@ -14,6 +18,10 @@ class ThreeTest {
     bloomShader,
     normalFadeShader,
     tonemapShader,
+    hslTest,
+    hsl2rgb,
+    hsl2rgbSingleParam,
+    lightBulb,
   } satisfies Record<string, IThreeTest>
 
   clock = new Clock()
@@ -21,7 +29,8 @@ class ThreeTest {
   init() {
     this.clock.start()
 
-    this.curTest = this.testMap.bloomShader
+    // -- change test here --
+    this.curTest = this.testMap.normalFadeShader
     this.curTest.init()
   }
 

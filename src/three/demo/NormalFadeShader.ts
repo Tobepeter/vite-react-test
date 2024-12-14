@@ -16,7 +16,7 @@ class NormalFadeShader implements IThreeTest {
   params = {
     fadeExponent: 2.0,
     color: '#00FFFF',
-    brightnessScale: 1.0,
+    brightnessScale: 0.5,
   }
 
   // 顶点着色器：传递法线和UV
@@ -44,12 +44,82 @@ class NormalFadeShader implements IThreeTest {
     uniform float fadeExponent;
     uniform float brightnessScale;
 
+    // 辅助函数，用于 HSL 转 RGB 的计算
+    float hue2rgb(float p, float q, float t) {
+      if (t < 0.0) t += 1.0;
+      if (t > 1.0) t -= 1.0;
+      if (t < 1.0/6.0) return p + (q - p) * 6.0 * t;
+      if (t < 1.0/2.0) return q;
+      if (t < 2.0/3.0) return p + (q - p) * (2.0/3.0 - t) * 6.0;
+      return p;
+    }
+
+    vec3 hsl2rgb(float h, float s, float l) {
+      vec3 rgb;
+      
+      if (s == 0.0) {
+          rgb = vec3(l);
+      } else {
+          float q = l < 0.5 ? l * (1.0 + s) : l + s - l * s;
+          float p = 2.0 * l - q;
+          
+          float r = hue2rgb(p, q, h + 1.0/3.0);
+          float g = hue2rgb(p, q, h);
+          float b = hue2rgb(p, q, h - 1.0/3.0);
+          
+          rgb = vec3(r, g, b);
+      }
+      
+      return rgb;
+    }
+    
+    vec3 rgb2hsl(vec3 color) {
+      float maxVal = max(max(color.r, color.g), color.b);
+      float minVal = min(min(color.r, color.g), color.b);
+      float delta = maxVal - minVal;
+      
+      vec3 hsl;
+      
+      // 计算亮度 (Lightness)
+      hsl.z = (maxVal + minVal) / 2.0;
+      
+      // 计算饱和度 (Saturation)
+      if (delta == 0.0) {
+          // 如果最大值和最小值相等,说明是灰色
+          hsl.x = 0.0; // 色相未定义
+          hsl.y = 0.0; // 饱和度为0
+      } else {
+          // 根据亮度计算饱和度
+          hsl.y = hsl.z < 0.5 ? 
+                  delta / (maxVal + minVal) : 
+                  delta / (2.0 - maxVal - minVal);
+                  
+          // 计算色相 (Hue)
+          float h;
+          if (color.r == maxVal) {
+              // 红色最大
+              h = (color.g - color.b) / delta + (color.g < color.b ? 6.0 : 0.0);
+          } else if (color.g == maxVal) {
+              // 绿色最大
+              h = (color.b - color.r) / delta + 2.0;
+          } else {
+              // 蓝色最大
+              h = (color.r - color.g) / delta + 4.0;
+          }
+          
+          hsl.x = h / 6.0; // 将色相归一化到 0-1 范围
+      }
+      
+      return hsl;
+    }
+
+
     void main() {
       vec3 viewDir = normalize(-vViewPosition);
       float dotNV = dot(vNormal, viewDir);
       
+      // -- 法线系数+手动插值 --
       float intensity = pow(dotNV, fadeExponent) * brightnessScale;
-      
       vec3 finalColor;
       if (intensity <= 1.0) {
         finalColor = mix(vec3(0.0), color, intensity);
@@ -57,6 +127,20 @@ class NormalFadeShader implements IThreeTest {
         finalColor = mix(color, vec3(1.0), intensity - 1.0); // 1~2 之间插值
       }
       gl_FragColor = vec4(finalColor, 1.0);
+
+      // -- 使用 hsl 调整基础色 --
+      // float intensity = pow(dotNV, fadeExponent) * brightnessScale;
+      // vec3 hsl = rgb2hsl(color);
+      // hsl.z = brightnessScale;
+      // hsl.z = min(hsl.z, 1.0);
+      // hsl.z = max(hsl.z, 0.0);
+      // vec3 rgb = hsl2rgb(hsl.x, hsl.y, hsl.z);
+      // gl_FragColor = vec4(rgb * intensity , 1.0);
+
+      // -- 法线系数+亮度系数 --
+      // float intensity = pow(dotNV, fadeExponent) * brightnessScale;
+      // vec3 finalColor = color * intensity;
+      // gl_FragColor = vec4(finalColor, 1.0);
     }
   `
 
@@ -142,7 +226,7 @@ class NormalFadeShader implements IThreeTest {
       .addBinding(this.params, 'brightnessScale', {
         min: 0,
         max: 4.0,
-        step: 0.1,
+        step: 0.01,
         label: '亮度修正',
       })
       .on('change', ev => {
