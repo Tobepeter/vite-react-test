@@ -1,8 +1,22 @@
 import gsap from 'gsap'
 import { Pane } from 'tweakpane'
 import { Tween, Group } from '@tweenjs/tween.js'
+import { Space, Switch } from 'antd'
 
-export const GsapHidden = () => {
+/**
+ * 测试 gsap 的lag smooth
+ */
+export const GsapHiddenLag = () => {
+  const [isNoLagSmooth, setIsNoLagSmooth] = useState(false)
+
+  useEffect(() => {
+    if (isNoLagSmooth) {
+      gsap.ticker.lagSmoothing(0)
+    } else {
+      gsap.ticker.lagSmoothing(500, 33)
+    }
+  }, [isNoLagSmooth])
+
   useEffect(() => {
     const duration = 60
     const distanceX = 600
@@ -23,7 +37,7 @@ export const GsapHidden = () => {
     // })
 
     // NOTE: 使用lag smooth可以实现动画快进
-    gsap.ticker.lagSmoothing(0)
+    // gsap.ticker.lagSmoothing(0)
 
     const gsapObj = { x: 0 }
     const gsapTween = gsap.to(gsapObj, {
@@ -85,5 +99,14 @@ export const GsapHidden = () => {
     })
   }
 
-  return <>{getContent()}</>
+  return (
+    <>
+      <Space>
+        <div>关闭lag smooth</div>
+        <Switch checked={isNoLagSmooth} onChange={setIsNoLagSmooth} />
+      </Space>
+
+      <div className="mt-4 relative">{getContent()}</div>
+    </>
+  )
 }

@@ -1,11 +1,11 @@
-import { GsapHidden } from './GsapHidden'
+import { GsapHiddenLag } from './GsapHiddenLag'
 import { GsapHiddenCb } from './GsapHiddenCb'
 
 export const GsapDemo = () => {
   // return <GsapSimple />
   // return <GsapCallTime />
-  // return <GsapHidden />
+  return <GsapHiddenLag />
   // return <GsapKill />
   // return <GsapGlobal />
-  return <GsapHiddenCb />
+  // return <GsapHiddenCb />
 }
