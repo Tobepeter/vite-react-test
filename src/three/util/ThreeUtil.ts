@@ -2,9 +2,8 @@ import { WebGLRenderTarget } from 'three'
 
 class ThreeUtil {
   rt2pixels(rt: WebGLRenderTarget) {
-    const gl = rt.texture.gl
-    const pixels = new Uint8Array(gl.canvas.height * gl.canvas.width * 4)
-    gl.readPixels(0, 0, gl.canvas.width, gl.canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
+    const pixels = new Uint8Array(rt.width * rt.height * 4)
+    threeEntry.renderer.readRenderTargetPixels(rt, 0, 0, rt.width, rt.height, pixels)
     return pixels
   }
 
@@ -21,6 +20,11 @@ class ThreeUtil {
   pixelsDownload(pixels: Uint8Array, width: number, height: number, filename: string) {
     const canvas = this.pixels2Canvas(pixels, width, height)
     this.downloadCanvas(canvas, filename)
+  }
+
+  downloadRT(rt: WebGLRenderTarget, filename: string) {
+    const pixels = this.rt2pixels(rt)
+    this.pixelsDownload(pixels, rt.width, rt.height, filename)
   }
 
   downloadCanvas(canvas: HTMLCanvasElement, filename: string) {
