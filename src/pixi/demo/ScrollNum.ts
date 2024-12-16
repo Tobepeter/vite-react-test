@@ -1,15 +1,14 @@
 import { ITest } from '../util/ITest'
 import { gsap } from 'gsap'
 import { Container, Text, TextStyle, TextMetrics, Graphics, Sprite, Texture } from 'pixi.js'
+import { Pane } from 'tweakpane'
 
 class ScrollNum implements ITest {
   cntr: Container
   cntrMask: Graphics
   scrollCntr: Container
   numbers: Container[] = []
-  isAnimating = false
   currentNumber = 0
-  targetNumber = 0
 
   textStyle = new TextStyle({
     fontSize: 32,
@@ -19,16 +18,17 @@ class ScrollNum implements ITest {
   width = 100
   height = 200
 
+  duration = 0.5
+  maxNum = 9
+
+  private timeline: gsap.core.Timeline
+  private pane: Pane
+
   init() {
     this.setup()
     this.updateSize()
-
-    // TEST
+    this.initPane()
     win.scrollNum = this
-
-    setTimeout(() => {
-      this.setNum(2)
-    }, 1000)
   }
 
   setup() {
@@ -43,15 +43,17 @@ class ScrollNum implements ITest {
     cntr.addChild(scrollCntr)
 
     // 创建遮罩
-    const mask = new PIXI.Graphics()
+    const mask = new Graphics()
     this.cntrMask = mask
     cntr.addChild(mask)
-    // cntr.mask = mask
+    cntr.mask = mask
 
     // 创建数字
-    for (let i = 0; i < 11; i++) {
+    const count = this.maxNum + 1
+    const padCount = count + 1 // 尾部多一个填充
+    for (let i = 0; i < padCount; i++) {
       let textStr = i + ''
-      if (i === 10) textStr = '0'
+      if (i === padCount - 1) textStr = '0'
 
       const textCntr = new Container()
       const sp = new Sprite(Texture.WHITE)
@@ -97,51 +99,67 @@ class ScrollNum implements ITest {
   }
 
   setNum(num: number) {
-    if (this.isAnimating) return
-    this.isAnimating = true
-    this.targetNumber = num
+    this.stopAni()
 
-    // 计算目标位置
+    const dur = this.duration
     const targetPos = -num * this.height
+    const currPos = this.scrollCntr.y
+    const maxPos = -(this.maxNum + 1) * this.height
 
-    // 如果目标数字大于9,需要先滚动到0再重置位置
-    if (num > 9) {
-      // 先滚动到0
-      gsap.to(this.scrollCntr, {
-        y: -10 * this.height, // 滚动到0的位置
-        duration: 0.8,
-        ease: 'bounce.out',
-        onComplete: () => {
-          // 瞬间重置到开始位置
-          this.scrollCntr.y = 0
-          // 再滚动到目标数字
-          gsap.to(this.scrollCntr, {
-            y: targetPos,
-            duration: 0.2,
-            ease: 'none',
-            onComplete: () => {
-              this.currentNumber = num
-              this.isAnimating = false
-            },
-          })
-        },
-      })
+    // 如果目标数字小于当前数字,需要先滚动到0再重置位置
+    if (targetPos > currPos) {
+      const distance = currPos - maxPos - targetPos
+      const dur1 = ((currPos - maxPos) / distance) * dur
+      const dur2 = dur - dur1
+
+      this.timeline = gsap
+        .timeline()
+        .to(this.scrollCntr, {
+          y: maxPos,
+          duration: dur1,
+        })
+        .to(this.scrollCntr, {
+          y: targetPos,
+          duration: dur2,
+        })
     } else {
-      // 正常滚动到目标位置
-      gsap.to(this.scrollCntr, {
+      this.timeline = gsap.timeline().to(this.scrollCntr, {
         y: targetPos,
-        duration: 1,
-        ease: 'bounce.out',
-        onComplete: () => {
-          this.currentNumber = num
-          this.isAnimating = false
-        },
+        duration: dur,
       })
+    }
+
+    this.currentNumber = num
+  }
+
+  initPane() {
+    const pane = new Pane()
+    this.pane = pane
+
+    const options: object = {}
+    for (let i = 0; i <= this.maxNum; i++) {
+      options[i] = i
+    }
+
+    pane
+      .addBinding({ number: 0 }, 'number', {
+        options,
+      })
+      .on('change', ev => {
+        this.setNum(ev.value)
+      })
+  }
+
+  stopAni() {
+    if (this.timeline) {
+      this.timeline.kill()
+      this.timeline = null
     }
   }
 
   destroy() {
-    this.cntr.destroy({ children: true })
+    this.stopAni()
+    this.pane.dispose()
   }
 }
 
