@@ -30,7 +30,7 @@ class ThreeTest {
     this.clock.start()
 
     // -- change test here --
-    this.curTest = this.testMap.lightBulb
+    this.curTest = this.testMap.bloomShader
     this.curTest.init()
   }
 

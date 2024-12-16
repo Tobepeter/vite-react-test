@@ -46,7 +46,7 @@ class BloomShader implements IThreeTest {
   `
 
   init() {
-    // 修改body背景颜色，方便观察
+    // 修改body背景颜色，方便观察是否透明
     const modifyBodyBgColor = true
     if (modifyBodyBgColor) {
       document.body.style.backgroundColor = 'rgba(0, 200, 200, 1)'
@@ -142,17 +142,19 @@ class BloomShader implements IThreeTest {
     composer.renderToScreen = false
 
     this.renderScenePass = new RenderPass(threeEntry.scene, this.offScreenCamera)
+
+    // 默认会自动clear，设置0可以防止重新设置为非透明
     this.renderScenePass.clearAlpha = 0
     composer.addPass(this.renderScenePass)
     const renderPassRender = this.renderScenePass.render
     const enableBlend = this.enableBlend
     this.renderScenePass.render = function () {
-      // 渲染了不透明材质又会篡改回去
+      // TODO: 这里内部渲染其实会disable blend，不过直接渲染内容，应该不需要
+      //  但是其实感觉暂时没必要在之类关心透明的问题
       renderPassRender.apply(this, arguments as any)
       if (enableBlend) {
         threeEntry.renderer.state.setBlending(NormalBlending)
       }
-      debugger
     }
 
     this.bloomPass = new UnrealBloomPass(undefined, 1, 0, 0)
@@ -219,7 +221,9 @@ class BloomShader implements IThreeTest {
       win.gl = threeEntry.renderer.getContext()
       const clear = win.gl.clear
       win.gl.clear = function () {
-        // debugger
+        if (win.needDebugger) {
+          debugger
+        }
         clear.apply(this, arguments)
       }
 
@@ -227,7 +231,9 @@ class BloomShader implements IThreeTest {
       const enable = win.gl.enable
       win.gl.enable = function () {
         if (arguments[0] === win.gl.BLEND) {
-          // debugger
+          if (win.needDebugger) {
+            debugger
+          }
         }
         enable.apply(this, arguments)
       }
@@ -235,7 +241,9 @@ class BloomShader implements IThreeTest {
       const disable = win.gl.disable
       win.gl.disable = function () {
         if (arguments[0] === win.gl.BLEND) {
-          debugger
+          if (win.needDebugger) {
+            debugger
+          }
         }
         disable.apply(this, arguments)
       }
@@ -246,7 +254,10 @@ class BloomShader implements IThreeTest {
       threeEntry.renderer.state.setBlending(NormalBlending)
     }
 
+    // TEST
+    win.needDebugger = true
     this.composer.render()
+    win.needDebugger = false
 
     // TODO: 这里的renderbuffer默认没有clear，感觉可能需要手动清空为alpha0
     const renderer = threeEntry.renderer
@@ -271,6 +282,8 @@ class BloomShader implements IThreeTest {
     if (enableBlend) {
       threeEntry.renderer.state.setBlending(NoBlending)
     }
+
+    // TEST
     debugger
   }
 
