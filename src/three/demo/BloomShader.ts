@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Layers, Mesh, MeshBasicMaterial, NoBlending, NormalBlending, PerspectiveCamera, RawShaderMaterial, Renderer, ShaderMaterial, UniformsUtils } from 'three'
+import { BoxGeometry, Color, Layers, Mesh, MeshBasicMaterial, NoBlending, NormalBlending, PerspectiveCamera, RawShaderMaterial, Renderer, ShaderMaterial, Texture, UniformsUtils } from 'three'
 import { IThreeTest } from '../util/IThreeTest'
 import { Random } from 'mockjs'
 import { EffectComposer, FullScreenQuad, OrbitControls, OutputShader, RenderPass, UnrealBloomPass } from 'three/examples/jsm/Addons.js'
@@ -26,7 +26,8 @@ class BloomShader implements IThreeTest {
 
   enableBlend = true
 
-  vertexShader = /** glsl */ `
+  // TODO: 其他的glsl使用一个星号
+  vertexShader = /* glsl */ `
     varying vec2 vUv;
     void main() {
       vUv = uv;
@@ -34,7 +35,7 @@ class BloomShader implements IThreeTest {
     }
   `
 
-  fragmentShader = /** glsl */ `
+  fragmentShader = /* glsl */ `
     uniform sampler2D tDiffuse;
     varying vec2 vUv;
     uniform vec3 color;
@@ -45,6 +46,76 @@ class BloomShader implements IThreeTest {
       gl_FragColor = texel;
     }
   `
+
+  test_fragmentShader = /* glsl */ `
+		precision highp float;
+
+    uniform sampler2D tDiffuse;
+    varying vec2 vUv;
+
+    void main() {
+      gl_FragColor = texture2D(tDiffuse, vUv);
+
+      // vec4 texel = texture2D(tDiffuse, vUv);
+      // gl_FragColor = vec4(texel.rgb, 0.5);
+
+
+      // gl_FragColor = vec4(1.0, 0.0, 0.0, 0.1);
+    }
+  `
+
+  test_OutputFragmentShader = /* glsl */ `
+	
+		precision highp float;
+
+		uniform sampler2D tDiffuse;
+
+		#include <tonemapping_pars_fragment>
+		#include <colorspace_pars_fragment>
+
+		varying vec2 vUv;
+
+		void main() {
+
+			gl_FragColor = texture2D( tDiffuse, vUv );
+
+			// tone mapping
+
+			#ifdef LINEAR_TONE_MAPPING
+
+				gl_FragColor.rgb = LinearToneMapping( gl_FragColor.rgb );
+
+			#elif defined( REINHARD_TONE_MAPPING )
+
+				gl_FragColor.rgb = ReinhardToneMapping( gl_FragColor.rgb );
+
+			#elif defined( CINEON_TONE_MAPPING )
+
+				gl_FragColor.rgb = OptimizedCineonToneMapping( gl_FragColor.rgb );
+
+			#elif defined( ACES_FILMIC_TONE_MAPPING )
+
+				gl_FragColor.rgb = ACESFilmicToneMapping( gl_FragColor.rgb );
+
+			#elif defined( AGX_TONE_MAPPING )
+
+				gl_FragColor.rgb = AgXToneMapping( gl_FragColor.rgb );
+
+			#elif defined( NEUTRAL_TONE_MAPPING )
+
+				gl_FragColor.rgb = NeutralToneMapping( gl_FragColor.rgb );
+
+			#endif
+
+			// color space
+
+			#ifdef SRGB_TRANSFER
+
+				gl_FragColor = sRGBTransferOETF( gl_FragColor );
+
+			#endif
+
+		}`
 
   init() {
     // 修改body背景颜色，方便观察是否透明
@@ -262,22 +333,44 @@ class BloomShader implements IThreeTest {
     // win.needDebugger = true
     this.composer.render()
     // win.needDebugger = false
-    debugger
 
     // TODO: 这里的renderbuffer默认没有clear，感觉可能需要手动清空为alpha0
     const renderer = threeEntry.renderer
 
     const outputMaterial = new RawShaderMaterial({
       vertexShader: OutputShader.vertexShader,
-      fragmentShader: OutputShader.fragmentShader,
+      // fragmentShader: OutputShader.fragmentShader,
+      // fragmentShader: this.test_OutputFragmentShader,
+      fragmentShader: this.test_fragmentShader,
       uniforms: UniformsUtils.clone(OutputShader.uniforms),
       transparent: true,
     })
     const fsQuad = new FullScreenQuad(outputMaterial)
-    outputMaterial.uniforms.tDiffuse.value = this.composer.readBuffer.texture
+    // outputMaterial.uniforms.tDiffuse.value = this.composer.readBuffer.texture
+    // TEST
+    // outputMaterial.uniforms.tDiffuse.value = debugTexture.getCircleTexture()
+
+    // TEST: 重新作为canvas然后使用
+    const canvas = threeUtil.rt2Canvas(this.composer.readBuffer)
+    outputMaterial.uniforms.tDiffuse.value = new Texture(canvas)
+    if (win.downloadCanvas) {
+      win.downloadCanvas = false
+      threeUtil.downloadCanvas(canvas, 'canvas.png')
+    }
+    if (!win.forceDisplayCanvas) {
+      threeUtil.forceDisplayCanvas(canvas)
+      win.forceDisplayCanvas = true
+    }
+
     outputMaterial.uniforms.toneMappingExposure.value = renderer.toneMappingExposure
 
     // TODO: 是否有需要销毁的逻辑？
+
+    // TEST
+    if (win.downloadFinal) {
+      win.downloadFinal = false
+      threeUtil.downloadRT(this.composer.readBuffer, 'bloom.png')
+    }
 
     const preAutoClear = renderer.autoClear
     renderer.autoClear = false
@@ -287,9 +380,6 @@ class BloomShader implements IThreeTest {
     if (enableBlend) {
       threeEntry.renderer.state.setBlending(NoBlending)
     }
-
-    // TEST
-    debugger
   }
 
   clear() {

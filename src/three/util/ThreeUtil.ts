@@ -1,12 +1,25 @@
-import { WebGLRenderTarget } from 'three'
+import { Vector2, WebGLRenderTarget } from 'three'
 
 class ThreeUtil {
+  /**
+   * 将渲染目标的像素数据转换为类型化数组
+   * @param rt 渲染目标 可以为null，表示当前屏幕
+   * @returns 像素数据
+   */
   rt2pixels(rt: WebGLRenderTarget) {
-    const isHalfFloat = rt.texture.type === THREE.HalfFloatType
-    const pixelsCount = rt.width * rt.height * 4
-    const pixels = isHalfFloat ? new Uint16Array(pixelsCount) : new Uint8Array(pixelsCount)
+    let isHalfFloat = false
+    let pixels: Uint8Array | Uint16Array
 
-    threeEntry.renderer.readRenderTargetPixels(rt, 0, 0, rt.width, rt.height, pixels)
+    const size = this.getRTSize(rt)
+    const pixelsCount = size.x * size.y * 4
+    if (rt) {
+      isHalfFloat = rt.texture.type === THREE.HalfFloatType
+      pixels = isHalfFloat ? new Uint16Array(pixelsCount) : new Uint8Array(pixelsCount)
+    } else {
+      pixels = new Uint8Array(pixelsCount)
+    }
+
+    threeEntry.renderer.readRenderTargetPixels(rt, 0, 0, size.x, size.y, pixels)
 
     if (isHalfFloat) {
       const uint8Pixels = new Uint8Array(pixels.length)
@@ -19,6 +32,14 @@ class ThreeUtil {
     return pixels as Uint8Array
   }
 
+  getRTSize(rt?: WebGLRenderTarget) {
+    if (rt) {
+      return new Vector2(rt.width, rt.height)
+    }
+    const gl = threeEntry.renderer.getContext()
+    return new Vector2(gl.drawingBufferWidth, gl.drawingBufferHeight)
+  }
+
   pixels2Canvas(pixels: Uint8Array, width: number, height: number) {
     const canvas = document.createElement('canvas')
     canvas.width = width
@@ -29,14 +50,32 @@ class ThreeUtil {
     return canvas
   }
 
-  pixelsDownload(pixels: Uint8Array, width: number, height: number, filename: string) {
+  rt2Canvas(rt: WebGLRenderTarget) {
+    const pixels = this.rt2pixels(rt)
+    const size = this.getRTSize(rt)
+    return this.pixels2Canvas(pixels, size.x, size.y)
+  }
+
+  dataURLFromPixels(pixels: Uint8Array, width: number, height: number) {
+    const canvas = this.pixels2Canvas(pixels, width, height)
+    return canvas.toDataURL()
+  }
+
+  dataURLFromRT(rt: WebGLRenderTarget) {
+    const pixels = this.rt2pixels(rt)
+    const size = this.getRTSize(rt)
+    return this.dataURLFromPixels(pixels, size.x, size.y)
+  }
+
+  downloadPixels(pixels: Uint8Array, width: number, height: number, filename: string) {
     const canvas = this.pixels2Canvas(pixels, width, height)
     this.downloadCanvas(canvas, filename)
   }
 
   downloadRT(rt: WebGLRenderTarget, filename: string) {
     const pixels = this.rt2pixels(rt)
-    this.pixelsDownload(pixels, rt.width, rt.height, filename)
+    const size = this.getRTSize(rt)
+    this.downloadPixels(pixels, size.x, size.y, filename)
   }
 
   downloadCanvas(canvas: HTMLCanvasElement, filename: string) {
@@ -44,6 +83,19 @@ class ThreeUtil {
     a.href = canvas.toDataURL()
     a.download = filename
     a.click()
+  }
+
+  forceDisplayCanvas(canvas: HTMLCanvasElement) {
+    canvas.style.cssText = `
+      position: fixed;
+      background: #FFFFFF;
+      width: 300px;
+      height: 300px;
+      top: 20px;
+      left: 20px;
+      zIndex: 999;
+    `
+    document.body.appendChild(canvas)
   }
 }
 

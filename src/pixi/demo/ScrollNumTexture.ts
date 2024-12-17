@@ -259,7 +259,7 @@ class ScrollNumTexture implements ITest {
       autoMode: true,
       noAni: false,
     }
-    // const mainFolder = pane.addFolder({ title: '数值配置' })
+
     pane.addBinding(params, 'number', { label: '数字' }).on('change', ev => {
       const num = parseInt(ev.value)
       this.setNumOpt(num, {
