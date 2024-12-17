@@ -13,6 +13,7 @@ import { rectTest } from './demo/RectTest'
 import { textureTest } from './demo/TextureTest'
 import { timeShaderTest } from './demo/TimeShaderTest'
 import { scrollNum } from './demo/ScrollNum'
+import { scrollNumTexture } from './demo/ScrollNumTexture'
 import { debugQueryRunner } from './util/debug/DebugQueryRunner'
 import type { ITest } from './util/ITest'
 import { pixiInput } from './util/PixiInput'
@@ -35,10 +36,11 @@ class PixiTest {
     hiddenRender,
     batchTest,
     scrollNum,
+    scrollNumTexture,
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.scrollNum
+    this.curTest = this.testMap.scrollNumTexture
 
     if (this.curTest.config) {
       const { dom, input } = this.curTest.config

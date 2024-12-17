@@ -4,6 +4,7 @@ import { Random } from 'mockjs'
 import { EffectComposer, FullScreenQuad, OrbitControls, OutputShader, RenderPass, UnrealBloomPass } from 'three/examples/jsm/Addons.js'
 import { debugTexture } from '../util/debug/DebugTexture'
 import { Pane } from 'tweakpane'
+import { threeUtil } from '../util/ThreeUtil'
 
 /**
  * 泛光
@@ -67,6 +68,9 @@ class BloomShader implements IThreeTest {
     this.initOffScreenCamera()
     this.initEffectComposer()
     this.addPane()
+
+    // TEST
+    win.threeUtil = threeUtil
   }
 
   private addControls() {
@@ -255,9 +259,10 @@ class BloomShader implements IThreeTest {
     }
 
     // TEST
-    win.needDebugger = true
+    // win.needDebugger = true
     this.composer.render()
-    win.needDebugger = false
+    // win.needDebugger = false
+    debugger
 
     // TODO: 这里的renderbuffer默认没有clear，感觉可能需要手动清空为alpha0
     const renderer = threeEntry.renderer

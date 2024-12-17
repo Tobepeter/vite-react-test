@@ -118,6 +118,9 @@ class ScrollNum implements ITest {
           y: maxPos,
           duration: dur1,
         })
+        .call(() => {
+          this.scrollCntr.y = 0
+        })
         .to(this.scrollCntr, {
           y: targetPos,
           duration: dur2,

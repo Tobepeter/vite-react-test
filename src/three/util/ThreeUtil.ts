@@ -2,9 +2,21 @@ import { WebGLRenderTarget } from 'three'
 
 class ThreeUtil {
   rt2pixels(rt: WebGLRenderTarget) {
-    const pixels = new Uint8Array(rt.width * rt.height * 4)
+    const isHalfFloat = rt.texture.type === THREE.HalfFloatType
+    const pixelsCount = rt.width * rt.height * 4
+    const pixels = isHalfFloat ? new Uint16Array(pixelsCount) : new Uint8Array(pixelsCount)
+
     threeEntry.renderer.readRenderTargetPixels(rt, 0, 0, rt.width, rt.height, pixels)
-    return pixels
+
+    if (isHalfFloat) {
+      const uint8Pixels = new Uint8Array(pixels.length)
+      for (let i = 0; i < pixels.length; i++) {
+        // NOTE: half float 其实精度是更高的，而且gpu中也是float类型，但是cpu中只有uint16能够接受这个类型，所以得到的是uint
+        uint8Pixels[i] = Math.round((pixels[i] / 65535) * 255)
+      }
+      return uint8Pixels
+    }
+    return pixels as Uint8Array
   }
 
   pixels2Canvas(pixels: Uint8Array, width: number, height: number) {
