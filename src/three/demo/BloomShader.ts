@@ -351,16 +351,19 @@ class BloomShader implements IThreeTest {
     // outputMaterial.uniforms.tDiffuse.value = debugTexture.getCircleTexture()
 
     // TEST: 重新作为canvas然后使用
-    const canvas = threeUtil.rt2Canvas(this.composer.readBuffer)
-    outputMaterial.uniforms.tDiffuse.value = new Texture(canvas)
-    if (win.downloadCanvas) {
-      win.downloadCanvas = false
-      threeUtil.downloadCanvas(canvas, 'canvas.png')
+    const test_canvas = () => {
+      const canvas = threeUtil.rt2Canvas(this.composer.readBuffer)
+      if (win.downloadCanvas) {
+        win.downloadCanvas = false
+        threeUtil.downloadCanvas(canvas, 'canvas.png')
+      }
+      if (!win.forceDisplayCanvas) {
+        threeUtil.forceDisplayCanvas(canvas)
+        win.forceDisplayCanvas = true
+      }
+      outputMaterial.uniforms.tDiffuse.value = new Texture(canvas)
     }
-    if (!win.forceDisplayCanvas) {
-      threeUtil.forceDisplayCanvas(canvas)
-      win.forceDisplayCanvas = true
-    }
+    test_canvas()
 
     outputMaterial.uniforms.toneMappingExposure.value = renderer.toneMappingExposure
 
