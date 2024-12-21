@@ -27,8 +27,8 @@ debugUtil.init()
 function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
-  return <GsapDemo />
-  // return <PixiDemo />
+  // return <GsapDemo />
+  return <PixiDemo />
   // return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />

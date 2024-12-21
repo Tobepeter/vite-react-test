@@ -14,6 +14,7 @@ import { textureTest } from './demo/TextureTest'
 import { timeShaderTest } from './demo/TimeShaderTest'
 import { scrollNum } from './demo/ScrollNum'
 import { scrollNumTexture } from './demo/ScrollNumTexture'
+import { pivotNotFollowTest } from './demo/PivotNotFollowTest'
 import { debugQueryRunner } from './util/debug/DebugQueryRunner'
 import type { ITest } from './util/ITest'
 import { pixiInput } from './util/PixiInput'
@@ -37,10 +38,11 @@ class PixiTest {
     batchTest,
     scrollNum,
     scrollNumTexture,
+    pivotNotFollowTest,
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.scrollNumTexture
+    this.curTest = this.testMap.pivotNotFollowTest
 
     if (this.curTest.config) {
       const { dom, input } = this.curTest.config
