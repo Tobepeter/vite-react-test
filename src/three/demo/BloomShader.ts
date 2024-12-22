@@ -1,10 +1,27 @@
-import { BoxGeometry, Color, Layers, Mesh, MeshBasicMaterial, NoBlending, NormalBlending, PerspectiveCamera, RawShaderMaterial, Renderer, ShaderMaterial, Texture, UniformsUtils } from 'three'
+import {
+  BoxGeometry,
+  Color,
+  Layers,
+  Mesh,
+  MeshBasicMaterial,
+  NoBlending,
+  NormalBlending,
+  PerspectiveCamera,
+  PlaneGeometry,
+  RawShaderMaterial,
+  Renderer,
+  ShaderMaterial,
+  Texture,
+  UniformsUtils,
+  WebGLRenderTarget,
+} from 'three'
 import { IThreeTest } from '../util/IThreeTest'
 import { Random } from 'mockjs'
 import { EffectComposer, FullScreenQuad, OrbitControls, OutputShader, RenderPass, UnrealBloomPass } from 'three/examples/jsm/Addons.js'
 import { debugTexture } from '../util/debug/DebugTexture'
 import { Pane } from 'tweakpane'
 import { threeUtil } from '../util/ThreeUtil'
+import { glUtil } from '../util/GLUtil'
 
 /**
  * 泛光
@@ -54,10 +71,8 @@ class BloomShader implements IThreeTest {
     varying vec2 vUv;
 
     void main() {
-      gl_FragColor = texture2D(tDiffuse, vUv);
-
-      // vec4 texel = texture2D(tDiffuse, vUv);
-      // gl_FragColor = vec4(texel.rgb, 0.5);
+      // gl_FragColor = texture2D(tDiffuse, vUv);
+      gl_FragColor = vec4(texture2D(tDiffuse, vUv).rgb, 0.5);
 
 
       // gl_FragColor = vec4(1.0, 0.0, 0.0, 0.1);
@@ -142,6 +157,10 @@ class BloomShader implements IThreeTest {
 
     // TEST
     win.threeUtil = threeUtil
+    win.glUtil = glUtil
+    win.gl = threeEntry.renderer.getContext()
+
+    glUtil.initEnumMap()
   }
 
   private addControls() {
@@ -290,39 +309,84 @@ class BloomShader implements IThreeTest {
     cam.updateMatrixWorld()
   }
 
+  // TEST
+  private hasRender = false
+  private renderRT: WebGLRenderTarget
+  private plane: Mesh
   render = () => {
-    // TEST
-    if (!win.gl) {
-      win.gl = threeEntry.renderer.getContext()
-      const clear = win.gl.clear
-      win.gl.clear = function () {
-        if (win.needDebugger) {
-          debugger
+    if (this.hasRender) {
+      if (!this.plane) {
+        const startZ = 1
+        const mtl = new MeshBasicMaterial({ transparent: true, opacity: 1 })
+        const plane = new Mesh(new PlaneGeometry(2, 2), mtl)
+        threeEntry.testRoot.add(plane)
+        plane.position.set(0, 0, startZ)
+        this.plane = plane
+        mtl.map = this.renderRT.texture
+
+        // TEST
+        // setTimeout(() => {
+        //   threeUtil.downloadTexture(mtl.map, 'bloom.png')
+        // }, 1000)
+
+        const addPlaneBg = () => {
+          const planeBgMtl = new MeshBasicMaterial({ transparent: true, color: 0xffffff, opacity: 0.5 })
+          const planeBg = new Mesh(new PlaneGeometry(2, 2), planeBgMtl)
+          threeEntry.testRoot.add(planeBg)
+          let z = -1 + startZ
+          planeBg.position.set(0, 0, z)
+
+          setInterval(() => {
+            z = Math.sin(Date.now() / 1000) + startZ
+            planeBg.position.set(0, 0, z)
+          }, 1)
         }
-        clear.apply(this, arguments)
+        // addPlaneBg()
       }
 
-      // monitor enableBlend
-      const enable = win.gl.enable
-      win.gl.enable = function () {
-        if (arguments[0] === win.gl.BLEND) {
-          if (win.needDebugger) {
-            debugger
-          }
-        }
-        enable.apply(this, arguments)
+      // TEST
+      if (win.downloadFinal) {
+        win.downloadFinal = false
+        const mtl = this.plane.material as MeshBasicMaterial
+        threeUtil.downloadTexture(mtl.map, 'bloom.png')
       }
 
-      const disable = win.gl.disable
-      win.gl.disable = function () {
-        if (arguments[0] === win.gl.BLEND) {
-          if (win.needDebugger) {
-            debugger
-          }
-        }
-        disable.apply(this, arguments)
-      }
+      return
     }
+    this.hasRender = true
+
+    // TEST
+    // if (!win.gl) {
+    //   win.gl = threeEntry.renderer.getContext()
+    //   const clear = win.gl.clear
+    //   win.gl.clear = function () {
+    //     if (win.needDebugger) {
+    //       debugger
+    //     }
+    //     clear.apply(this, arguments)
+    //   }
+
+    //   // monitor enableBlend
+    //   const enable = win.gl.enable
+    //   win.gl.enable = function () {
+    //     if (arguments[0] === win.gl.BLEND) {
+    //       if (win.needDebugger) {
+    //         debugger
+    //       }
+    //     }
+    //     enable.apply(this, arguments)
+    //   }
+
+    //   const disable = win.gl.disable
+    //   win.gl.disable = function () {
+    //     if (arguments[0] === win.gl.BLEND) {
+    //       if (win.needDebugger) {
+    //         debugger
+    //       }
+    //     }
+    //     disable.apply(this, arguments)
+    //   }
+    // }
 
     const enableBlend = true
     if (enableBlend) {
@@ -346,7 +410,7 @@ class BloomShader implements IThreeTest {
       transparent: true,
     })
     const fsQuad = new FullScreenQuad(outputMaterial)
-    // outputMaterial.uniforms.tDiffuse.value = this.composer.readBuffer.texture
+    outputMaterial.uniforms.tDiffuse.value = this.composer.readBuffer.texture
     // TEST
     // outputMaterial.uniforms.tDiffuse.value = debugTexture.getCircleTexture()
 
@@ -363,7 +427,10 @@ class BloomShader implements IThreeTest {
       }
       outputMaterial.uniforms.tDiffuse.value = new Texture(canvas)
     }
-    test_canvas()
+    // test_canvas()
+
+    // TEST
+    this.renderRT = this.composer.readBuffer
 
     outputMaterial.uniforms.toneMappingExposure.value = renderer.toneMappingExposure
 
@@ -374,6 +441,11 @@ class BloomShader implements IThreeTest {
       win.downloadFinal = false
       threeUtil.downloadRT(this.composer.readBuffer, 'bloom.png')
     }
+
+    // TEST
+    setTimeout(() => {
+      threeUtil.downloadTexture(this.renderRT.texture, 'bloom.png')
+    }, 200)
 
     const preAutoClear = renderer.autoClear
     renderer.autoClear = false

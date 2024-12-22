@@ -1,4 +1,5 @@
-import { Vector2, WebGLRenderTarget } from 'three'
+import { Mesh, MeshBasicMaterial, NormalBlending, OrthographicCamera, PlaneGeometry, Scene, Texture, Vector2, WebGLRenderTarget } from 'three'
+import { glUtil } from './GLUtil'
 
 class ThreeUtil {
   /**
@@ -96,6 +97,58 @@ class ThreeUtil {
       zIndex: 999;
     `
     document.body.appendChild(canvas)
+  }
+
+  downloadTexture(texture: Texture, filename: string) {
+    // TODO: 此方法还没有验证
+    let valid = true
+    if (!texture.image) {
+      valid = false
+    } else if (!texture.image.width || !texture.image.height) {
+      valid = false
+    }
+    if (!valid) {
+      console.error('Texture is not valid')
+      return
+    }
+
+    const renderer = threeEntry.renderer
+
+    const rt = new WebGLRenderTarget(texture.image.width, texture.image.height)
+
+    const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1)
+    // TODO: 不需要设置z好像也能拍到，为什么
+    camera.position.set(0, 0, 0.1)
+    const scene = new Scene()
+    const geometry = new PlaneGeometry(2, 2)
+    const material = new MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+      // blending: NormalBlending,
+    })
+    const mesh = new Mesh(geometry, material)
+    scene.add(mesh)
+
+    const currentRT = renderer.getRenderTarget()
+    const currentAutoClear = renderer.autoClear
+    renderer.setRenderTarget(rt)
+    renderer.autoClear = false
+
+    // TEST
+    debugger
+    glUtil.monitorCommon()
+    renderer.render(scene, camera)
+    glUtil.unmonitor()
+    debugger
+
+    this.downloadRT(rt, filename)
+
+    renderer.setRenderTarget(currentRT)
+    renderer.autoClear = currentAutoClear
+
+    rt.dispose()
+    geometry.dispose()
+    material.dispose()
   }
 }
 
