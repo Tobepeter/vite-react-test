@@ -104,7 +104,7 @@ class DebugInject {
     Object.defineProperty(DisplayObject.prototype, 'showPos', {
       get: function () {
         if (!this.showPosRect) {
-          debugVisual.showRect(this.position, this.parent)
+          debugVisual.showPos(this.position, this.parent)
         }
       },
     })

@@ -9,6 +9,7 @@ class DebugVisual {
   domKey = 'debug-visual'
   dom: HTMLDivElement
   rectName = 'debug-rect'
+  posName = 'debug-pos'
 
   init() {
     this.initDom()
@@ -183,12 +184,20 @@ class DebugVisual {
    * @param parent 展示的容器，默认是舞台
    * @desc 由于自身可能存在缩放，visible，所以一般添加到parent上去看，坐标也是相对于自己
    */
-  showRect(pos: Point, parent?: Container) {
-    const rect = this.getRect()
-    rect.name = this.rectName
+  showPos(pos: Point, parent?: Container) {
+    const obj = this.getRect()
+    obj.name = this.posName
     parent = parent || pixiEntry.stage
-    parent.addChild(rect)
-    rect.position.copyFrom(pos)
+    parent.addChild(obj)
+    obj.position.copyFrom(pos)
+  }
+
+  showRect(rect: Rectangle, parent?: Container) {
+    const obj = this.getRect({ width: rect.width, height: rect.height })
+    parent = parent || pixiEntry.stage
+    parent.addChild(obj)
+    obj.x = rect.x
+    obj.y = rect.y
   }
 
   /**

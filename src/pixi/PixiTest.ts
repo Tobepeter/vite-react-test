@@ -16,6 +16,7 @@ import { scrollNum } from './demo/ScrollNum'
 import { scrollNumTexture } from './demo/ScrollNumTexture'
 import { pivotNotFollowTest } from './demo/PivotNotFollowTest'
 import { boundTest } from './demo/BoundTest'
+import { relativeMatrixTest } from './demo/RelativeMatrixTest'
 import { debugQueryRunner } from './util/debug/DebugQueryRunner'
 import type { ITest } from './util/ITest'
 import { pixiInput } from './util/PixiInput'
@@ -41,10 +42,11 @@ class PixiTest {
     scrollNumTexture,
     pivotNotFollowTest,
     boundTest,
+    relativeMatrixTest,
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.boundTest
+    this.curTest = this.testMap.relativeMatrixTest
 
     if (this.curTest.config) {
       const { dom, input } = this.curTest.config
