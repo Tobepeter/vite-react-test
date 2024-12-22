@@ -14,8 +14,6 @@ class BoundUtil {
     obj.updateTransform()
 
     const result = this.transformRect(rect, obj.localTransform)
-
-    console.log('getParentRect', result)
     return result
   }
 
