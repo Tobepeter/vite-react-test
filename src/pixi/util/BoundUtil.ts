@@ -10,8 +10,6 @@ class BoundUtil {
     //  getLocalBounds 会计算vertex时候直接考虑了anchor，后续不需要考虑anchor导致的坐标影响了
     const rect = obj.getLocalBounds()
 
-    console.log('getLocalBounds', rect)
-
     // 1. 对象刚创建时候，localTransform 是一定是最新的
     // 2 getLocalBounds 会 dirty localTransform
     obj.updateTransform()

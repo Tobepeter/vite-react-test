@@ -1,12 +1,4 @@
-import {
-  Container,
-  DisplayObject,
-  Graphics,
-  IPointData,
-  Point,
-  Sprite,
-  Text,
-} from 'pixi.js'
+import { Container, DisplayObject, Graphics, IPointData, Point, Rectangle, Sprite, Text } from 'pixi.js'
 import { boundUtil } from '../BoundUtil'
 import { debugHelper } from './DebugHelper'
 
@@ -96,14 +88,7 @@ class DebugVisual {
   }
 
   /** 小矩形，常用于定位和测量 */
-  getRect(opt?: {
-    size?: number
-    alpha?: number
-    width?: number
-    height?: number
-    center?: boolean
-    color?: number
-  }) {
+  getRect(opt?: { size?: number; alpha?: number; width?: number; height?: number; center?: boolean; color?: number }) {
     opt = opt || {}
     const size = opt.size ?? 50
     const alpha = opt.alpha ?? 0.5
@@ -211,20 +196,27 @@ class DebugVisual {
    * @param parent 展示的dom容器，默认是body
    */
   showDomPos(pos: Point, parent?: HTMLElement) {
-    parent = parent || document.body
-
     const size = 10
-    const color = '#ffffff'
     const x = pos.x - size / 2
     const y = pos.y - size / 2
+    const rect = new Rectangle(x, y, size, size)
+    this.showDomRect(rect, parent)
+  }
+
+  showDomRect(rect: Rectangle, parent?: HTMLElement) {
+    parent = parent || document.body
+
+    const { x, y, width, height } = rect
     const div = document.createElement('div')
-    div.style.position = 'absolute'
-    div.style.left = `${x}px`
-    div.style.top = `${y}px`
-    div.style.width = `${size}px`
-    div.style.height = `${size}px`
-    div.style.color = color
-    div.style.backgroundColor = 'rgba(255, 0, 0, 0.5)'
+    div.style.cssText = `
+      position: absolute;
+      left: ${x}px;
+      top: ${y}px;
+      width: ${width}px;
+      height: ${height}px;
+      // background-color: rgba(255, 0, 0, 0.5);
+      border: 1px solid white;
+    `
     div.id = 'debug_helper_div'
     ;(window as any).debug_helper_div = div
     parent.appendChild(div)
@@ -252,9 +244,7 @@ export type DebugVisualBtnConfig = {
   name?: string
 }
 
-export type DebugVisualBtnList =
-  | DebugVisualBtnConfig[]
-  | ((...args: any[]) => void)[]
+export type DebugVisualBtnList = DebugVisualBtnConfig[] | ((...args: any[]) => void)[]
 
 export type DebugVisualOpt =
   | IPointData
