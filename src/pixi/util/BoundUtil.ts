@@ -10,8 +10,7 @@ class BoundUtil {
     //  getLocalBounds 会计算vertex时候直接考虑了anchor，后续不需要考虑anchor导致的坐标影响了
     const rect = obj.getLocalBounds()
 
-    // 1. 对象刚创建时候，localTransform 是一定是最新的
-    // 2 getLocalBounds 会 dirty localTransform
+    // getLocalBounds 会 dirty
     obj.updateTransform()
 
     const result = this.transformRect(rect, obj.localTransform)
@@ -27,8 +26,7 @@ class BoundUtil {
 
   /**
    * 变换bound
-   *
-   * 理论上这么常见的方法应该是有的，但是pixi我找不到，如果有可以删掉了
+   * NOTE: 理论上这么常见的方法应该是有的，但是pixi我找不到，如果有可以删掉了
    */
   transformBound(bound: Bounds, matrix: Matrix) {
     const tl = new Point(bound.minX, bound.minY)
