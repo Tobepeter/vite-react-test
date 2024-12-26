@@ -3,6 +3,7 @@ import { CanvasDemo } from './canvas/CanvasDemo'
 import { TailwindDemo } from './css/tailwind/TailwindDemo'
 import { GsapDemo } from './gsap/GsapDemo'
 import { HtmlDemo } from './html/HtmlDemo'
+import { JSDemo } from './js/JSDemo'
 import { PerformanceDemo } from './js/perpormance/PerformanceDemo'
 import { PerformanceSimple } from './js/perpormance/PerformanceSimple'
 import { PixiDemo } from './pixi/PixiDemo'
@@ -28,7 +29,7 @@ function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
   // return <GsapDemo />
-  return <PixiDemo />
+  // return <PixiDemo />
   // return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />
@@ -39,7 +40,7 @@ function Test() {
   // return <CanvasDemo />
   // return <HtmlDemo />
   // return <TailwindDemo />
-  // return <PerformanceDemo />
+  return <JSDemo />
   // return <ReactDemo />
   // return <ShadcnDemo />
   // return <AntdDemo />
