@@ -4,7 +4,7 @@
  * 在sourcemap下直接修改ts是不能生效的
  * 只有关闭了sourcemap，直接修改js文件才能生效
  */
-class ChromeMod {
+class ChromeModJS {
   init() {
     window.addEventListener('keydown', e => {
       if (e.key === 't') {
@@ -18,4 +18,4 @@ class ChromeMod {
   }
 }
 
-export const chromeMod = new ChromeMod()
+export const chromeModjs = new ChromeModJS()

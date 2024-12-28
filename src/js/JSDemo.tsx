@@ -1,15 +1,10 @@
-import { chromeMod } from './chrome-mod'
+import { chromeModjs } from './chrome-mod/chrome-mod-js'
+import { ChromeMod } from './chrome-mod/ChromeMod'
 import { LockOrientationDemo } from './lock-orientation/LockOrientationDemo'
 import { PerformanceDemo } from './perpormance/PerformanceDemo'
 
 export const JSDemo = () => {
-  useEffect(() => {
-    console.log('JSDemo')
-
-    chromeMod.init()
-  }, [])
-
-  return <div>JSDemo</div>
   // return <PerformanceDemo />
   // return <LockOrientationDemo />
+  return <ChromeMod />
 }
