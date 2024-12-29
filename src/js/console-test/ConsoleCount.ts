@@ -1,6 +1,6 @@
 class ConsoleCount {
   init() {
-    // this.test_count_reset()
+    this.test_count_reset()
   }
 
   test_count_reset() {

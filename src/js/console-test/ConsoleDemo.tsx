@@ -6,11 +6,7 @@ export const ConsoleDemo = () => {
   useEffect(() => {
     // consoleTable.init()
     // consoleGroup.init()
-    // consoleCount.init()
-
-    const obj = {}
-    // @ts-ignore
-    console.log(obj.a.b)
+    consoleCount.init()
   }, [])
 
   return <div>ConsoleDemo</div>
