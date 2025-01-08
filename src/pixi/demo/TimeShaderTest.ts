@@ -4,60 +4,60 @@ import { ITest } from '../util/ITest'
 
 class TimeShaderTest implements ITest {
   vs = /** glsl */ `
-  attribute vec2 aVertexPosition;
-  uniform mat3 projectionMatrix;
-  
-  varying vec2 vTextureCoord;
-  varying vec2 vVertexPosition;
-  
-  uniform vec4 inputSize;
-  uniform vec4 outputFrame;
-  
-  vec4 filterVertexPosition(void)
-  {
-      vec2 position = aVertexPosition * max(outputFrame.zw, vec2(0.)) + outputFrame.xy;
-  
-      return vec4((projectionMatrix * vec3(position, 1.0)).xy, 0.0, 1.0);
-  }
-  
-  vec2 filterTextureCoord(void)
-  {
-      return aVertexPosition * (outputFrame.zw * inputSize.zw);
-  }
-  
-  void main(void)
-  {
-      gl_Position = filterVertexPosition();
-      vTextureCoord = filterTextureCoord();
+    attribute vec2 aVertexPosition;
+    uniform mat3 projectionMatrix;
+    
+    varying vec2 vTextureCoord;
+    varying vec2 vVertexPosition;
+    
+    uniform vec4 inputSize;
+    uniform vec4 outputFrame;
+    
+    vec4 filterVertexPosition(void)
+    {
+        vec2 position = aVertexPosition * max(outputFrame.zw, vec2(0.)) + outputFrame.xy;
+    
+        return vec4((projectionMatrix * vec3(position, 1.0)).xy, 0.0, 1.0);
+    }
+    
+    vec2 filterTextureCoord(void)
+    {
+        return aVertexPosition * (outputFrame.zw * inputSize.zw);
+    }
+    
+    void main(void)
+    {
+        gl_Position = filterVertexPosition();
+        vTextureCoord = filterTextureCoord();
 
-      // 相对于默认加的一行，filter的纹理是翻转的，因此y朝下，原点在左上角
-      vVertexPosition = aVertexPosition;
-  }
+        // 相对于默认加的一行，filter的纹理是翻转的，因此y朝下，原点在左上角
+        vVertexPosition = aVertexPosition;
+    }
   `
 
   fs = /** glsl */ `
-  precision mediump float;
-  #define PI 3.1415926538
-  varying vec2 vTextureCoord;
-  varying vec2 vVertexPosition;
-  uniform sampler2D uSampler;
-  uniform float progress;
+    precision mediump float;
+    #define PI 3.1415926538
+    varying vec2 vTextureCoord;
+    varying vec2 vVertexPosition;
+    uniform sampler2D uSampler;
+    uniform float progress;
 
-  void main(void) {
-    vec2 coord = vVertexPosition * 2.0 - 1.0;
+    void main(void) {
+      vec2 coord = vVertexPosition * 2.0 - 1.0;
 
-    float rad = atan(coord.y, coord.x);
-    if (rad < -PI / 2.0) {
-      rad += PI * 2.0;
+      float rad = atan(coord.y, coord.x);
+      if (rad < -PI / 2.0) {
+        rad += PI * 2.0;
+      }
+
+      float targetRad = -PI / 2.0 + progress * PI * 2.0;
+      if (rad < targetRad) {
+        discard;
+      }
+
+      gl_FragColor = texture2D(uSampler, vTextureCoord);
     }
-
-    float targetRad = -PI / 2.0 + progress * PI * 2.0;
-    if (rad < targetRad) {
-      discard;
-    }
-
-    gl_FragColor = texture2D(uSampler, vTextureCoord);
-  }
  `
 
   sp: Sprite
@@ -98,11 +98,11 @@ class TimeShaderTest implements ITest {
   }
 
   tick = () => {
-    this.progress += 0.003
-    if (this.progress > 1) {
+    let progress = this.progress + 0.003
+    if (progress > 1) {
       this.progress = 0
     }
-    this.setProgress(this.progress)
+    this.setProgress(progress)
   }
 
   startTick() {
@@ -170,8 +170,13 @@ class TimeShaderTest implements ITest {
   }
 
   setProgress(t: number) {
-    this.filter.uniforms.progress = t
-    this.setColorByProgress(t)
+    this.progress = t
+    this.updateByProgress()
+  }
+
+  updateByProgress() {
+    this.filter.uniforms.progress = this.progress
+    this.setColorByProgress(this.progress)
   }
 
   setColorByProgress(t: number) {
