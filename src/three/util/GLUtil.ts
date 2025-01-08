@@ -18,6 +18,8 @@ class GLUtil {
   commonMonitorKeys: string[] = [
     // prettier-ignore
     'clear',
+    'drawArrays',
+    'drawElements',
     'clearColor',
     'clearDepth',
     'clearStencil',

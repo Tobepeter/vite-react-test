@@ -80,8 +80,7 @@ class TimeShaderTest implements ITest {
     const sp = new Sprite()
     sp.texture = texture
     sp.anchor.set(0.5)
-    const centerRoot = pixiEntry.root
-    centerRoot.addChild(sp)
+    pixiEntry.root.addChild(sp)
     this.sp = sp
 
     const filter = new Filter(this.vs, this.fs, {
@@ -128,7 +127,7 @@ class TimeShaderTest implements ITest {
         max: 1,
         step: 0.01,
       })
-      .on('change', (ev) => {
+      .on('change', ev => {
         console.log('change', ev.value)
         this.stopTick()
         this.setProgress(ev.value)
@@ -141,7 +140,7 @@ class TimeShaderTest implements ITest {
         .addInput({ color: color.toHex() }, 'color', {
           label: `Color ${index + 1}`,
         })
-        .on('change', (ev) => {
+        .on('change', ev => {
           this.colors[index] = new Color(ev.value)
         })
     })
@@ -187,11 +186,7 @@ class TimeShaderTest implements ITest {
     // 最后的比例需要设置到1.0，因为没有过渡了
     const t2 = idx1 === idx2 ? 1.0 : idx2 / len
     const tColor = (t - t1) / (t2 - t1)
-    const color = this.getBlendColor(
-      this.colors[idx1],
-      this.colors[idx2],
-      tColor
-    )
+    const color = this.getBlendColor(this.colors[idx1], this.colors[idx2], tColor)
 
     this.sp.tint = color.toHex()
   }

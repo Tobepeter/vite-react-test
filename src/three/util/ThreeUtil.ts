@@ -135,11 +135,11 @@ class ThreeUtil {
     renderer.autoClear = false
 
     // TEST
-    debugger
+    // debugger
     glUtil.monitorCommon()
     renderer.render(scene, camera)
     glUtil.unmonitor()
-    debugger
+    // debugger
 
     this.downloadRT(rt, filename)
 

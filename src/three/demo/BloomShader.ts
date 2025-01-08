@@ -417,15 +417,14 @@ class BloomShader implements IThreeTest {
     // TEST: 重新作为canvas然后使用
     const test_canvas = () => {
       const canvas = threeUtil.rt2Canvas(this.composer.readBuffer)
-      if (win.downloadCanvas) {
-        win.downloadCanvas = false
-        threeUtil.downloadCanvas(canvas, 'canvas.png')
-      }
+      // if (win.downloadCanvas) {
+      //   win.downloadCanvas = false
+      //   threeUtil.downloadCanvas(canvas, 'canvas.png')
+      // }
       if (!win.forceDisplayCanvas) {
         threeUtil.forceDisplayCanvas(canvas)
         win.forceDisplayCanvas = true
       }
-      outputMaterial.uniforms.tDiffuse.value = new Texture(canvas)
     }
     // test_canvas()
 
@@ -436,7 +435,7 @@ class BloomShader implements IThreeTest {
 
     // TODO: 是否有需要销毁的逻辑？
 
-    // TEST
+    // TEST: 这里测试下载下来是正常的
     if (win.downloadFinal) {
       win.downloadFinal = false
       threeUtil.downloadRT(this.composer.readBuffer, 'bloom.png')
@@ -444,13 +443,14 @@ class BloomShader implements IThreeTest {
 
     // TEST
     setTimeout(() => {
-      threeUtil.downloadTexture(this.renderRT.texture, 'bloom.png')
+      // threeUtil.downloadTexture(this.renderRT.texture, 'bloom.png')
+      threeUtil.downloadTexture(this.composer.readBuffer.texture, 'bloom.png')
     }, 200)
 
-    const preAutoClear = renderer.autoClear
-    renderer.autoClear = false
-    fsQuad.render(renderer)
-    renderer.autoClear = preAutoClear
+    // const preAutoClear = renderer.autoClear
+    // renderer.autoClear = false
+    // fsQuad.render(renderer)
+    // renderer.autoClear = preAutoClear
 
     if (enableBlend) {
       threeEntry.renderer.state.setBlending(NoBlending)
