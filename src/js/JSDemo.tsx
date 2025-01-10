@@ -4,10 +4,12 @@ import { ConsoleDemo } from './console-test/ConsoleDemo'
 import { consoleTable } from './console-test/ConsoleTable'
 import { LockOrientationDemo } from './lock-orientation/LockOrientationDemo'
 import { PerformanceDemo } from './perpormance/PerformanceDemo'
+import { MobileDemo } from './mobile/MobileDemo'
 
 export const JSDemo = () => {
   // return <PerformanceDemo />
   // return <LockOrientationDemo />
   // return <ChromeMod />
-  return <ConsoleDemo />
+  // return <ConsoleDemo />
+  return <MobileDemo />
 }
