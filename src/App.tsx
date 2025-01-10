@@ -42,12 +42,12 @@ function Test() {
   // return <HtmlDemo />
   // return <TailwindDemo />
   // return <JSDemo />
-  // return <ReactDemo />
+  return <ReactDemo />
   // return <ShadcnDemo />
   // return <AntdDemo />
   // return <TSDemo />
   // return <UtilTest />
-  return <LoadashDemo />
+  // return <LoadashDemo />
 }
 
 function App() {
