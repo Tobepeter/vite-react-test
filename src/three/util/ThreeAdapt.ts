@@ -45,7 +45,7 @@ class ThreeAdapt {
       this.onResize()
       this.lastResizeTime = now
       this.resizeTimer = -1
-    }, this.resizeThrottleTime)
+    }, this.resizeThrottleTime) as unknown as number
   }
 
   stopThrottleResize() {

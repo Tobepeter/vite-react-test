@@ -1,3 +1,5 @@
+import { debug } from 'console'
+
 class GLUtil {
   private isMapInit = false
   enumMap: Record<GLenum, string> = {}
@@ -23,6 +25,12 @@ class GLUtil {
     'clearColor',
     'clearDepth',
     'clearStencil',
+
+    'drawArrays',
+    'drawElements',
+    'drawArraysInstanced',
+    'drawElementsInstanced',
+
     'colorMask',
     'depthMask',
     'stencilMask',
