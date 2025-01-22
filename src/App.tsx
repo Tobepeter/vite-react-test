@@ -7,6 +7,7 @@ import { JSDemo } from './js/JSDemo'
 import { PerformanceDemo } from './js/perpormance/PerformanceDemo'
 import { PerformanceSimple } from './js/perpormance/PerformanceSimple'
 import { LoadashDemo } from './lodash/LoadashDemo'
+import { MittDemo } from './mitt/MittDemo'
 import { PixiDemo } from './pixi/PixiDemo'
 import { ReactDemo } from './react/ReactDemo'
 import { SwiperDemo } from './swiper/SwiperDemo'
@@ -30,7 +31,7 @@ function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
   // return <GsapDemo />
-  return <PixiDemo />
+  // return <PixiDemo />
   // return <ThreeDemo />
   // return <DatGUITest />
   // return <LevaTest />
@@ -48,6 +49,7 @@ function Test() {
   // return <TSDemo />
   // return <UtilTest />
   // return <LoadashDemo />
+  return <MittDemo />
 }
 
 function App() {

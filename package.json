@@ -41,6 +41,7 @@
     "lottie-pixi": "^0.0.5",
     "lottie-web": "^5.12.2",
     "lucide-react": "^0.468.0",
+    "mitt": "^3.0.1",
     "mockjs": "^1.1.0",
     "pixi.js": "^7.4.2",
     "prop-types": "^15.8.1",
