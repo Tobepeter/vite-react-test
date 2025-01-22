@@ -2,7 +2,8 @@ import { debug } from 'console'
 
 class GLUtil {
   private isMapInit = false
-  enumMap: Record<GLenum, string> = {}
+  // NOTE: 可能存在多个key映射到同一个值，所以使用数组
+  enumMap: Record<GLenum, string | string[]> = {}
 
   monitorFunc: string[] = []
 
@@ -62,7 +63,15 @@ class GLUtil {
       const val = glProto[key]
       const isInt = !isNaN(parseInt(val))
       if (isInt) {
-        this.enumMap[val] = key
+        if (this.enumMap[val] == undefined) {
+          this.enumMap[val] = key
+        } else {
+          const isArray = Array.isArray(this.enumMap[val])
+          if (!isArray) {
+            this.enumMap[val] = [this.enumMap[val] as string]
+          }
+          ;(this.enumMap[val] as string[]).push(key)
+        }
       }
     }
   }
@@ -70,6 +79,14 @@ class GLUtil {
   getEnumName(e: GLenum) {
     this.initEnumMap()
     return this.enumMap[e]
+  }
+
+  /**
+   * 批量获取枚举名
+   * @desc 有的gl接口，如 blendFuncSeparate 是批量参数的，提供一个批量接口方便使用
+   */
+  getEnumNameArr(arr: GLenum[]) {
+    return arr.map(e => this.getEnumName(e))
   }
 
   initMonitorFunc() {

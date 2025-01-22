@@ -13,6 +13,7 @@ class ThreeUtil {
 
     const size = this.getRTSize(rt)
     const pixelsCount = size.x * size.y * 4
+
     if (rt) {
       isHalfFloat = rt.texture.type === THREE.HalfFloatType
       pixels = isHalfFloat ? new Uint16Array(pixelsCount) : new Uint8Array(pixelsCount)
@@ -118,7 +119,8 @@ class ThreeUtil {
 
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1)
     // TODO: 不需要设置z好像也能拍到，为什么
-    camera.position.set(0, 0, 0.1)
+    // TODO: 默认近平面是0.1，但是设置0.1也能拍到，不会有浮点误差？
+    camera.position.set(0, 0, 1)
     const scene = new Scene()
     const geometry = new PlaneGeometry(2, 2)
     const material = new MeshBasicMaterial({
@@ -131,8 +133,10 @@ class ThreeUtil {
 
     const currentRT = renderer.getRenderTarget()
     const currentAutoClear = renderer.autoClear
+    const currentClearAlpha = renderer.getClearAlpha()
     renderer.setRenderTarget(rt)
-    renderer.autoClear = false
+    renderer.autoClear = true
+    renderer.setClearAlpha(0)
 
     // TEST
     // debugger
@@ -141,11 +145,12 @@ class ThreeUtil {
     glUtil.unmonitor()
     // debugger
 
+    // TEST
     this.downloadRT(rt, filename)
 
     renderer.setRenderTarget(currentRT)
     renderer.autoClear = currentAutoClear
-
+    renderer.setClearAlpha(currentClearAlpha)
     rt.dispose()
     geometry.dispose()
     material.dispose()

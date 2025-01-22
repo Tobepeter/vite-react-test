@@ -21,6 +21,7 @@ import { sweepResolveEffect } from './demo/SweepResolveEffect'
 import { debugQueryRunner } from './util/debug/DebugQueryRunner'
 import type { ITest } from './util/ITest'
 import { pixiInput } from './util/PixiInput'
+import { adaptDemo } from './demo/AdaptDemo'
 
 class PixiTest {
   curTest: ITest = null
@@ -45,10 +46,11 @@ class PixiTest {
     boundTest,
     relativeMatrixTest,
     sweepResolveEffect,
+    adaptDemo,
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.sweepResolveEffect
+    this.curTest = this.testMap.adaptDemo
 
     if (this.curTest.config) {
       const { dom, input } = this.curTest.config

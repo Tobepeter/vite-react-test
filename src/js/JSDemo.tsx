@@ -5,11 +5,15 @@ import { consoleTable } from './console-test/ConsoleTable'
 import { LockOrientationDemo } from './lock-orientation/LockOrientationDemo'
 import { PerformanceDemo } from './perpormance/PerformanceDemo'
 import { MobileDemo } from './mobile/MobileDemo'
+import { TimerDemo } from './timer/TimerDemo'
+import { JSFetchDemo } from './fetch/JSFetchDemo'
 
 export const JSDemo = () => {
   // return <PerformanceDemo />
   // return <LockOrientationDemo />
   // return <ChromeMod />
   // return <ConsoleDemo />
-  return <MobileDemo />
+  // return <MobileDemo />
+  // return <TimerDemo />
+  return <JSFetchDemo />
 }

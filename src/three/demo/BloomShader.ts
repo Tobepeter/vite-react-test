@@ -30,7 +30,6 @@ import { glUtil } from '../util/GLUtil'
  * https://www.shadertoy.com/view/lsBfRc
  */
 class BloomShader implements IThreeTest {
-  envCubes: Mesh[] = []
   controls: OrbitControls
 
   cube: Mesh
@@ -165,7 +164,8 @@ class BloomShader implements IThreeTest {
 
   private addControls() {
     this.controls = new OrbitControls(threeEntry.camera, threeEntry.canvas)
-    this.controls.enableDamping = true
+    // TODO: 这个用鼠标交互起来很奇怪，一卡一卡的，临时关闭了
+    // this.controls.enableDamping = true
   }
 
   private createEnvCubes() {
@@ -192,7 +192,6 @@ class BloomShader implements IThreeTest {
       mtl.color = color
 
       threeEntry.testRoot.add(envCube)
-      this.envCubes.push(envCube)
     }
   }
 
@@ -315,6 +314,7 @@ class BloomShader implements IThreeTest {
   private plane: Mesh
   render = () => {
     if (this.hasRender) {
+      return
       if (!this.plane) {
         const startZ = 1
         const mtl = new MeshBasicMaterial({ transparent: true, opacity: 1 })
@@ -417,14 +417,21 @@ class BloomShader implements IThreeTest {
     // TEST: 重新作为canvas然后使用
     const test_canvas = () => {
       const canvas = threeUtil.rt2Canvas(this.composer.readBuffer)
-      // if (win.downloadCanvas) {
-      //   win.downloadCanvas = false
-      //   threeUtil.downloadCanvas(canvas, 'canvas.png')
-      // }
-      if (!win.forceDisplayCanvas) {
-        threeUtil.forceDisplayCanvas(canvas)
-        win.forceDisplayCanvas = true
+      if (!win.downloadCanvas) {
+        win.downloadCanvas = true
+        threeUtil.downloadCanvas(canvas, 'canvas.png')
       }
+      // if (!win.forceDisplayCanvas) {
+      //   threeUtil.forceDisplayCanvas(canvas)
+      //   win.forceDisplayCanvas = true
+      // }
+
+      // using a plane
+      const texture = new Texture(canvas)
+      texture.needsUpdate = true
+      const plane = new Mesh(new PlaneGeometry(2, 2), new MeshBasicMaterial({ map: texture, transparent: true }))
+      plane.position.set(0, 0, 1)
+      threeEntry.testRoot.add(plane)
     }
     // test_canvas()
 
@@ -436,16 +443,23 @@ class BloomShader implements IThreeTest {
     // TODO: 是否有需要销毁的逻辑？
 
     // TEST: 这里测试下载下来是正常的
-    if (win.downloadFinal) {
-      win.downloadFinal = false
-      threeUtil.downloadRT(this.composer.readBuffer, 'bloom.png')
-    }
+    if (!win.downloadFinal) {
+      win.downloadFinal = true
 
-    // TEST
-    setTimeout(() => {
-      // threeUtil.downloadTexture(this.renderRT.texture, 'bloom.png')
-      threeUtil.downloadTexture(this.composer.readBuffer.texture, 'bloom.png')
-    }, 200)
+      // NOTE: 经过测试，问题出现在这里，直接下载rt是可以得到透明的，但是经过render之后无法透明，暂时不知道原因
+      // threeUtil.downloadRT(this.composer.readBuffer, 'bloom.png')
+      // threeUtil.downloadTexture(this.composer.readBuffer.texture, 'bloom.png')
+
+      // -- using a plane
+      const textureReadBuffer = this.composer.readBuffer.texture
+      const textureCanvas = new Texture(threeUtil.rt2Canvas(this.composer.readBuffer))
+      debugger
+      const texture = textureCanvas
+      texture.needsUpdate = true
+      const plane = new Mesh(new PlaneGeometry(2, 2), new MeshBasicMaterial({ map: texture, transparent: true }))
+      plane.position.set(0, 0, 1)
+      threeEntry.testRoot.add(plane)
+    }
 
     // const preAutoClear = renderer.autoClear
     // renderer.autoClear = false
