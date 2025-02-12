@@ -30,7 +30,7 @@ debugUtil.init()
 function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
-  // return <GsapDemo />
+  return <GsapDemo />
   // return <PixiDemo />
   // return <ThreeDemo />
   // return <DatGUITest />
@@ -49,7 +49,7 @@ function Test() {
   // return <TSDemo />
   // return <UtilTest />
   // return <LoadashDemo />
-  return <MittDemo />
+  // return <MittDemo />
 }
 
 function App() {

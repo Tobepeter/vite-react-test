@@ -3,7 +3,7 @@ import { GsapTranslate } from './GsapTranslate'
 import { GsapOnStart } from './GsapOnStart'
 import { GsapHiddenCb } from './GsapHiddenCb'
 import { GsapDomUnmount } from './GsapDomUnmount'
-
+import { GsapScope } from './GsapScope'
 export const GsapDemo = () => {
   // return <GsapSimple />
   // return <GsapCallTime />
@@ -13,5 +13,6 @@ export const GsapDemo = () => {
   // return <GsapKill />
   // return <GsapOnStart />
   // return <GsapHiddenCb />
-  return <GsapDomUnmount />
+  // return <GsapDomUnmount />
+  return <GsapScope />
 }
