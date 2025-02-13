@@ -1,5 +1,7 @@
 import { AhooksDemo } from './ahooks/AhooksDemo'
 import { CanvasDemo } from './canvas/CanvasDemo'
+import { CSSDemo } from './css/demo/CSSDemo'
+import { StyledCompDemo } from './css/styled-comp/StyledCompDemo'
 import { TailwindDemo } from './css/tailwind/TailwindDemo'
 import { GsapDemo } from './gsap/GsapDemo'
 import { HtmlDemo } from './html/HtmlDemo'
@@ -30,7 +32,7 @@ debugUtil.init()
 function Test() {
   // return <div>Test</div>
   // return <SwiperDemo />
-  return <GsapDemo />
+  // return <GsapDemo />
   // return <PixiDemo />
   // return <ThreeDemo />
   // return <DatGUITest />
@@ -41,6 +43,8 @@ function Test() {
   // return <AhooksDemo />
   // return <CanvasDemo />
   // return <HtmlDemo />
+  return <CSSDemo />
+  // return <StyledCompDemo />
   // return <TailwindDemo />
   // return <JSDemo />
   // return <ReactDemo />
