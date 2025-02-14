@@ -43,9 +43,9 @@ function Test() {
   // return <AhooksDemo />
   // return <CanvasDemo />
   // return <HtmlDemo />
-  return <CSSDemo />
+  // return <CSSDemo />
   // return <StyledCompDemo />
-  // return <TailwindDemo />
+  return <TailwindDemo />
   // return <JSDemo />
   // return <ReactDemo />
   // return <ShadcnDemo />
