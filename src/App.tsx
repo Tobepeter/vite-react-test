@@ -45,9 +45,9 @@ function Test() {
   // return <HtmlDemo />
   // return <CSSDemo />
   // return <StyledCompDemo />
-  return <TailwindDemo />
+  // return <TailwindDemo />
   // return <JSDemo />
-  // return <ReactDemo />
+  return <ReactDemo />
   // return <ShadcnDemo />
   // return <AntdDemo />
   // return <TSDemo />

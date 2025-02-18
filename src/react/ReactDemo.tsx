@@ -6,8 +6,8 @@ import { ReactUseCallback } from './ReactUseCallback'
 
 export const ReactDemo = () => {
   // return <ReactClosureBug />
-  // return <ReactMountedOrder />
+  return <ReactMountedOrder />
   // return <ReactDefaultProp />
   // return <ReactPropType />
-  return <ReactUseCallback />
+  // return <ReactUseCallback />
 }
