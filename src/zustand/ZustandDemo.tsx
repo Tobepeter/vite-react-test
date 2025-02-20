@@ -3,6 +3,7 @@ import { ZustandShallow } from './ZustandShallow'
 import { ZustandSimple } from './ZustandSimple'
 import { ZustandStateDiff } from './ZustandStateDiff'
 import { ZustandNotReact } from './ZustandNotReact'
+import { ZustandSetState } from './ZustandSetState'
 
 export const ZustandDemo = () => {
   // return <ZustandSimple />
@@ -10,5 +11,6 @@ export const ZustandDemo = () => {
   // return <ZustandCustom />
   // return <ZustandShallow />
   // return <ZustandUpdate />
-  return <ZustandNotReact />
+  // return <ZustandNotReact />
+  return <ZustandSetState />
 }
