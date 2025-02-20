@@ -55,7 +55,8 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.171.0",
-    "tweakpane": "^4.0.5"
+    "tweakpane": "^4.0.5",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.25.9",

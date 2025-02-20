@@ -25,6 +25,7 @@ import { storage } from './utils/Storage'
 import { UtilTest } from './utils/test/UtilTest'
 import { ViteTest } from './vite-test/ViteTest'
 import { WebGLDemo } from './webgl/WebGLDemo'
+import { ZustandDemo } from './zustand/ZustandDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -47,13 +48,14 @@ function Test() {
   // return <StyledCompDemo />
   // return <TailwindDemo />
   // return <JSDemo />
-  return <ReactDemo />
+  // return <ReactDemo />
   // return <ShadcnDemo />
   // return <AntdDemo />
   // return <TSDemo />
   // return <UtilTest />
   // return <LoadashDemo />
   // return <MittDemo />
+  return <ZustandDemo />
 }
 
 function App() {
