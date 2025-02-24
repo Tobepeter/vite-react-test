@@ -31,7 +31,6 @@ globalUtil.init()
 debugUtil.init()
 
 function Test() {
-  // return <div>Test</div>
   // return <SwiperDemo />
   // return <GsapDemo />
   // return <PixiDemo />
@@ -46,7 +45,7 @@ function Test() {
   // return <HtmlDemo />
   // return <CSSDemo />
   // return <StyledCompDemo />
-  // return <TailwindDemo />
+  return <TailwindDemo />
   // return <JSDemo />
   // return <ReactDemo />
   // return <ShadcnDemo />
@@ -55,7 +54,7 @@ function Test() {
   // return <UtilTest />
   // return <LoadashDemo />
   // return <MittDemo />
-  return <ZustandDemo />
+  //return <ZustandDemo />
 }
 
 function App() {
