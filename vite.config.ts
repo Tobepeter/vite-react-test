@@ -2,14 +2,16 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react({
-      babel: {
-        plugins: [['@babel/plugin-proposal-decorators', { version: '2023-05' }]],
-      },
-    }),
+    // TODO: 不配置也能用，很奇怪，配置了，但是函数的装饰器又给我传递奇怪的参数，不是标准的装饰器参数来的?
+    //  但是不安装这个插件，hmr的装饰器可以用，decorate写的又不能用了，很奇怪
+    // react({
+    //   babel: {
+    //     plugins: [['@babel/plugin-proposal-decorators', { version: '2023-05' }]],
+    //   },
+    // }),
   ],
   resolve: {
     alias: {
@@ -18,37 +20,7 @@ export default defineConfig({
   },
   server: {
     port: 5178,
+    // open: true,
     host: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, ''),
-      },
-    },
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'lodash-vendor': ['lodash-es'],
-          'antd-vendor': ['antd'],
-        },
-      },
-    },
-    chunkSizeWarningLimit: 1500,
-  },
-  css: {
-    preprocessorOptions: {
-      less: {
-        javascriptEnabled: true,
-      },
-    },
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'lodash-es'],
   },
 })
