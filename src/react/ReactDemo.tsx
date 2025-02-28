@@ -4,6 +4,8 @@ import { ReactDefaultProp } from './ReactDefaultProp'
 import { ReactPropType } from './ReactPropType'
 import { ReactUseCallback } from './ReactUseCallback'
 import { ReactWhiteSpace } from './ReactWhiteSpace'
+import { ReactMemo } from './ReactMemo'
+import { ReactMemoCustom } from './ReactMemoCustom'
 
 export const ReactDemo = () => {
   // return <ReactClosureBug />
@@ -11,5 +13,7 @@ export const ReactDemo = () => {
   // return <ReactDefaultProp />
   // return <ReactPropType />
   // return <ReactUseCallback />
-  return <ReactWhiteSpace />
+  // return <ReactWhiteSpace />
+  // return <ReactMemo />
+  return <ReactMemoCustom />
 }

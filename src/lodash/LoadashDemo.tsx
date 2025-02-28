@@ -1,9 +1,5 @@
-import { lodashThrottle } from './LodThrottle'
+import { LodashThrottle } from './LodashThrottle'
 
 export const LoadashDemo = () => {
-  useEffect(() => {
-    lodashThrottle.init()
-  }, [])
-
-  return <div>LoadashDemo</div>
+  return <LodashThrottle />
 }

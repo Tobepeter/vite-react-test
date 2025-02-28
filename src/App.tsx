@@ -55,10 +55,10 @@ function Test() {
   // return <AntdDemo />
   // return <TSDemo />
   // return <UtilTest />
-  // return <LoadashDemo />
+  return <LoadashDemo />
   // return <MittDemo />
   //return <ZustandDemo />
-  return <SafeAreaInsetsDemo />
+  // return <SafeAreaInsetsDemo />
 }
 
 function App() {
