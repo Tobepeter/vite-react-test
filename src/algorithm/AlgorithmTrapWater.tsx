@@ -22,12 +22,19 @@ export const algorithm_trapWater = (heightList: number[]) => {
   let referHeight = -1
   let delta = 0
   const len = heightList.length
+  let right = -1
 
   for (let i = 1; i < heightList.length; i++) {
     // 边缘情况，到达末尾并且上升，强制回溯并退出
     if (i === len - 1) {
       if (step === 2) {
-        referHeight = Math.min(heightList[i], left)
+        // 最后的case有点复杂，可能最好一个刚好突然下降一下，也可能并无下降
+        right = heightList[i]
+        if (right < pre) {
+          right = pre
+        }
+
+        referHeight = Math.min(left, right)
         j = leftIndex + 1
         while (j < i) {
           delta = referHeight - heightList[j]
@@ -63,7 +70,10 @@ export const algorithm_trapWater = (heightList: number[]) => {
         referHeight = heightList[leftIndex]
         j = leftIndex + 1 // 额外加1，因为边缘没必要
         while (j < i) {
-          total += referHeight - heightList[j]
+          delta = referHeight - heightList[j]
+          if (delta > 0) {
+            total += delta
+          }
           j++
         }
         step = 0
@@ -97,9 +107,12 @@ export const algorithm_trapWater = (heightList: number[]) => {
         }
         j++
       }
+      // 注意，需要用降低前的基准点
+      i--
 
       step = 0
       left = heightList[i]
+      pre = left
       leftIndex = i
       continue
     }
