@@ -26,6 +26,8 @@ import { UtilTest } from './utils/test/UtilTest'
 import { ViteTest } from './vite-test/ViteTest'
 import { WebGLDemo } from './webgl/WebGLDemo'
 import { ZustandDemo } from './zustand/ZustandDemo'
+import { ComponentDemo } from './components/ComponentDemo'
+import { SafeAreaInsetsDemo } from './safe-area-insets/SafeAreaInsetsDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -42,10 +44,11 @@ function Test() {
   // return <UseHotKeyDemo />
   // return <AhooksDemo />
   // return <CanvasDemo />
+  // return <ComponentDemo />
   // return <HtmlDemo />
   // return <CSSDemo />
   // return <StyledCompDemo />
-  return <TailwindDemo />
+  // return <TailwindDemo />
   // return <JSDemo />
   // return <ReactDemo />
   // return <ShadcnDemo />
@@ -55,6 +58,7 @@ function Test() {
   // return <LoadashDemo />
   // return <MittDemo />
   //return <ZustandDemo />
+  return <SafeAreaInsetsDemo />
 }
 
 function App() {

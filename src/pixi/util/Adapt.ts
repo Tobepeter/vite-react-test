@@ -44,8 +44,8 @@ class Adapt {
   }
 
   stopThrottleResize() {
-    if (this.resizeTimer > -1) {
-      clearTimeout(this.resizeTimer)
+    if (this.resizeTimer !== -1) {
+      clearTimeout(this.resizeTimer as number)
       this.resizeTimer = -1
     }
   }
@@ -55,8 +55,7 @@ class Adapt {
       this.onResize()
       return
     }
-
-    if (this.resizeTimer > -1) return
+    if (this.resizeTimer !== -1) return
 
     const now = Date.now()
 
@@ -71,15 +70,14 @@ class Adapt {
       this.onResize()
       this.lastResizeTime = now
       this.resizeTimer = -1
-    }, this.resizeThrottleTime)
+    }, this.resizeThrottleTime) as any // TODO: 这个nodejs的类型混合有空处理下
   }
 
   onResize() {
     this.currDpr = window.devicePixelRatio
 
     const innerWidth = window.innerWidth || document.documentElement.clientWidth
-    const innerHeight =
-      window.innerHeight || document.documentElement.clientHeight
+    const innerHeight = window.innerHeight || document.documentElement.clientHeight
     this.width = innerWidth * this.dpr
     this.height = innerHeight * this.dpr
     this.cssWidth = innerWidth
