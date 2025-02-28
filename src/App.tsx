@@ -28,6 +28,7 @@ import { WebGLDemo } from './webgl/WebGLDemo'
 import { ZustandDemo } from './zustand/ZustandDemo'
 import { ComponentDemo } from './components/ComponentDemo'
 import { SafeAreaInsetsDemo } from './safe-area-insets/SafeAreaInsetsDemo'
+import { AlgorithmDemo } from './algorithm/AlgorithmDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -55,10 +56,11 @@ function Test() {
   // return <AntdDemo />
   // return <TSDemo />
   // return <UtilTest />
-  return <LoadashDemo />
+  // return <LoadashDemo />
   // return <MittDemo />
   //return <ZustandDemo />
   // return <SafeAreaInsetsDemo />
+  return <AlgorithmDemo />
 }
 
 function App() {
