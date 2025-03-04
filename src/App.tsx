@@ -43,7 +43,7 @@ function Test() {
   // return <TweakpaneTest />
   // return <ViteTest />
   // return <UseHotKeyDemo />
-  // return <AhooksDemo />
+  return <AhooksDemo />
   // return <CanvasDemo />
   // return <ComponentDemo />
   // return <HtmlDemo />
@@ -60,7 +60,7 @@ function Test() {
   // return <MittDemo />
   //return <ZustandDemo />
   // return <SafeAreaInsetsDemo />
-  return <AlgorithmDemo />
+  // return <AlgorithmDemo />
 }
 
 function App() {
