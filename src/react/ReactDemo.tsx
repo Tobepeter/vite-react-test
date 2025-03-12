@@ -7,6 +7,7 @@ import { ReactWhiteSpace } from './ReactWhiteSpace'
 import { ReactMemo } from './ReactMemo'
 import { ReactMemoCustom } from './ReactMemoCustom'
 import { ReactMemoEmpty } from './ReactMemoEmpty'
+import { ReactEarlyReturn } from './ReactEarlyReturn'
 
 export const ReactDemo = () => {
   // return <ReactClosureBug />
@@ -17,5 +18,6 @@ export const ReactDemo = () => {
   // return <ReactWhiteSpace />
   // return <ReactMemo />
   // return <ReactMemoCustom />
-  return <ReactMemoEmpty />
+  // return <ReactMemoEmpty />
+  return <ReactEarlyReturn />
 }
