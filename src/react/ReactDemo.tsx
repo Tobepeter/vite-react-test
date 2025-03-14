@@ -8,6 +8,7 @@ import { ReactMemo } from './ReactMemo'
 import { ReactMemoCustom } from './ReactMemoCustom'
 import { ReactMemoEmpty } from './ReactMemoEmpty'
 import { ReactEarlyReturn } from './ReactEarlyReturn'
+import { ReactNestedOrder } from './ReactNestedOrder'
 
 export const ReactDemo = () => {
   // return <ReactClosureBug />
@@ -19,5 +20,6 @@ export const ReactDemo = () => {
   // return <ReactMemo />
   // return <ReactMemoCustom />
   // return <ReactMemoEmpty />
-  return <ReactEarlyReturn />
+  // return <ReactEarlyReturn />
+  return <ReactNestedOrder />
 }

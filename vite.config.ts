@@ -23,4 +23,12 @@ export default defineConfig({
     // open: true,
     host: true,
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 如果您想要添加全局的 SCSS 变量或 mixin，可以在这里配置
+        // additionalData: `@import "@/styles/variables.scss";`,
+      },
+    },
+  },
 })

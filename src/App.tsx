@@ -29,6 +29,7 @@ import { ZustandDemo } from './zustand/ZustandDemo'
 import { ComponentDemo } from './components/ComponentDemo'
 import { SafeAreaInsetsDemo } from './safe-area-insets/SafeAreaInsetsDemo'
 import { AlgorithmDemo } from './algorithm/AlgorithmDemo'
+import { ScssDemo } from './css/scss/ScssDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -50,8 +51,9 @@ function Test() {
   // return <CSSDemo />
   // return <StyledCompDemo />
   // return <TailwindDemo />
+  return <ScssDemo />
   // return <JSDemo />
-  return <ReactDemo />
+  // return <ReactDemo />
   // return <ShadcnDemo />
   // return <AntdDemo />
   // return <TSDemo />

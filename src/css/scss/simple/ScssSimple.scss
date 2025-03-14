@@ -1,0 +1,88 @@
+// 变量定义
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$spacing-unit: 16px;
+$border-radius: 4px;
+
+@use "sass:math";
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-style($bg-color) {
+  background-color: $bg-color;
+  color: white;
+  padding: $spacing-unit;
+  border-radius: $border-radius;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// 主要样式
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-unit;
+
+  .header {
+    @include flex-center;
+    margin-bottom: $spacing-unit * 2;
+
+    h1 {
+      color: $primary-color;
+      font-size: 2rem;
+    }
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $spacing-unit;
+
+    .card {
+      padding: $spacing-unit;
+      border-radius: $border-radius;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &-title {
+        color: $primary-color;
+        margin-bottom: $spacing-unit;
+      }
+
+      &-content {
+        line-height: 1.5;
+      }
+    }
+  }
+
+  .button {
+    &-primary {
+      @include button-style($primary-color);
+    }
+
+    &-secondary {
+      @include button-style($secondary-color);
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .container {
+    // NOTE: scss 新版本，math.div 代替了 / 运算符
+    padding: math.div($spacing-unit, 2);
+
+    .content {
+      grid-template-columns: 1fr;
+    }
+  }
+}
