@@ -2,6 +2,25 @@ import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 
 export const StyledCompBasic = () => {
+  /**
+   * 构建分析
+   *
+   * 构建后，使用一个class，但是这个class是一个带有哈希的
+   * 比如 sc-blHHSb fwsnNR
+   *
+   * 实际上，经过查阅，styled-components 是运行时解析的
+   * 性能会有折扣
+   * 与预编译的 CSS 相比，可能会导致首屏渲染稍慢
+   */
+
+  /**
+   * hmr
+   *
+   * 貌似 hmr 不支持
+   * 每次修改都会刷新浏览器
+   *
+   * 可以试试颜色，可以看到控制台刷新了，说明加载了
+   */
   // 基础样式组件
   const Button = styled.button`
     background-color: #4caf50;
@@ -34,15 +53,15 @@ export const StyledCompBasic = () => {
   `
   // 使用全局样式
   const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: red
-  }
-`
+    body {
+      background-color: red;
+    }
+  `
 
   return (
     <div>
       <Button />
-      <FlexContainer />
+      <FlexContainer direction="column" />
       <PrimaryButton />
       <GlobalStyle />
     </div>

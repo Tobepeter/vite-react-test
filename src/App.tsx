@@ -30,6 +30,7 @@ import { ComponentDemo } from './components/ComponentDemo'
 import { SafeAreaInsetsDemo } from './safe-area-insets/SafeAreaInsetsDemo'
 import { AlgorithmDemo } from './algorithm/AlgorithmDemo'
 import { ScssDemo } from './css/scss/ScssDemo'
+import { LessDemo } from './css/less/LessDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -49,9 +50,10 @@ function Test() {
   // return <ComponentDemo />
   // return <HtmlDemo />
   // return <CSSDemo />
-  // return <StyledCompDemo />
+  return <StyledCompDemo />
   // return <TailwindDemo />
-  return <ScssDemo />
+  // return <ScssDemo />
+  // return <LessDemo />
   // return <JSDemo />
   // return <ReactDemo />
   // return <ShadcnDemo />

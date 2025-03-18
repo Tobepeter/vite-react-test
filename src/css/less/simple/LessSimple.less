@@ -1,0 +1,95 @@
+// 1. 变量定义
+@primary-color: #1890ff;
+@secondary-color: #52c41a;
+@border-radius: 4px;
+@font-size: 16px;
+
+// 2. 混合器（Mixin）定义
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-base {
+  padding: 8px 16px;
+  border-radius: @border-radius;
+  font-size: @font-size;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+// 3. 主要样式
+.less-demo {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  
+  // 4. 嵌套规则
+  .header {
+    .flex-center();
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    h1 {
+      color: @primary-color;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: fade(@primary-color, 70%);
+    }
+  }
+
+  // 5. 按钮组样式
+  .button-group {
+    .flex-center();
+    gap: 16px;
+
+    // 6. 继承混合器
+    .primary-button {
+      .button-base();
+      background-color: @primary-color;
+      color: white;
+      border: none;
+
+      // 7. &符号用法（代表父选择器）
+      &:hover {
+        background-color: lighten(@primary-color, 10%);
+      }
+    }
+
+    .secondary-button {
+      .button-base();
+      background-color: white;
+      color: @secondary-color;
+      border: 1px solid @secondary-color;
+
+      &:hover {
+        background-color: fade(@secondary-color, 10%);
+      }
+    }
+  }
+
+  // 8. 列表样式
+  .feature-list {
+    margin-top: 20px;
+    
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        padding: 8px 0;
+        border-bottom: 1px solid fade(@primary-color, 10%);
+        
+        // 9. 使用计算
+        margin-left: @font-size * 0.5;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
