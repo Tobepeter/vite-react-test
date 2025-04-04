@@ -50,13 +50,13 @@ function Test() {
   // return <ComponentDemo />
   // return <HtmlDemo />
   // return <CSSDemo />
-  return <StyledCompDemo />
+  // return <StyledCompDemo />
   // return <TailwindDemo />
   // return <ScssDemo />
   // return <LessDemo />
   // return <JSDemo />
   // return <ReactDemo />
-  // return <ShadcnDemo />
+  return <ShadcnDemo />
   // return <AntdDemo />
   // return <TSDemo />
   // return <UtilTest />
