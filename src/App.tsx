@@ -31,6 +31,8 @@ import { SafeAreaInsetsDemo } from './safe-area-insets/SafeAreaInsetsDemo'
 import { AlgorithmDemo } from './algorithm/AlgorithmDemo'
 import { ScssDemo } from './css/scss/ScssDemo'
 import { LessDemo } from './css/less/LessDemo'
+import { TsedPerfDemo } from './tsed-perf/TsedPerfDemo'
+import { MermaidDemo } from './mermaid/MermaidDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -56,7 +58,7 @@ function Test() {
   // return <LessDemo />
   // return <JSDemo />
   // return <ReactDemo />
-  return <ShadcnDemo />
+  // return <ShadcnDemo />
   // return <AntdDemo />
   // return <TSDemo />
   // return <UtilTest />
@@ -65,6 +67,7 @@ function Test() {
   // return <ZustandDemo />
   // return <SafeAreaInsetsDemo />
   // return <AlgorithmDemo />
+  return <MermaidDemo />
 }
 
 function App() {
