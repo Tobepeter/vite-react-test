@@ -33,6 +33,7 @@ import { ScssDemo } from './css/scss/ScssDemo'
 import { LessDemo } from './css/less/LessDemo'
 import { TsedPerfDemo } from './tsed-perf/TsedPerfDemo'
 import { MermaidDemo } from './mermaid/MermaidDemo'
+import { LibDebugDemo } from './lib-debug/LibDebugDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -67,7 +68,8 @@ function Test() {
   // return <ZustandDemo />
   // return <SafeAreaInsetsDemo />
   // return <AlgorithmDemo />
-  return <MermaidDemo />
+  // return <MermaidDemo />
+  return <LibDebugDemo />
 }
 
 function App() {
