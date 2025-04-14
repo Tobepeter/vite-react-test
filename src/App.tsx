@@ -68,8 +68,8 @@ function Test() {
   // return <ZustandDemo />
   // return <SafeAreaInsetsDemo />
   // return <AlgorithmDemo />
-  // return <MermaidDemo />
-  return <LibDebugDemo />
+  return <MermaidDemo />
+  // return <LibDebugDemo />
 }
 
 function App() {

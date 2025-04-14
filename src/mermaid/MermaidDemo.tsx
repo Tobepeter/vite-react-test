@@ -12,13 +12,13 @@ export const MermaidDemo = () => {
   return (
     <div>
       {/* <MermaidFlowChart /> */}
-      {/* <MermaidSequence /> */}
+      <MermaidSequence />
       {/* <MermaidState /> */}
       {/* <MermaidGantt /> */}
       {/* <MermaidPie /> */}
       {/* <MermaidClass /> */}
       {/* <MermaidJourney /> */}
-      <MermaidQuadrant />
+      {/* <MermaidQuadrant /> */}
       {/* <MermaidMindmap /> */}
     </div>
   )

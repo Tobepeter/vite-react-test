@@ -55,15 +55,24 @@ export const LibDebugDemo = () => {
     log3('hello world 3')
   }
 
+  const test_extend = () => {
+    const log = debug('test')
+    // NOTE: 类似进一步划分区间，这里其实就是 test-hello
+    const extendLog = log.extend('hello', '-')
+    log('hello world 1')
+    extendLog('hello world 2')
+  }
+
   useEffect(() => {
     // NOTE: 必须enable，否则不会输出
     // debug.enable('test:*')
     debug.enable('*')
 
     // test_basic()
-    test_multi_namespace()
+    // test_multi_namespace()
     // test_multi_namespace_hash()
     // test_multi_darkmode()
+    test_extend()
   }, [])
 
   return <div>LibDebugDemo</div>
