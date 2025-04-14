@@ -11,7 +11,6 @@ const userDataPath = path.join(__dirname, '../temp', 'chrome-user-data-dir')
 const openUrl = 'http://localhost:5173'
 const fullScreen = false
 
-
 function getChromePath() {
   const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
   const windowsPathList = [
@@ -32,6 +31,9 @@ function getChromePath() {
   return ''
 }
 
+/**
+ * 运行 chrome 支持前端调试
+ */
 function main() {
   const chromePath = getChromePath()
   if (!fs.existsSync(chromePath)) {
@@ -44,11 +46,7 @@ function main() {
     fs.mkdirSync(userDataPath, { recursive: true })
   }
 
-  const chromeArgs = [
-    `"${chromePath}"`,
-    '--remote-debugging-port=9222',
-    `--user-data-dir=${userDataPath}`,
-  ]
+  const chromeArgs = [`"${chromePath}"`, '--remote-debugging-port=9222', `--user-data-dir=${userDataPath}`]
 
   if (openUrl) {
     chromeArgs.push(openUrl)

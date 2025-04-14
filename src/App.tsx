@@ -34,6 +34,7 @@ import { LessDemo } from './css/less/LessDemo'
 import { TsedPerfDemo } from './tsed-perf/TsedPerfDemo'
 import { MermaidDemo } from './mermaid/MermaidDemo'
 import { LibDebugDemo } from './lib-debug/LibDebugDemo'
+import { OpenEditor } from './open-editor/OpenEditor'
 
 globalUtil.init()
 debugUtil.init()
@@ -68,8 +69,9 @@ function Test() {
   // return <ZustandDemo />
   // return <SafeAreaInsetsDemo />
   // return <AlgorithmDemo />
-  return <MermaidDemo />
+  // return <MermaidDemo />
   // return <LibDebugDemo />
+  return <OpenEditor />
 }
 
 function App() {
