@@ -35,6 +35,8 @@ import { TsedPerfDemo } from './tsed-perf/TsedPerfDemo'
 import { MermaidDemo } from './mermaid/MermaidDemo'
 import { LibDebugDemo } from './lib-debug/LibDebugDemo'
 import { OpenEditor } from './open-editor/OpenEditor'
+import { TempusDemo } from './tempus/TempusDemo'
+import { StatsJsDemo } from './stats-js/StatsJsDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -71,7 +73,9 @@ function Test() {
   // return <AlgorithmDemo />
   // return <MermaidDemo />
   // return <LibDebugDemo />
-  return <OpenEditor />
+  // return <OpenEditor />
+  // return <TempusDemo />
+  return <StatsJsDemo />
 }
 
 function App() {
