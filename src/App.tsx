@@ -69,12 +69,12 @@ function Test() {
   // return <MittDemo />
   // return <ZustandDemo />
   // return <SafeAreaInsetsDemo />
-  // return <AlgorithmDemo />
+  return <AlgorithmDemo />
   // return <MermaidDemo />
   // return <LibDebugDemo />
   // return <OpenEditor />
   // return <TempusDemo />
-  return <PerfDemo />
+  // return <PerfDemo />
 }
 
 function App() {

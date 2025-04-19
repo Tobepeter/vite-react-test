@@ -42,6 +42,7 @@ export const PerfChrome = () => {
     performance.mark('heavy start')
     heavy()
     performance.mark('heavy end')
+    // NOTE: mark可以是重名的，但是会自动从最近的开始进行measure
     performance.measure('heavy', 'heavy start', 'heavy end')
     setLoading(false)
     message.info('heavy done')
