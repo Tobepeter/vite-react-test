@@ -37,7 +37,7 @@ import { LibDebugDemo } from './lib-debug/LibDebugDemo'
 import { OpenEditor } from './open-editor/OpenEditor'
 import { TempusDemo } from './tempus/TempusDemo'
 import { StatsJsDemo } from './stats-js/StatsJsDemo'
-
+import { PerfDemo } from './perf/PerfDemo'
 globalUtil.init()
 debugUtil.init()
 
@@ -75,7 +75,8 @@ function Test() {
   // return <LibDebugDemo />
   // return <OpenEditor />
   // return <TempusDemo />
-  return <StatsJsDemo />
+  // return <StatsJsDemo />
+  return <PerfDemo />
 }
 
 function App() {
