@@ -38,14 +38,14 @@ class DebugHelper {
   }
 
   delayPromise(delay = 500) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(resolve, delay)
     })
   }
 
   keyTest(fn: () => void) {
     const key = 't'
-    window.addEventListener('keydown', (e) => {
+    window.addEventListener('keydown', e => {
       if (e.key === key) {
         fn()
       }
@@ -54,7 +54,7 @@ class DebugHelper {
 
   waitUntil(fn: () => boolean, dur = 100, timeout = 5000) {
     const startTime = Date.now()
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const func = () => {
         if (fn()) {
           resolve(true)
@@ -73,7 +73,7 @@ class DebugHelper {
   getEnumKey(enumObj: object, value: string | number) {
     // 枚举作为key时候经常会转换为string， 对比转换为number
     value = +value
-    return Object.keys(enumObj).find((key) => enumObj[key] === value) || ''
+    return Object.keys(enumObj).find(key => enumObj[key] === value) || ''
   }
 
   getTreeStr(obj: DisplayObject) {
@@ -81,9 +81,7 @@ class DebugHelper {
     let str = ''
     const processObj = (obj: DisplayObject, curIndent: number) => {
       str += ' '.repeat(curIndent) + obj.name + '\n'
-      obj.children.forEach((child) =>
-        processObj(child as DisplayObject, curIndent + indent)
-      )
+      obj.children.forEach(child => processObj(child as DisplayObject, curIndent + indent))
     }
     processObj(obj, 0)
     return str

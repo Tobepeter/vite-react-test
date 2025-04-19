@@ -30,11 +30,7 @@ export const useLoadInfo = <T>(promise: Promise<T>): LoadInfo<T> => {
     error: null,
     errorMsg: '',
   })
-  promise
-    .then((data) => setInfo({ data, isLoad: true, error: null, errorMsg: '' }))
-    .catch((error) =>
-      setInfo({ data: null, isLoad: true, error, errorMsg: error.message })
-    )
+  promise.then(data => setInfo({ data, isLoad: true, error: null, errorMsg: '' })).catch(error => setInfo({ data: null, isLoad: true, error, errorMsg: error.message }))
 
   return info
 }

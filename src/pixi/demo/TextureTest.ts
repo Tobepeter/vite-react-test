@@ -24,9 +24,7 @@ class TextureTest implements ITest {
     win.sp = sp
 
     const pane = new win.Tweakpane.Pane()
-    pane
-      .addButton({ title: '改变url' })
-      .on('click', () => this.changeRandomUrl())
+    pane.addButton({ title: '改变url' }).on('click', () => this.changeRandomUrl())
   }
 
   changeRandomUrl() {

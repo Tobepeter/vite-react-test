@@ -8,12 +8,12 @@ export const FileUpload = (props: FileUploadProps) => {
   const backgroundColor = 'rgba(255, 255, 255, 0.3)'
 
   return (
-    <div className="height-[60px] absolute right-[24px] bottom-[24px]">
+    <div className='height-[60px] absolute right-[24px] bottom-[24px]'>
       <Upload.Dragger
         showUploadList={false}
-        accept=".jpg,.jpeg,.png"
+        accept='.jpg,.jpeg,.png'
         beforeUpload={() => false}
-        onChange={(info) => {
+        onChange={info => {
           console.log('info', info)
           props.onFileChange?.(info.file as unknown as File)
         }}

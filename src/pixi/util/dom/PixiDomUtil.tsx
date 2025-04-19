@@ -18,7 +18,7 @@ export class PixiDomUtil extends Component<PixiDomUtilProps, PixiDomUtilState> {
 
   componentDidMount() {
     this.handle = {
-      setConfig: (config) => {
+      setConfig: config => {
         // NOTE: 只会替换部分配置
         const mergedConfig = { ...this.state.config, ...config }
         this.setState({ config: mergedConfig })
@@ -33,13 +33,7 @@ export class PixiDomUtil extends Component<PixiDomUtilProps, PixiDomUtilState> {
   }
 
   render() {
-    return (
-      <div>
-        {this.state.config.enableUpload && (
-          <FileUpload onFileChange={this.onFileUpload} />
-        )}
-      </div>
-    )
+    return <div>{this.state.config.enableUpload && <FileUpload onFileChange={this.onFileUpload} />}</div>
   }
 }
 

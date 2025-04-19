@@ -8,5 +8,5 @@ import './chrome-mod.css'
  * TODO：不知道有没有css sourcemap之类的能够让chrome跳转过去
  */
 export const ChromeModCSS = () => {
-  return <div id="chrome-mod-css">ChromeModCSS</div>
+  return <div id='chrome-mod-css'>ChromeModCSS</div>
 }

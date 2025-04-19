@@ -43,7 +43,7 @@ export const MobileInputTest = () => {
 
   return (
     <div>
-      <div className="fixed bottom-10 right-10">
+      <div className='fixed bottom-10 right-10'>
         {Object.entries(data).map(([key, value]) => (
           <div key={key}>
             <span>{key}: </span>
@@ -51,7 +51,7 @@ export const MobileInputTest = () => {
           </div>
         ))}
       </div>
-      <input className="fixed bottom-10 border-2 border-red-500" type="text" placeholder="请输入" />
+      <input className='fixed bottom-10 border-2 border-red-500' type='text' placeholder='请输入' />
     </div>
   )
 }

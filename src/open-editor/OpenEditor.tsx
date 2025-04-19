@@ -69,12 +69,12 @@ export const OpenEditor = () => {
   }
 
   return (
-    <Card title="打开编辑器">
-      <Space direction="vertical" size="middle">
-        <Button type="primary" onClick={openWithVscodeProtocol}>
+    <Card title='打开编辑器'>
+      <Space direction='vertical' size='middle'>
+        <Button type='primary' onClick={openWithVscodeProtocol}>
           使用 vscode:// 协议
         </Button>
-        <Button type="primary" onClick={openWithLocalServer} loading={loading}>
+        <Button type='primary' onClick={openWithLocalServer} loading={loading}>
           使用本地服务器
         </Button>
         <Button onClick={checkServerHealth}>检查服务器状态</Button>

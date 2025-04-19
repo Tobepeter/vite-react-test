@@ -36,7 +36,7 @@ export const HtmlCustomScroll = () => {
     if (!isDragging.current) return
     const deltaY = e.clientY - lastTouchY.current
     // 注意，scrollY是正数，往上移动是负数
-    setScrollY((prev) => clampScrollY(prev - deltaY))
+    setScrollY(prev => clampScrollY(prev - deltaY))
     lastTouchY.current = e.clientY
 
     // 实时计算速度
@@ -68,7 +68,7 @@ export const HtmlCustomScroll = () => {
     if (isDragging.current) return
     if (velocity.current === 0) return
 
-    setScrollY((prev) => clampScrollY(prev + velocity.current))
+    setScrollY(prev => clampScrollY(prev + velocity.current))
     velocity.current *= daming
     if (Math.abs(velocity.current) < 0.001) {
       velocity.current = 0

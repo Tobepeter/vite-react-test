@@ -8,7 +8,7 @@ class AnimationSpriteDemo implements ITest {
     // 创建一个精灵动画
     const textures = []
 
-    Object.values(debugTexture.colorTextureMap).forEach((texture) => {
+    Object.values(debugTexture.colorTextureMap).forEach(texture => {
       textures.push(texture)
     })
 

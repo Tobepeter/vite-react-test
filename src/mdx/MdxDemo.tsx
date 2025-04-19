@@ -23,11 +23,11 @@ export const MdxDemo = () => {
   }
 
   return (
-    <div className="calculator">
+    <div className='calculator'>
       <h2>简单计算器</h2>
       <div>
-        <input type="number" value={num1} onChange={e => setNum1(Number(e.target.value))} />
-        <input type="number" value={num2} onChange={e => setNum2(Number(e.target.value))} />
+        <input type='number' value={num1} onChange={e => setNum1(Number(e.target.value))} />
+        <input type='number' value={num2} onChange={e => setNum2(Number(e.target.value))} />
       </div>
       <div>
         <button onClick={() => calculate('+')}>+</button>

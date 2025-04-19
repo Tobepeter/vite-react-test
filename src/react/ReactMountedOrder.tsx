@@ -58,15 +58,15 @@ export const ReactMountedOrder = () => {
 
     return (
       <div>
-        <ReactChild name="child1" />
+        <ReactChild name='child1' />
         <ReactChildClass />
-        <ReactChild name="child2" />
+        <ReactChild name='child2' />
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className='flex flex-col gap-4'>
       {show && <ReactParent />}
       <Button onClick={() => setShow(!show)}>Toggle</Button>
     </div>

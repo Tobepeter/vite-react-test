@@ -16,7 +16,7 @@ export const SafeAreaInsetsReactive = () => {
   })
 
   return (
-    <div className="h-screen w-screen bg-black relative">
+    <div className='h-screen w-screen bg-black relative'>
       {/* 信息展示 */}
       <div
         style={{
@@ -43,7 +43,7 @@ export const SafeAreaInsetsReactive = () => {
 
       {/* 顶部 */}
       <div
-        className="absolute top-0 w-full bg-red-500"
+        className='absolute top-0 w-full bg-red-500'
         style={{
           height: insets.top,
         }}
@@ -51,7 +51,7 @@ export const SafeAreaInsetsReactive = () => {
 
       {/* 底部 */}
       <div
-        className="absolute bottom-0 w-full bg-blue-500"
+        className='absolute bottom-0 w-full bg-blue-500'
         style={{
           height: insets.bottom,
         }}
@@ -59,7 +59,7 @@ export const SafeAreaInsetsReactive = () => {
 
       {/* 左侧 */}
       <div
-        className="absolute left-0 h-full bg-green-500"
+        className='absolute left-0 h-full bg-green-500'
         style={{
           width: insets.left,
         }}
@@ -67,7 +67,7 @@ export const SafeAreaInsetsReactive = () => {
 
       {/* 右侧 */}
       <div
-        className="absolute right-0 h-full bg-yellow-500"
+        className='absolute right-0 h-full bg-yellow-500'
         style={{
           width: insets.right,
         }}

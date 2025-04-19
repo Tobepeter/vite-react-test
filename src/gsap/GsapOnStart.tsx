@@ -18,7 +18,7 @@ export const GsapOnStart = () => {
 
   return (
     <div
-      className="box"
+      className='box'
       style={{
         width: '20px',
         height: '20px',

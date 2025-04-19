@@ -10,7 +10,7 @@ export const UseHotKeyScope = () => {
     // 在编辑模式下使用热键
     useHotkeys(
       'ctrl+s',
-      (e) => {
+      e => {
         // e.preventDefault();
         if (isEditing) {
           setIsEditing(false)
@@ -41,15 +41,9 @@ export const UseHotKeyScope = () => {
     return (
       <div>
         {isEditing ? (
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="请输入内容，按 Ctrl+S 保存"
-          />
+          <textarea value={text} onChange={e => setText(e.target.value)} placeholder='请输入内容，按 Ctrl+S 保存' />
         ) : (
-          <div onClick={() => setIsEditing(true)}>
-            {text || '点击编辑或按 E 键进入编辑模式'}
-          </div>
+          <div onClick={() => setIsEditing(true)}>{text || '点击编辑或按 E 键进入编辑模式'}</div>
         )}
       </div>
     )

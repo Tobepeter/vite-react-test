@@ -6,10 +6,7 @@ class CubeTest implements IThreeTest {
   cube: Mesh
 
   init() {
-    this.cube = new Mesh(
-      new BoxGeometry(1, 1, 1),
-      new MeshBasicMaterial({ color: 0xff0000 })
-    )
+    this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicMaterial({ color: 0xff0000 }))
     threeEntry.testRoot.add(this.cube)
 
     const camera = threeEntry.camera

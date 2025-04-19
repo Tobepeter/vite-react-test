@@ -20,5 +20,5 @@ export const LockOrientationDemo = () => {
     // addMetaTag()
   }, [])
 
-  return <div className="w-full h-full bg-red-500">LockOrientationDemo</div>
+  return <div className='w-full h-full bg-red-500'>LockOrientationDemo</div>
 }

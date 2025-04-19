@@ -22,7 +22,7 @@ export const GsapDomUnmount = () => {
         },
       })
     }, [])
-    return <div className="bg-red-500 w-10 h-10 rect"></div>
+    return <div className='bg-red-500 w-10 h-10 rect'></div>
   }
 
   return (

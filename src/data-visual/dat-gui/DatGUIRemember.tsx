@@ -16,12 +16,12 @@ export const DatGUIRemember = () => {
       // },
     }
 
-    gui.add(params, 'count', 0, 100).onChange((value) => {
-      setParams((prev) => ({ ...prev, count: value }))
+    gui.add(params, 'count', 0, 100).onChange(value => {
+      setParams(prev => ({ ...prev, count: value }))
     })
 
-    gui.add(params, 'text').onChange((value) => {
-      setParams((prev) => ({ ...prev, text: value }))
+    gui.add(params, 'text').onChange(value => {
+      setParams(prev => ({ ...prev, text: value }))
     })
 
     // NOTE: 注意，虽然用起来有点别扭，即使是callback也需要包裹为一个对象上的属性，这是因为add的api设计导致的

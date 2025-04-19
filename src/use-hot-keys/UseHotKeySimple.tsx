@@ -5,11 +5,11 @@ export const UseHotKeySimple = () => {
 
   // NOTE: 经过测试，useHotKeys会排除input等组件的keydown事件
   //  但是addEventListener不会排除
-  useHotkeys('a', () => setCount((count) => count + 1))
+  useHotkeys('a', () => setCount(count => count + 1))
 
   useEffect(() => {
-    window.addEventListener('keydown', (e) => {
-      setCount((count) => count + 1)
+    window.addEventListener('keydown', e => {
+      setCount(count => count + 1)
     })
 
     return () => {
@@ -19,7 +19,7 @@ export const UseHotKeySimple = () => {
 
   return (
     <>
-      <input type="text" />
+      <input type='text' />
       <span>Pressed 'a' key {count} times.</span>
     </>
   )

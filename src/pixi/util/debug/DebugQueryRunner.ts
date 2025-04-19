@@ -35,9 +35,7 @@ class DebugQueryRunner {
       if (testIndex < testNames.length) {
         testName = testNames[testIndex]
       } else {
-        console.error(
-          `[DebugQueryRunner] test index<${testIndex}> out of range`
-        )
+        console.error(`[DebugQueryRunner] test index<${testIndex}> out of range`)
         return
       }
     }

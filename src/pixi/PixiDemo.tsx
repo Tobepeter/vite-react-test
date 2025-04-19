@@ -21,7 +21,7 @@ export const PixiDemo = () => {
 
   return (
     <div>
-      <div ref={rootRef} id="pixi-root"></div>
+      <div ref={rootRef} id='pixi-root'></div>
       <PixiDomUtil onHandle={onDomHandle} />
     </div>
   )

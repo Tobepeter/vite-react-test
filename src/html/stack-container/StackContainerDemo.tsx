@@ -46,21 +46,13 @@ export const StackContainerDemo = () => {
   }
 
   return (
-    <div className="w-screen h-screen">
-      <div
-        id="div-back"
-        className={getWrapperStyle(false)}
-        onClick={onBackClick}
-      >
+    <div className='w-screen h-screen'>
+      <div id='div-back' className={getWrapperStyle(false)} onClick={onBackClick}>
         <button className={getButtonStyle(false)} onClick={onBackButtonClick}>
           back button
         </button>
       </div>
-      <div
-        id="div-front"
-        className={getWrapperStyle(true)}
-        onClick={onFrontClick}
-      >
+      <div id='div-front' className={getWrapperStyle(true)} onClick={onFrontClick}>
         <button className={getButtonStyle(true)} onClick={onFrontButtonClick}>
           front button
         </button>

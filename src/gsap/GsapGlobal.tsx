@@ -37,9 +37,9 @@ export const GsapGlobal = () => {
 
   return (
     <div>
-      <div id="circle" className="w-[50px] h-[50px] rounded-full bg-red-500 absolute left-0 top-[300px]" />
-      <Space className="mt-4">
-        <Button id="kill-btn" onClick={actions.kill}>
+      <div id='circle' className='w-[50px] h-[50px] rounded-full bg-red-500 absolute left-0 top-[300px]' />
+      <Space className='mt-4'>
+        <Button id='kill-btn' onClick={actions.kill}>
           终止
         </Button>
         <Button onClick={actions.resume}>继续</Button>
@@ -47,9 +47,9 @@ export const GsapGlobal = () => {
         <Button onClick={actions.reverse}>反向</Button>
         <Button onClick={actions.restart}>重启</Button>
       </Space>
-      <Row className="mt-4">
+      <Row className='mt-4'>
         <Col span={2}>
-          <div className="mb-2">速度</div>
+          <div className='mb-2'>速度</div>
         </Col>
         <Col span={20}>
           <Slider

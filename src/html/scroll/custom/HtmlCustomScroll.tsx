@@ -41,7 +41,7 @@ export const HtmlCustomScroll = () => {
     const deltaY = (clientY - lastTouchY.current) * speed
 
     // 注意，scrollY是正数，往上移动是负数
-    setScrollY((prev) => clampScrollY(prev - deltaY))
+    setScrollY(prev => clampScrollY(prev - deltaY))
     lastTouchY.current = clientY
 
     // 实时计算速度
@@ -93,7 +93,7 @@ export const HtmlCustomScroll = () => {
       if (isDragging.current) return
       if (velocity.current === 0) return
 
-      setScrollY((prev) => clampScrollY(prev + velocity.current))
+      setScrollY(prev => clampScrollY(prev + velocity.current))
       velocity.current *= daming
       if (Math.abs(velocity.current) < 0.001) {
         velocity.current = 0
@@ -156,7 +156,7 @@ export const HtmlCustomScroll = () => {
     // -- touchmove --
     viewportRef.current.addEventListener(
       'touchmove',
-      (e) => {
+      e => {
         // NOTE: 貌似只有这个方法才可以阻止浏览器的默认边缘回弹
         e.preventDefault()
         onTouchMove(e as unknown as React.TouchEvent<HTMLDivElement>)
@@ -198,10 +198,10 @@ export const HtmlCustomScroll = () => {
         }}
         ref={contentRef}
       >
-        <div className="bg-blue-200" style={{ height: itemHeight }} />
-        <div className="bg-green-200" style={{ height: itemHeight }} />
-        <div className="bg-yellow-200" style={{ height: itemHeight }} />
-        <div className="bg-red-200" style={{ height: itemHeight }} />
+        <div className='bg-blue-200' style={{ height: itemHeight }} />
+        <div className='bg-green-200' style={{ height: itemHeight }} />
+        <div className='bg-yellow-200' style={{ height: itemHeight }} />
+        <div className='bg-red-200' style={{ height: itemHeight }} />
       </div>
     </div>
   )

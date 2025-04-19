@@ -14,7 +14,7 @@ export const ReactMemoCustom = () => {
   const [arr, setArr] = useState([1, 2, 3])
 
   return (
-    <Space direction="vertical" size="large">
+    <Space direction='vertical' size='large'>
       <Title level={2}>React.memo 自定义</Title>
       <MemoChild arr={arr} />
       <MemoCustonChild arr={arr} />

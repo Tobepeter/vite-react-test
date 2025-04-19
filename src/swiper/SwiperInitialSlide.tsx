@@ -21,7 +21,7 @@ export const SwiperInitialSlide = () => {
   }
 
   useEffect(() => {
-    window.addEventListener('keydown', (e) => {
+    window.addEventListener('keydown', e => {
       if (e.key === 't') {
         const swiper = swiperRef.current
         // NOTE: 可以指定速度，如果是0，可以瞬间切换
@@ -47,7 +47,7 @@ export const SwiperInitialSlide = () => {
 
       // NOTE: 这个测试好像和windows的自己的旋转无关
       // onOrientationchange={() => console.log('orientation change')}
-      onSwiper={(swiper) => {
+      onSwiper={swiper => {
         swiperRef.current = swiper
       }}
     >

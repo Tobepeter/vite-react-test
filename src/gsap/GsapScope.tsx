@@ -54,15 +54,15 @@ export const GsapScope = () => {
   }, [])
 
   return (
-    <div className="p-2">
-      <div className="mt-2">
+    <div className='p-2'>
+      <div className='mt-2'>
         <Space>
           <Button onClick={onToggleFast}>{isFast ? '慢速' : '快速'}</Button>
           <Button onClick={onClickKill}>kill</Button>
         </Space>
       </div>
 
-      <Space className="mt-2" direction="vertical" align="center">
+      <Space className='mt-2' direction='vertical' align='center'>
         {[...Array(count)].map((_, i) => (
           <div
             key={i}

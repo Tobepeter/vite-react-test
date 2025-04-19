@@ -58,7 +58,7 @@ export const GsapHiddenCb = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-center">
+      <div className='flex items-center justify-center'>
         <Space>
           <Button onClick={runTest}>Run Test</Button>
           <div>
@@ -72,7 +72,7 @@ export const GsapHiddenCb = () => {
           </div>
         </Space>
       </div>
-      <div ref={el} className="w-10 h-10 bg-red-500 rounded-full absolute left-10 top-0"></div>
+      <div ref={el} className='w-10 h-10 bg-red-500 rounded-full absolute left-10 top-0'></div>
     </div>
   )
 }

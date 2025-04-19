@@ -29,7 +29,7 @@ export const MobileScroll = () => {
 
   return (
     <div
-      className="mobile-scroll"
+      className='mobile-scroll'
       style={{
         height: 300,
         width: 200,

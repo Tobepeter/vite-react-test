@@ -20,26 +20,9 @@ export const UseHotKeyEssential = () => {
     const editableTags = ['input', 'textarea', 'select', 'option']
 
     // 排除特定类型的input
-    const editableInputTypes = [
-      'text',
-      'password',
-      'number',
-      'email',
-      'tel',
-      'url',
-      'search',
-      'date',
-      'datetime',
-      'datetime-local',
-      'time',
-      'month',
-      'week',
-    ]
+    const editableInputTypes = ['text', 'password', 'number', 'email', 'tel', 'url', 'search', 'date', 'datetime', 'datetime-local', 'time', 'month', 'week']
 
-    return (
-      editableTags.includes(tagName) &&
-      (tagName !== 'input' || editableInputTypes.includes(inputType))
-    )
+    return editableTags.includes(tagName) && (tagName !== 'input' || editableInputTypes.includes(inputType))
   }
 
   function handleKeyPress(event: KeyboardEvent) {
@@ -53,7 +36,7 @@ export const UseHotKeyEssential = () => {
 
     // 继续处理热键...
     console.log('handleKeyPress', event)
-    setCount((count) => count + 1)
+    setCount(count => count + 1)
   }
 
   useEffect(() => {
@@ -66,7 +49,7 @@ export const UseHotKeyEssential = () => {
 
   return (
     <>
-      <input type="text" />
+      <input type='text' />
       <span>Pressed 'a' key {count} times.</span>
     </>
   )

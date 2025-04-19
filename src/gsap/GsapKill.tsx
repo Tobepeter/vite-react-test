@@ -36,9 +36,9 @@ export const GsapKill = () => {
 
   return (
     <div>
-      <div id="circle" className="w-[50px] h-[50px] rounded-full bg-red-500 absolute left-0 top-[300px]" />
+      <div id='circle' className='w-[50px] h-[50px] rounded-full bg-red-500 absolute left-0 top-[300px]' />
       <Space>
-        <Button id="kill-btn" onClick={actions.kill}>
+        <Button id='kill-btn' onClick={actions.kill}>
           终止
         </Button>
         <Button onClick={actions.resume}>继续</Button>

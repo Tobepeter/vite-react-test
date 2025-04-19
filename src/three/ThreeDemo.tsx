@@ -10,7 +10,7 @@ export const ThreeDemo = () => {
     rootRef.current!.appendChild(threeEntry.canvas)
   }, [])
 
-  return <div ref={rootRef} id="three-root"></div>
+  return <div ref={rootRef} id='three-root'></div>
 }
 
 if (import.meta.hot) {

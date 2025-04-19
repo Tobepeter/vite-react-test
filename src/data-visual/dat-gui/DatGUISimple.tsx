@@ -17,55 +17,53 @@ export const DatGUISimple = () => {
   const [callCount, setCallCount] = useState(0)
 
   const callback = () => {
-    setCallCount((prev) => prev + 1)
+    setCallCount(prev => prev + 1)
   }
 
   useEffect(() => {
     const gui = new GUI()
 
     // NOTE: 如果数据是reactive的，其实不需要onChange回调
-    gui.addColor(params, 'color').onChange((value) => {
-      setParams((prev) => ({ ...prev, color: value }))
+    gui.addColor(params, 'color').onChange(value => {
+      setParams(prev => ({ ...prev, color: value }))
     })
 
-    gui.add(params, 'scale', 0.1, 2).onChange((value) => {
-      setParams((prev) => ({ ...prev, scale: value }))
+    gui.add(params, 'scale', 0.1, 2).onChange(value => {
+      setParams(prev => ({ ...prev, scale: value }))
     })
 
-    gui.add(params, 'rotation', 0, Math.PI * 2).onChange((value) => {
-      setParams((prev) => ({ ...prev, rotation: value }))
+    gui.add(params, 'rotation', 0, Math.PI * 2).onChange(value => {
+      setParams(prev => ({ ...prev, rotation: value }))
     })
 
     gui
       .add(params, 'stepSlider', 0.1, 1)
       .step(0.1)
-      .onChange((value) => {
-        setParams((prev) => ({ ...prev, stepSlider: value }))
+      .onChange(value => {
+        setParams(prev => ({ ...prev, stepSlider: value }))
       })
 
-    gui.add(params, 'switch').onChange((value) => {
-      setParams((prev) => ({ ...prev, switch: value }))
+    gui.add(params, 'switch').onChange(value => {
+      setParams(prev => ({ ...prev, switch: value }))
     })
 
-    gui
-      .add(params, 'dropdown', ['option1', 'option2', 'option3'])
-      .onChange((value) => {
-        setParams((prev) => ({ ...prev, dropdown: value }))
-      })
+    gui.add(params, 'dropdown', ['option1', 'option2', 'option3']).onChange(value => {
+      setParams(prev => ({ ...prev, dropdown: value }))
+    })
 
-    gui.add(params, 'text').onChange((value) => {
-      setParams((prev) => ({ ...prev, text: value }))
+    gui.add(params, 'text').onChange(value => {
+      setParams(prev => ({ ...prev, text: value }))
     })
 
     // 创建一个组
     const group = gui.addFolder('Group Settings')
 
-    group.add(params, 'groupText1').onChange((value) => {
-      setParams((prev) => ({ ...prev, groupText1: value }))
+    group.add(params, 'groupText1').onChange(value => {
+      setParams(prev => ({ ...prev, groupText1: value }))
     })
 
-    group.add(params, 'groupText2').onChange((value) => {
-      setParams((prev) => ({ ...prev, groupText2: value }))
+    group.add(params, 'groupText2').onChange(value => {
+      setParams(prev => ({ ...prev, groupText2: value }))
     })
 
     // 默认展开组

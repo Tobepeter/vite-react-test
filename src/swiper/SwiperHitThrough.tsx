@@ -29,16 +29,14 @@ export const SwiperHitThrough = () => {
     const color = tailwindColors[i % tailwindColors.length]
     sliderContent.push(
       <SwiperSlide key={i}>
-        <div
-          className={`h-full w-full flex flex-col items-center justify-center ${color} bg-opacity-50`}
-        >
-          <input type="checkbox" id={`slide-${i}`} />
-          <label className="user-select-none" htmlFor={`slide-${i}`}>
+        <div className={`h-full w-full flex flex-col items-center justify-center ${color} bg-opacity-50`}>
+          <input type='checkbox' id={`slide-${i}`} />
+          <label className='user-select-none' htmlFor={`slide-${i}`}>
             Slide {i}
           </label>
           <button
-            className="bg-white"
-            onClick={(e) => {
+            className='bg-white'
+            onClick={e => {
               /**
                * 点击阻止滑动设计
                * 貌似 Swiper 没有做类似设计，chrome是有的，点击时候preventDefault会阻止浏览器滚动
@@ -47,7 +45,7 @@ export const SwiperHitThrough = () => {
               e.preventDefault()
               onClickButton()
             }}
-            onClickCapture={(e) => {
+            onClickCapture={e => {
               e.stopPropagation()
               onClickButton()
             }}
@@ -77,20 +75,20 @@ export const SwiperHitThrough = () => {
   const getSliderWrapBtn = () => {
     return (
       <div
-        className="absolute top-0 left-0 w-full h-full z-10"
-        onPointerDown={(e) => {
+        className='absolute top-0 left-0 w-full h-full z-10'
+        onPointerDown={e => {
           console.log('swiper inner btn wrapper pointer down')
         }}
-        onTouchStart={(e) => {
+        onTouchStart={e => {
           console.log('swiper inner btn wrapper touch start')
         }}
       >
         <button
-          className="mt-[150px] ml-[10px]"
-          onPointerDown={(e) => {
+          className='mt-[150px] ml-[10px]'
+          onPointerDown={e => {
             console.log('swiper inner btn pointer down')
           }}
-          onTouchStart={(e) => {
+          onTouchStart={e => {
             console.log('swiper inner btn touch start')
           }}
         >
@@ -102,11 +100,11 @@ export const SwiperHitThrough = () => {
 
   return (
     <div>
-      <div className="mt-4 ml-4 flex flex-col">
+      <div className='mt-4 ml-4 flex flex-col'>
         <div>{msg}</div>
-        <div className="mt-4">
-          <input type="checkbox" id="clickable" />
-          <label className="user-select-none" htmlFor="clickable">
+        <div className='mt-4'>
+          <input type='checkbox' id='clickable' />
+          <label className='user-select-none' htmlFor='clickable'>
             点击后层
           </label>
         </div>
@@ -115,9 +113,9 @@ export const SwiperHitThrough = () => {
       {/* NOTE: Swiper本身会设置position: relative */}
       {/* 注意如果使用绝对定定位，必须设置宽度，默认宽度是由内容决定了 */}
       {showSwiper && (
-        <div className="absolute top-0 left-0 w-full h-full">
+        <div className='absolute top-0 left-0 w-full h-full'>
           <Swiper
-            onSwiper={(swiper) => {
+            onSwiper={swiper => {
               swiperRef.current = swiper
 
               // NOTE: 找了好久终于找到，可以点击浮层同时slide的代码了 T T
@@ -126,7 +124,7 @@ export const SwiperHitThrough = () => {
               win.swiper = swiper
               win.swiperRef = swiperRef
             }}
-            className="h-full w-full"
+            className='h-full w-full'
             modules={[Navigation, Pagination]}
             // spaceBetween={50}
             slidesPerView={1}
@@ -138,7 +136,7 @@ export const SwiperHitThrough = () => {
              *
              * 貌似内部没有适配，不会派发，毕竟不是原生事件
              */
-            onPointerDown={(e) => {
+            onPointerDown={e => {
               console.log('swiper pointer down')
             }}
             /**
@@ -147,7 +145,7 @@ export const SwiperHitThrough = () => {
              * 内部有适配，可以派发
              * 但是很奇怪， 如果点击上层的浮层，是不可以触发的
              */
-            onTouchStart={(e) => {
+            onTouchStart={e => {
               console.log('swiper touch start')
             }}
             // speed={3000}
@@ -164,9 +162,9 @@ export const SwiperHitThrough = () => {
         </div>
       )}
 
-      <div className="mt-4 ml-4">
-        <input type="checkbox" id="clickable" />
-        <label className="user-select-none" htmlFor="clickable">
+      <div className='mt-4 ml-4'>
+        <input type='checkbox' id='clickable' />
+        <label className='user-select-none' htmlFor='clickable'>
           点击前层
         </label>
       </div>

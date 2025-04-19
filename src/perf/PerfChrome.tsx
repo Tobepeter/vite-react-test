@@ -63,11 +63,11 @@ export const PerfChrome = () => {
   ]
 
   return (
-    <Card title="PerfChrome">
+    <Card title='PerfChrome'>
       <Spin spinning={loading}>
-        <Space direction="vertical" style={{ width: '100%' }}>
+        <Space direction='vertical' style={{ width: '100%' }}>
           {buttons.map(button => (
-            <Button key={button.label} loading={loading} onClick={button.onClick} type="primary" block>
+            <Button key={button.label} loading={loading} onClick={button.onClick} type='primary' block>
               {button.label}
             </Button>
           ))}

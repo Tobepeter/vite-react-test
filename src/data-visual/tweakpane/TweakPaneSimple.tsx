@@ -23,7 +23,7 @@ export const TweakpaneSimple = () => {
 
   useEffect(() => {
     setInterval(() => {
-      setParams((prev) => ({
+      setParams(prev => ({
         ...prev,
         monitor: { name: Random.name(), count: prev.monitor.count + 1 },
       }))
@@ -36,7 +36,7 @@ export const TweakpaneSimple = () => {
     type TpChangeValue = any
     type TpChangeTarget = any
     const onChange = (ev: TpChangeEvent<TpChangeValue, TpChangeTarget>) => {
-      setParams((prev) => ({ ...prev, [ev.target.key]: ev.value }))
+      setParams(prev => ({ ...prev, [ev.target.key]: ev.value }))
     }
 
     // 为每个参数添加 onChange 回调
@@ -73,7 +73,7 @@ export const TweakpaneSimple = () => {
 
     // button
     pane.addButton({ title: 'button' }).on('click', () => {
-      setParams((prev) => ({ ...prev, visible: !prev.visible }))
+      setParams(prev => ({ ...prev, visible: !prev.visible }))
     })
 
     pane.addBinding(params, 'visible').on('change', onChange)

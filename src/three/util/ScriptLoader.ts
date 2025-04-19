@@ -1,12 +1,9 @@
 class ScriptLoader {
   scriptMap = {
-    vConsole:
-      'https://cdn.jsdelivr.net/npm/vconsole@3.3.4/dist/vconsole.min.js',
+    vConsole: 'https://cdn.jsdelivr.net/npm/vconsole@3.3.4/dist/vconsole.min.js',
     // NOTE: 只有v3才支持umd，v4强制模块化了
-    tweakpane:
-      'https://cdn.jsdelivr.net/npm/tweakpane@4.0.5/dist/tweakpane.min.js',
-    tweakpaneV3:
-      'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.min.js',
+    tweakpane: 'https://cdn.jsdelivr.net/npm/tweakpane@4.0.5/dist/tweakpane.min.js',
+    tweakpaneV3: 'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.min.js',
     stats: 'https://cdn.jsdelivr.net/npm/stats-js@1.0.1/build/stats.min.js',
   }
 
@@ -29,7 +26,7 @@ class ScriptLoader {
     const info = { isDone: false, promise: null }
     this.loadedScript[url] = info
 
-    const promise = new Promise<void>((resolve) => {
+    const promise = new Promise<void>(resolve => {
       script.onload = () => {
         info.isDone = true
         resolve()

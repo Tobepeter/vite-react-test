@@ -25,10 +25,10 @@ export const ReactMemo = () => {
   console.log('父组件渲染')
 
   return (
-    <Space direction="vertical" size="large">
+    <Space direction='vertical' size='large'>
       <Title level={2}>React.memo 示例</Title>
 
-      <Space direction="vertical">
+      <Space direction='vertical'>
         <MemoChild msg={msg} />
         <NomralChild msg={msg} />
         <Button onClick={() => setMsg('hello')}>hello</Button>

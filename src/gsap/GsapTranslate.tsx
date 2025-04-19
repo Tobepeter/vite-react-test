@@ -49,7 +49,7 @@ export const GsapTranslate = () => {
 
   return (
     <div>
-      <div className="flex justify-center items-center">
+      <div className='flex justify-center items-center'>
         <Space>
           <Button onClick={runTest}>Run Test</Button>
           <div>
@@ -58,7 +58,7 @@ export const GsapTranslate = () => {
           </div>
         </Space>
       </div>
-      <div ref={el} className="w-[20px] h-[20px] bg-red-500 absolute left-[20px] top-0" />
+      <div ref={el} className='w-[20px] h-[20px] bg-red-500 absolute left-[20px] top-0' />
     </div>
   )
 }

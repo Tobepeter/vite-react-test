@@ -69,12 +69,8 @@ export const SwiperCanvas = () => {
       refObj.current.cssWidth = window.innerWidth
       refObj.current.cssHeight = window.innerHeight
       refObj.current.dpr = window.devicePixelRatio
-      refObj.current.width = Math.floor(
-        refObj.current.cssWidth * refObj.current.dpr
-      )
-      refObj.current.height = Math.floor(
-        refObj.current.cssHeight * refObj.current.dpr
-      )
+      refObj.current.width = Math.floor(refObj.current.cssWidth * refObj.current.dpr)
+      refObj.current.height = Math.floor(refObj.current.cssHeight * refObj.current.dpr)
       refObj.current.canvas.width = refObj.current.width
       refObj.current.canvas.height = refObj.current.height
       refObj.current.canvas.style.width = `${refObj.current.cssWidth}px`
@@ -93,7 +89,7 @@ export const SwiperCanvas = () => {
     // TEST
     win.canvas = canvas
 
-    canvas.addEventListener('pointerdown', (e) => {
+    canvas.addEventListener('pointerdown', e => {
       console.log('canvas pointerdown', e)
     })
 
@@ -107,11 +103,8 @@ export const SwiperCanvas = () => {
     const content = []
     for (let i = 0; i < count; i++) {
       content.push(
-        <SwiperSlide className="w-full h-full" key={i}>
-          <div
-            ref={i === 0 ? (el) => (refObj.current.firstSlide = el) : null}
-            className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
-          >
+        <SwiperSlide className='w-full h-full' key={i}>
+          <div ref={i === 0 ? el => (refObj.current.firstSlide = el) : null} className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
             Slide{i}
           </div>
         </SwiperSlide>
@@ -170,11 +163,11 @@ export const SwiperCanvas = () => {
   }, [])
 
   return (
-    <div className="w-full h-full absolute top-0 left-0">
+    <div className='w-full h-full absolute top-0 left-0'>
       <Swiper
         speed={3000}
-        className="h-full"
-        onSwiper={(swiper) => (refObj.current.swiper = swiper)}
+        className='h-full'
+        onSwiper={swiper => (refObj.current.swiper = swiper)}
         modules={[Navigation]}
         navigation
         // onProgress={onSwiperProgress}

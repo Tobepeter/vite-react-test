@@ -43,21 +43,17 @@ export const PerformanceSimple = () => {
 
   return (
     <div>
-      <div className="flex justify-end items-end flex-col">
+      <div className='flex justify-end items-end flex-col'>
         <button onClick={doHeavyWork}>Click me</button>
         <div>
-          <input
-            type="checkbox"
-            defaultChecked={autoRun}
-            onChange={(e) => setAutoRun(e.target.checked)}
-          />
+          <input type='checkbox' defaultChecked={autoRun} onChange={e => setAutoRun(e.target.checked)} />
           <label>自动运行</label>
         </div>
       </div>
 
       {/* 添加内联样式的动画 */}
       <div
-        className="w-10 h-10 absolute top-1/2 rounded-full bg-red-500"
+        className='w-10 h-10 absolute top-1/2 rounded-full bg-red-500'
         style={{
           animation: 'moveLeftRight 2s ease-in-out infinite',
         }}

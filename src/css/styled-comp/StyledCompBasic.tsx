@@ -61,7 +61,7 @@ export const StyledCompBasic = () => {
   return (
     <div>
       <Button />
-      <FlexContainer direction="column" />
+      <FlexContainer direction='column' />
       <PrimaryButton />
       <GlobalStyle />
     </div>

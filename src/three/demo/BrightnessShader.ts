@@ -1,12 +1,4 @@
-import {
-  BoxGeometry,
-  Color,
-  Mesh,
-  ShaderMaterial,
-  TextureLoader,
-  Vector2,
-  Vector4,
-} from 'three'
+import { BoxGeometry, Color, Mesh, ShaderMaterial, TextureLoader, Vector2, Vector4 } from 'three'
 import { IThreeTest } from '../util/IThreeTest'
 import { debugTexture } from '../util/debug/DebugTexture'
 
@@ -80,7 +72,7 @@ class BrightnessShader implements IThreeTest {
         max: 1,
         step: 0.01,
       })
-      .on('change', (obj) => {
+      .on('change', obj => {
         material.uniforms.brightness.value = obj.value
       })
   }

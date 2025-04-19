@@ -20,10 +20,5 @@ export const GsapSimple = () => {
     test_simple()
   }, [])
 
-  return (
-    <div
-      className="gsap-test"
-      style={{ width: '100px', height: '100px', background: 'red' }}
-    ></div>
-  )
+  return <div className='gsap-test' style={{ width: '100px', height: '100px', background: 'red' }}></div>
 }

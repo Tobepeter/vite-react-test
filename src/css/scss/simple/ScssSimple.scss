@@ -4,7 +4,7 @@ $secondary-color: #2ecc71;
 $spacing-unit: 16px;
 $border-radius: 4px;
 
-@use "sass:math";
+@use 'sass:math';
 
 // Mixins
 @mixin flex-center {

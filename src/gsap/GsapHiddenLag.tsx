@@ -106,7 +106,7 @@ export const GsapHiddenLag = () => {
         <Switch checked={isNoLagSmooth} onChange={setIsNoLagSmooth} />
       </Space>
 
-      <div className="mt-4 relative">{getContent()}</div>
+      <div className='mt-4 relative'>{getContent()}</div>
     </>
   )
 }

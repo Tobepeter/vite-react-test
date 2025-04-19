@@ -8,8 +8,7 @@ export const TweakpaneCdnV3 = () => {
   useEffect(() => {
     // 使用 CDN 引入 Tweakpane
     const script = document.createElement('script')
-    script.src =
-      'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.min.js'
+    script.src = 'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.min.js'
     script.async = true
 
     script.onload = () => {
@@ -19,16 +18,14 @@ export const TweakpaneCdnV3 = () => {
       })
 
       // 添加颜色控制
-      pane.addInput({ color }, 'color').on('change', (ev) => {
+      pane.addInput({ color }, 'color').on('change', ev => {
         setColor(ev.value)
       })
 
       // 添加大小控制
-      pane
-        .addInput({ size }, 'size', { min: 50, max: 200 })
-        .on('change', (ev) => {
-          setSize(ev.value)
-        })
+      pane.addInput({ size }, 'size', { min: 50, max: 200 }).on('change', ev => {
+        setSize(ev.value)
+      })
 
       // 添加位置控制
       pane
@@ -36,7 +33,7 @@ export const TweakpaneCdnV3 = () => {
           x: { min: 0, max: 300 },
           y: { min: 0, max: 300 },
         })
-        .on('change', (ev) => {
+        .on('change', ev => {
           setPosition(ev.value)
         })
 
@@ -46,7 +43,7 @@ export const TweakpaneCdnV3 = () => {
           min: 0,
           max: 360,
         })
-        .on('change', (ev) => {
+        .on('change', ev => {
           setRotation(ev.value)
         })
     }
@@ -59,9 +56,9 @@ export const TweakpaneCdnV3 = () => {
   }, [])
 
   return (
-    <div className="flex min-h-screen">
-      <div ref={containerRef} className="w-64" />
-      <div className="flex-1 flex items-center justify-center">
+    <div className='flex min-h-screen'>
+      <div ref={containerRef} className='w-64' />
+      <div className='flex-1 flex items-center justify-center'>
         <div
           style={{
             width: `${size}px`,

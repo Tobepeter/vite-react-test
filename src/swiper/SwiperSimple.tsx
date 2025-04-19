@@ -43,7 +43,7 @@ export const SwiperSimple = () => {
 
       // NOTE: 这个测试好像和windows的自己的旋转无关
       // onOrientationchange={() => console.log('orientation change')}
-      onSwiper={(swiper) => console.log(swiper)}
+      onSwiper={swiper => console.log(swiper)}
     >
       {content}
     </Swiper>

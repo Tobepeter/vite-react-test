@@ -28,9 +28,7 @@ export const SwiperCallback = () => {
 
   // [回弹] 即使是没有实际拉过去，回弹也会触发
   // [首次] 默认首次会自动触发一次
-  const onSlideChange: React.ComponentProps<typeof Swiper>['onSlideChange'] = (
-    e
-  ) => {
+  const onSlideChange: React.ComponentProps<typeof Swiper>['onSlideChange'] = e => {
     // console.log('-- slide change --');
 
     /**
@@ -68,9 +66,7 @@ export const SwiperCallback = () => {
     // console.log('');
   }
 
-  const onSwiper: React.ComponentProps<typeof Swiper>['onSwiper'] = (
-    swiper
-  ) => {
+  const onSwiper: React.ComponentProps<typeof Swiper>['onSwiper'] = swiper => {
     swiperRef.current = swiper
 
     // console.log('swiper', swiper);
@@ -80,7 +76,7 @@ export const SwiperCallback = () => {
     // swiper.params.cssMode = true;
   }
 
-  const onProgress: React.ComponentProps<typeof Swiper>['onProgress'] = (e) => {
+  const onProgress: React.ComponentProps<typeof Swiper>['onProgress'] = e => {
     console.log('progress', e.progress)
   }
 
@@ -121,10 +117,7 @@ export const SwiperCallback = () => {
     // },
   }
 
-  const onSliderMove: ComponentProps<typeof Swiper>['onSliderMove'] = (
-    swiper,
-    event
-  ) => {
+  const onSliderMove: ComponentProps<typeof Swiper>['onSliderMove'] = (swiper, event) => {
     // console.log('slider move')
     console.log('slider move', getCurrTime())
   }
@@ -135,16 +128,16 @@ export const SwiperCallback = () => {
     document.body.style.height = '100%'
     document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
 
-    document.body.addEventListener('touchmove', (e) => {
+    document.body.addEventListener('touchmove', e => {
       console.log('body touchmove', getCurrTime())
     })
   }, [])
 
-  const onToEdge: ComponentProps<typeof Swiper>['onToEdge'] = (swiper) => {
+  const onToEdge: ComponentProps<typeof Swiper>['onToEdge'] = swiper => {
     console.log('to edge', swiper)
   }
 
-  const onFromEdge: ComponentProps<typeof Swiper>['onFromEdge'] = (swiper) => {
+  const onFromEdge: ComponentProps<typeof Swiper>['onFromEdge'] = swiper => {
     console.log('from edge', swiper)
   }
 
@@ -156,10 +149,7 @@ export const SwiperCallback = () => {
    *
    * 注意loop模式会有点特别，是用附近的一个临时代替的
    */
-  const onSetTranslate: ComponentProps<typeof Swiper>['onSetTranslate'] = (
-    swiper,
-    translate
-  ) => {
+  const onSetTranslate: ComponentProps<typeof Swiper>['onSetTranslate'] = (swiper, translate) => {
     console.log('set translate', translate)
   }
 
@@ -169,16 +159,11 @@ export const SwiperCallback = () => {
    * 经过测试，开始触摸点击时设置为0
    * 松手设置为300（毫秒）
    */
-  const onSetTransition: ComponentProps<typeof Swiper>['onSetTransition'] = (
-    swiper,
-    transition
-  ) => {
+  const onSetTransition: ComponentProps<typeof Swiper>['onSetTransition'] = (swiper, transition) => {
     console.log('set transition', transition)
   }
 
-  const onObserverUpdate: ComponentProps<typeof Swiper>['onObserverUpdate'] = (
-    swiper
-  ) => {
+  const onObserverUpdate: ComponentProps<typeof Swiper>['onObserverUpdate'] = swiper => {
     console.log('observer update')
   }
 

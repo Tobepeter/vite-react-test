@@ -25,11 +25,7 @@ export const SwiperHook = () => {
       // );
     }, [swiperSlide])
 
-    return (
-      <div style={{ height: 200, background: Random.color() }}>
-        Slide {index}
-      </div>
-    )
+    return <div style={{ height: 200, background: Random.color() }}>Slide {index}</div>
   }
 
   // arrow
@@ -56,7 +52,7 @@ export const SwiperHook = () => {
       // speed={10000}
       slidesPerView={1}
       loop={true}
-      onSwiper={(swiper) => {
+      onSwiper={swiper => {
         swiperRef.current = swiper
       }}
     >

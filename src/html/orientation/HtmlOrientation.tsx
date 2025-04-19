@@ -72,7 +72,7 @@ export const HtmlOrientation = () => {
      *
      */
     let isLocked = false
-    window.addEventListener('keypress', async (e) => {
+    window.addEventListener('keypress', async e => {
       if (e.key == 't') {
         try {
           if (isLocked) {

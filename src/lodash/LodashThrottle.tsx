@@ -52,7 +52,7 @@ export const LodashThrottle = () => {
   })
 
   return (
-    <Space direction="vertical" size="large">
+    <Space direction='vertical' size='large'>
       <Title level={2}>Lodash Throttle</Title>
       <Space>
         <Button onClick={handleClick}>点击</Button>
