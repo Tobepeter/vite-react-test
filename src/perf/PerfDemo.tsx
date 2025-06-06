@@ -4,8 +4,8 @@ import { StatsJsDemo } from './stats-js/StatsJsDemo'
 export const PerfDemo = () => {
   return (
     <div>
-      <PerfChrome />
-      {/* <StatsJsDemo /> */}
+      {/* <PerfChrome />np */}
+      <StatsJsDemo />
     </div>
   )
 }

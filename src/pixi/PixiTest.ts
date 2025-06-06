@@ -50,7 +50,7 @@ class PixiTest {
   } satisfies Record<string, ITest>
 
   init() {
-    this.curTest = this.testMap.adaptDemo
+    this.curTest = this.testMap.scrollNumTexture
 
     if (this.curTest.config) {
       const { dom, input } = this.curTest.config

@@ -108,7 +108,7 @@ class DebugVisual {
     const y = center ? -height / 2 : 0
     rect.drawRect(x, y, width, height)
     rect.endFill()
-    root.addChild(rect)
+    root.addChild(rect as any)
     return root
   }
 
@@ -122,7 +122,7 @@ class DebugVisual {
       center: false,
       color,
     })
-    obj.parent.addChild(rect)
+    obj.parent.addChild(rect as any)
     rect.x = bound.x
     rect.y = bound.y
   }
@@ -136,7 +136,7 @@ class DebugVisual {
       center: false,
       color,
     })
-    obj.parent.addChild(rect)
+    obj.parent.addChild(rect as any)
     rect.x = obj.x
     rect.y = obj.y
 
@@ -169,11 +169,11 @@ class DebugVisual {
     g.moveTo(0, -len / 2)
     g.lineTo(0, len / 2)
 
-    root.addChild(g)
+    root.addChild(g as any)
     if (pos) {
       root.position.copyFrom(pos)
     }
-    obj.addChild(root)
+    obj.addChild(root as any)
     return root
   }
 
@@ -188,14 +188,14 @@ class DebugVisual {
     const obj = this.getRect()
     obj.name = this.posName
     parent = parent || pixiEntry.stage
-    parent.addChild(obj)
+    parent.addChild(obj as any)
     obj.position.copyFrom(pos)
   }
 
   showRect(rect: Rectangle, parent?: Container) {
     const obj = this.getRect({ width: rect.width, height: rect.height })
     parent = parent || pixiEntry.stage
-    parent.addChild(obj)
+    parent.addChild(obj as any)
     obj.x = rect.x
     obj.y = rect.y
   }

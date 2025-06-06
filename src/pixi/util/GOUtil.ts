@@ -10,7 +10,8 @@ class GOUtil {
     const cntr = new Container()
     cntr.name = name
     if (parent) {
-      parent.addChild(cntr)
+      // TODO: 这个类型很奇怪
+      parent.addChild(cntr as any)
     }
     return cntr
   }
@@ -19,7 +20,7 @@ class GOUtil {
     const sprite = new Sprite()
     sprite.name = name
     if (parent) {
-      parent.addChild(sprite)
+      parent.addChild(sprite as any)
     }
     if (textureKey) {
       sprite.texture = Texture.from(textureKey)
@@ -31,7 +32,7 @@ class GOUtil {
     const text = new Text(str)
     text.name = name
     if (parent) {
-      parent.addChild(text)
+      parent.addChild(text as any)
     }
     return text
   }

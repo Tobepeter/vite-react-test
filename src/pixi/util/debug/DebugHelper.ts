@@ -81,7 +81,7 @@ class DebugHelper {
     let str = ''
     const processObj = (obj: DisplayObject, curIndent: number) => {
       str += ' '.repeat(curIndent) + obj.name + '\n'
-      obj.children.forEach(child => processObj(child as DisplayObject, curIndent + indent))
+      obj.children.forEach(child => processObj(child as any, curIndent + indent))
     }
     processObj(obj, 0)
     return str

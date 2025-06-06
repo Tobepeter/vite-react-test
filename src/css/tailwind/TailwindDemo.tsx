@@ -5,9 +5,9 @@ import { TailwindFont } from './TailwindFont'
 import { TailwindArbitraryValue } from './TailwindArbitraryValue'
 
 export const TailwindDemo = () => {
-  // return <TailwindSimple />
+  return <TailwindSimple />
   // return <TailwindPlayground />
   // return <TailwindBreakPoint />
   // return <TailwindFont />
-  return <TailwindArbitraryValue />
+  // return <TailwindArbitraryValue />
 }

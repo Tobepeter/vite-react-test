@@ -37,6 +37,7 @@ import { LibDebugDemo } from './lib-debug/LibDebugDemo'
 import { OpenEditor } from './open-editor/OpenEditor'
 import { TempusDemo } from './tempus/TempusDemo'
 import { PerfDemo } from './perf/PerfDemo'
+
 globalUtil.init()
 debugUtil.init()
 
@@ -54,7 +55,7 @@ function Test() {
   // return <CanvasDemo />
   // return <ComponentDemo />
   // return <HtmlDemo />
-  // return <CSSDemo />
+  return <CSSDemo />
   // return <StyledCompDemo />
   // return <TailwindDemo />
   // return <ScssDemo />
@@ -69,7 +70,7 @@ function Test() {
   // return <MittDemo />
   // return <ZustandDemo />
   // return <SafeAreaInsetsDemo />
-  return <AlgorithmDemo />
+  // return <AlgorithmDemo />
   // return <MermaidDemo />
   // return <LibDebugDemo />
   // return <OpenEditor />

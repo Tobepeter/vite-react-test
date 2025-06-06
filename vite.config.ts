@@ -15,6 +15,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      // NOTE: 其实esm不允许用 __dirname 的，不知道为什么内部是可以的
+      //  但是其实 用 import.meta.url 指向一个很奇怪的位置，在 node_modules/.vite/ 中
       '@': path.resolve(__dirname, './src'),
     },
   },

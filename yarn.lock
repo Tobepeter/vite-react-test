@@ -2275,6 +2275,23 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
+"@tsed/core@6.133.2":
+  version "6.133.2"
+  resolved "https://registry.npmjs.org/@tsed/core/-/core-6.133.2.tgz#13c9cbf90ff7d6422a6c5172d05db57b03f22fa1"
+  integrity sha512-QcX8vVYBfaYaMBAnBbSYTbTdPE1cFC/sbR2wRVVlvNNEmLATuiTCJwJdv/kfkfZKokQw8Hb47Bq3XoO0jeGFaw==
+  dependencies:
+    reflect-metadata "^0.1.13"
+    tslib "2.4.0"
+
+"@tsed/perf@^6.133.2":
+  version "6.133.2"
+  resolved "https://registry.npmjs.org/@tsed/perf/-/perf-6.133.2.tgz#2e6c5b66281313590cd81192214ffeeea838bcfe"
+  integrity sha512-/zQ/4dRu6IIwMSlXcBVgrIaQoPA62ABqKL4smk/3Zswwatekj7N4bESqTB62RAvjy8AVkuSqWubMfTrxoXp+uw==
+  dependencies:
+    "@tsed/core" "6.133.2"
+    chalk "^4.1.0"
+    tslib "2.4.0"
+
 "@tweakpane/core@^2.0.5":
   version "2.0.5"
   resolved "https://registry.npmmirror.com/@tweakpane/core/-/core-2.0.5.tgz#bae776cd530b31f5e5424641411d4b20c3baed8e"
@@ -3270,7 +3287,7 @@ chalk@^3.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^4.0.0:
+chalk@^4.0.0, chalk@^4.1.0:
   version "4.1.2"
   resolved "https://registry.npmmirror.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
@@ -6474,6 +6491,11 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
+reflect-metadata@^0.1.13:
+  version "0.1.14"
+  resolved "https://registry.npmjs.org/reflect-metadata/-/reflect-metadata-0.1.14.tgz#24cf721fe60677146bb77eeb0e1f9dece3d65859"
+  integrity sha512-ZhYeb6nRaXCfhnndflDK8qI6ZQ/YcWZCISRAWICW9XYqMUwjZM9Z0DveWX/ABN01oxSHwVxKQmxeYZSsm0jh5A==
+
 regenerator-runtime@^0.14.0:
   version "0.14.1"
   resolved "https://registry.npmmirror.com/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
@@ -7135,6 +7157,11 @@ ts-interface-checker@^0.1.9:
   version "0.1.13"
   resolved "https://registry.npmmirror.com/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz#784fd3d679722bc103b1b4b8030bcddb5db2a699"
   integrity sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==
+
+tslib@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
+  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
 tslib@2.6.2:
   version "2.6.2"

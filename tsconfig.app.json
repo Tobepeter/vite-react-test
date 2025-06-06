@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable", "WebWorker"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "experimentalDecorators": true,
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
@@ -20,7 +21,6 @@
     "noImplicitAny": false,
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
-    "experimentalDecorators": true,
     /* Resolve */
     "baseUrl": ".",
     "paths": {

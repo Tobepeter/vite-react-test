@@ -57,7 +57,7 @@ class HiddenRender implements ITest {
       sp.width = 100
       sp.height = 100
       this.spList.push(sp)
-      pixiEntry.root.addChild(sp)
+      pixiEntry.root.addChild(sp as any)
     }
   }
 
