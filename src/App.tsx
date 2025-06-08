@@ -55,7 +55,7 @@ function Test() {
   // return <CanvasDemo />
   // return <ComponentDemo />
   // return <HtmlDemo />
-  // return <CSSDemo />
+  return <CSSDemo />
   // return <StyledCompDemo />
   // return <TailwindDemo />
   // return <ScssDemo />
@@ -63,7 +63,7 @@ function Test() {
   // return <JSDemo />
   // return <ReactDemo />
   // return <ShadcnDemo />
-  return <AntdDemo />
+  // return <AntdDemo />
   // return <TSDemo />
   // return <UtilTest />
   // return <LoadashDemo />
