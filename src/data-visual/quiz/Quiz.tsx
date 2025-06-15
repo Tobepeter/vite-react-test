@@ -141,19 +141,18 @@ export const Quiz = () => {
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4'>
+    <div className='min-h-screen bg-background flex items-center justify-center p-4'>
       <div className='w-full max-w-4xl space-y-6'>
         {/* 主要内容卡片 */}
-        <Card className='shadow-xl border-0 overflow-hidden transition-all duration-300'>
+        <Card className='shadow-md border-2 border-border'>
           <CardContent className='p-8 space-y-8'>
             {/* 代码显示区域 */}
             <div className='text-center'>
               <div className='inline-block'>
-                <Badge variant='outline' className='text-6xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-white border-0 px-12 py-8 rounded-3xl shadow-2xl'>
+                <Badge variant='outline' className='text-4xl font-bold px-8 py-6 rounded-xl border-2 border-foreground shadow-sm'>
                   {currentCode?.code}
                 </Badge>
               </div>
-              <p className='text-gray-600 mt-4 text-lg'>选择正确的状态码含义</p>
             </div>
 
             {/* 选项列表 */}
@@ -176,10 +175,12 @@ export const Quiz = () => {
                     }
                   >
                     <Button
-                      variant={isCorrectAnswer ? 'default' : 'outline'}
-                      className={`w-full p-6 h-auto text-left justify-start relative text-base border-2 transition-all duration-300 hover:border-blue-400 hover:shadow-md ${
-                        isCorrectAnswer ? 'bg-emerald-100 hover:bg-emerald-200 border-emerald-300 text-emerald-800' : ''
-                      } ${isWrongAnswer ? 'bg-rose-50 border-rose-200 text-rose-700' : ''} ${showResult ? 'disabled:opacity-100 disabled:pointer-events-auto cursor-default' : ''}`}
+                      variant='outline'
+                      className={`w-full p-6 h-auto text-left justify-start relative text-base border border-border transition-all duration-300 
+                        ${isCorrectAnswer ? 'bg-background border-foreground text-foreground' : ''} 
+                        ${isWrongAnswer ? 'bg-background border-muted text-muted-foreground' : ''} 
+                        ${showResult ? 'disabled:opacity-100 disabled:pointer-events-auto cursor-default' : ''}
+                        hover:scale-[1.02] hover:shadow-md hover:bg-background hover:border-foreground`}
                       onClick={() => handleAnswer(option)}
                       disabled={showResult}
                     >
@@ -190,7 +191,7 @@ export const Quiz = () => {
                         {/* 结果状态图标 */}
                         {showResult && isCorrectAnswer && (
                           <div className='ml-4'>
-                            <CheckCircle className='w-10 h-10 text-white' />
+                            <CheckCircle className='w-6 h-6 text-foreground' />
                           </div>
                         )}
                       </div>
