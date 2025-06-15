@@ -39,6 +39,7 @@ import { TempusDemo } from './tempus/TempusDemo'
 import { PerfDemo } from './perf/PerfDemo'
 import { MotionDemo } from './motion/MotionDemo'
 import { MockJSDemo } from './mockjs/MockJSDemo'
+import { DataVisualDemo } from './data-visual/DataVisualDemo'
 
 globalUtil.init()
 debugUtil.init()
@@ -79,7 +80,8 @@ function Test() {
   // return <TempusDemo />
   // return <PerfDemo />
   // return <MotionDemo />
-  return <MockJSDemo />
+  // return <MockJSDemo />
+  return <DataVisualDemo />
 }
 
 function App() {
